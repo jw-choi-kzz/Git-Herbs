@@ -1,64 +1,24 @@
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: "jdbc:mysql://J10a205.p.ssafy.io:3306/temp"
-#    username: "root"
-#    password: "godqhraksEkd123@@"
-#    hikari:
-#      maximum-pool-size: 10
-#  jpa:
-#    properties:
-#      hibernate:
-#        show_sql: true
-#        format_sql: true
-#    hibernate:
-#      ddl-auto: update
-#    defer-datasource-initialization: true
-#    database-platform: org.hibernate.dialect.MySQLDialect
-#  sql:
-#    init:
-#      mode: always
-#  servlet:
-#    multipart:
-#      max-file-size: 5MB
-#      max-request-size: 5MB
+spring:
+  application:
+    name: auth
 
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          kakao:
-#            client-id: ""
-#            client-secret: ""
-#            scope: profile_nickname, account_email
-#            client-name: Kakao
-#            authorization-grant-type: authorization_code
-#            redirect-uri: ""
-#            client-authentication-method: POST
-#      provider:
-#        kakao:
-#          authorization-uri: https://kauth.kakao.com/oauth/authorize
-#          token-uri: https://kauth.kakao.com/oauth/token
-#          user-info-uri: https://kapi.kakao.com/v2/user/me
-#          user-name-attribute: id
+  jwt:
+    header: Authorization
+    secret: JDJhJDEyJE5YVjB2MGlZMC5pL2E4MGNUTE9oMk83YldhOHlCTDRpcHducDltd0R2ZkhLNnoyZ2FleXFp
+    access-token-validity-in-seconds: 86400  # 1 day
+    refresh-token-validity-in-seconds: 2592000  # 30 days
 
 
-#jwt:
-#  header: Authorization
-#  secret: "???"
-#  token-validity-in-seconds: 86400
-
-#cloud:
-#  aws:
-#    s3:
-#      bucket: "??"
-#    credentials:
-#      access-key: "???"
-#      secret-key: "???"
-#    region:
-#      static: ap-northeast-2
-#      auto: false
-#      stack: false
+redis:
+  master:
+    host: http://J10a205.p.ssafy.io
+    port: 6379
+#  nodes:
+#    - host: something
+#      port: 6379
+#    - host: something2
+#      port: 6379
+  password: godqhraksEkd123@@
 
 
 

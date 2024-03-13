@@ -1,5 +1,7 @@
-package githerbs.board.entity;
+package githerbs.favorite.entity;
 
+import githerbs.board.entity.BaseTime;
+import githerbs.board.entity.Board;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -19,13 +21,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Table(name = "favorite")
-public class Favorite  extends BaseTime{
+public class Favorite  extends BaseTime {
 
 	@Id @GeneratedValue
 	int favoriteId;
-
-	int userId;
-
+	int memberId;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
 	Board board;

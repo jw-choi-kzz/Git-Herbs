@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "AuthorizationTokenRequestDto", description = "Authorization token 클래스")
-public class AuthorizationTokenRequestDto {
+@Schema(name = "AuthorizationTokenDto", description = "Authorization token 클래스")
+public class AuthorizationTokenDto {
 	@Schema(description = "access_token")
 	private String accessToken;
 	@Schema(description = "refresh_token")

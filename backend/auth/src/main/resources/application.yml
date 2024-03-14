@@ -2,11 +2,13 @@ spring:
   application:
     name: auth
 
+
+
   jwt:
     header: Authorization
-    secret: JDJhJDEyJE5YVjB2MGlZMC5pL2E4MGNUTE9oMk83YldhOHlCTDRpcHducDltd0R2ZkhLNnoyZ2FleXFp
+    secret: $2a$12$NXV0v0iY0.i/a80cTLOh2O7bWa8yBL4ipwnp9mwDvfHK6z2gaeyqi
     access-token-validity-in-seconds: 86400  # 1 day
-    refresh-token-validity-in-seconds: 2592000  # 30 days
+    refresh-token-validity-in-seconds: 604800  # 7 days
 
 
 redis:

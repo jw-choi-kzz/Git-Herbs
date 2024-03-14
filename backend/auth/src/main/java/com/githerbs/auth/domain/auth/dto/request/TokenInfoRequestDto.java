@@ -27,5 +27,7 @@ public class TokenInfoRequestDto extends MemberInfoDto {
 	private String state;
 	@Schema(description = "refresh_token")
 	private String refreshToken;
+	@Schema(description = "기기 고유 아이디")
+	private String deviceId;
 
 }

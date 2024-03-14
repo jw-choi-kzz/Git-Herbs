@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.githerbs.auth.domain.auth.dto.common.MemberInfoDto;
-import com.githerbs.auth.domain.auth.dto.request.AuthorizationTokenRequestDto;
+import com.githerbs.auth.domain.auth.dto.request.AuthorizationTokenDto;
 import com.githerbs.auth.domain.auth.dto.request.JwtGrantTypeDto;
 import com.githerbs.auth.domain.auth.dto.response.JwtExtrationResponseDto;
 import com.githerbs.auth.domain.auth.dto.response.JwtResponseDto;
@@ -13,8 +13,6 @@ import com.githerbs.auth.domain.auth.dto.response.JwtResponseDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.*;
 
 @Slf4j
 @Service
@@ -31,17 +29,17 @@ public class JwtServiceImpl implements JwtService{
 
 	@Override
 	public JwtResponseDto createToken(JwtGrantTypeDto grantType, MemberInfoDto memberInfo,
-		AuthorizationTokenRequestDto token, String state) {
+		AuthorizationTokenDto token, String state) {
 		return null;
 	}
 
 	@Override
-	public JwtExtrationResponseDto validateToken(AuthorizationTokenRequestDto token) {
+	public JwtExtrationResponseDto validateToken(AuthorizationTokenDto token) {
 		return null;
 	}
 
 	@Override
-	public boolean revokeToken(AuthorizationTokenRequestDto token) {
+	public boolean revokeToken(AuthorizationTokenDto token) {
 		return false;
 	}
 }

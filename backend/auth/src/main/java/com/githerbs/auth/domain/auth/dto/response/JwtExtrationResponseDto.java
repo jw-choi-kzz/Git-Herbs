@@ -10,15 +10,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(name = "JwtExtrationResponseDto", description = "JWT 정보추출 응답 클래스")
 public class JwtExtrationResponseDto extends MemberInfoDto {
-	@Schema(description = "무작위 문자열")
-	private String state;
-
 }

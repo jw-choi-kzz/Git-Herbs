@@ -26,3 +26,8 @@ redis:
 
 server:
   port: 8000
+
+
+logging:
+  level:
+    root: debug

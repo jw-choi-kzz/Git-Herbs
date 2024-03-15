@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Schema(name = "JwtResponseDto", description = "JWT 응답 클래스")
 public class JwtResponseDto {
+	@Builder.Default
 	@Schema(description = "JWT 발급 타입")
 	private String tokenType = "Bearer";
 	@Schema(description = "Access Token(JWT)")

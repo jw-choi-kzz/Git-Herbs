@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.githerbs.auth.domain.auth.entity.JwtRedisEntity;
 
 @Repository
-public interface JwtRedisRepository extends ListCrudRepository<JwtRedisEntity, String> {
+public interface JwtRedisRepository extends CrudRepository<JwtRedisEntity, String> {
 	Optional<JwtRedisEntity> findByMemberId(String memberId);
 }

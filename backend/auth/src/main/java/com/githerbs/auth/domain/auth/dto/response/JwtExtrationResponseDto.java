@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
+// @AllArgsConstructor
 @Schema(name = "JwtExtrationResponseDto", description = "JWT 정보추출 응답 클래스")
 public class JwtExtrationResponseDto extends MemberInfoDto {
 }

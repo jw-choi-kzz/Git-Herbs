@@ -19,7 +19,7 @@ public class RedisServiceImpl implements RedisService {
 	public boolean setRefreshToken(String id, String refreshToken, String deviceId) {
 
 		// 이미 존재하는 경우 삭제(user 쪽에서 이미 로그아웃 처리하고 넘겨주는 경우)
-		repo.findById(id).ifPresent(repo::delete);
+		repo.findById(deviceId).ifPresent(repo::delete);
 
 		var entity = JwtRedisEntity.builder().id(deviceId).memberId(id).refreshToken(refreshToken).build();
 		var result = repo.save(entity);
@@ -43,8 +43,11 @@ public class RedisServiceImpl implements RedisService {
 		if (repo.findById(deviceId).isEmpty()) {
 			return false;
 		}
+		var entity = repo.findById(deviceId).get();
+		entity.setRefreshToken(refreshToken);
+		var result = repo.save(entity);
 
-		return false;
+		return result.getRefreshToken().equals(refreshToken);
 	}
 
 	@Override

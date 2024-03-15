@@ -1,4 +1,6 @@
-package com.githerbs.herb.global.common;
+package com.githerbs.herb.global.common.exception;
+
+import com.githerbs.herb.global.common.code.ErrorCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

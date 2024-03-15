@@ -1,4 +1,4 @@
-package com.githerbs.herb.global.common;
+package com.githerbs.herb.global.common.code;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

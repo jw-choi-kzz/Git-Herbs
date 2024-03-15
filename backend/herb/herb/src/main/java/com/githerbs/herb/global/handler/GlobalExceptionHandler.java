@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.githerbs.herb.global.common.BaseException;
-import com.githerbs.herb.global.common.ErrorResponse;
+import com.githerbs.herb.global.common.exception.BaseException;
+import com.githerbs.herb.global.common.response.ErrorResponse;
 
 import lombok.RequiredArgsConstructor;
 

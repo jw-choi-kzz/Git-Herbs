@@ -13,7 +13,7 @@ spring:
 
 redis:
   master:
-    host: http://J10a205.p.ssafy.io
+    host: J10a205.p.ssafy.io
     port: 6379
 #  nodes:
 #    - host: something

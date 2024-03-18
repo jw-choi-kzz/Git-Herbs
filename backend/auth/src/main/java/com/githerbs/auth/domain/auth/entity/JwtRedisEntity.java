@@ -2,7 +2,6 @@ package com.githerbs.auth.domain.auth.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class JwtRedisEntity {
 	@Id
 	private String id;    // device_id
-	@Indexed
-	private String memberId;    // member_id
+	// @Indexed
+	private int memberId;    // member_id
 	private String refreshToken;
 }

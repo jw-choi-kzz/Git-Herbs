@@ -6,10 +6,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
+@Getter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 public class MemberInfoDto {
 	@Schema(description = "사용자 아이디")
 	@NotBlank(message = "memberId는 필수값입니다.")
-	private String memberId;
+	private int memberId;
 	@Schema(description = "사용자 닉네임")
 	@NotBlank(message = "memberNickname은 필수값입니다.")
 	private String memberNickname;

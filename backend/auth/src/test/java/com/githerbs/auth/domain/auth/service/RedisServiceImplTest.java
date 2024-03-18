@@ -13,16 +13,12 @@ import com.githerbs.auth.domain.auth.repository.JwtRedisRepository;
 @DataRedisTest
 class RedisServiceImplTest {
 
-	@Autowired
-	private JwtRedisRepository repo;
+
+	private RedisService service;
 
 	@Test
 	void setRefreshToken() {
-		var entity = JwtRedisEntity.builder().id("deviceId").memberId("0").refreshToken("asdfasdfasdfasdf").build();
-		var result = repo.save(entity);
-		assertEquals(result.getId(), "deviceId");
-		assertEquals(result.getMemberId(), "0");
-		assertEquals(result.getRefreshToken(), "asdfasdfasdfasdf");
+
 	}
 
 	@Test

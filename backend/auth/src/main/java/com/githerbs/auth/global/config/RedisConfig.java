@@ -25,10 +25,6 @@ public class RedisConfig {
 	private final RedisClusterNodes nodes;
 	@Value("${redis.password}")
 	private String password;
-	@Value("${redis.master.host}")
-	private String masterHost;
-	@Value("${redis.master.port}")
-	private int masterPort;
 
 	/**
 	 * redis 연결 설정
@@ -39,14 +35,6 @@ public class RedisConfig {
 		/*redis standalone을 구성한 경우*/
 		String host = nodes.getMaster().getHost();
 		int port = nodes.getMaster().getPort();
-		if(nodes.getMaster().getHost() == null || nodes.getMaster().getHost().equals("")){
-			log.debug("redis standalone master host null");
-			host =  masterHost;
-		}
-		if(nodes.getMaster().getPort() != 6379) {
-			log.debug("redis standalone master port null");
-			port = masterPort;
-		}
 		RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(host, port);
 		config.setPassword(password);
 		return new LettuceConnectionFactory(config);

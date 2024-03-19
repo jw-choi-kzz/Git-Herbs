@@ -1,7 +1,6 @@
 package org.happiness.githerbs.global.common.exception;
 
-import com.githerbs.herb.global.common.code.ErrorCode;
-
+import org.happiness.githerbs.global.common.code.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

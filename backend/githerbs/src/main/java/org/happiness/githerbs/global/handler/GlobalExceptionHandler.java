@@ -1,12 +1,11 @@
 package org.happiness.githerbs.global.handler;
 
+import org.happiness.githerbs.global.common.exception.BaseException;
+import org.happiness.githerbs.global.common.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import com.githerbs.herb.global.common.exception.BaseException;
-import com.githerbs.herb.global.common.response.ErrorResponse;
 
 import lombok.RequiredArgsConstructor;
 

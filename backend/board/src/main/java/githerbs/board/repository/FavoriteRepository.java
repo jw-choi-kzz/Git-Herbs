@@ -9,9 +9,9 @@ import githerbs.board.entity.Favorite;
 
 @Repository
 public interface FavoriteRepository extends JpaRepository<Favorite,Integer> {
-	int countFavoritesByBoardId(int boardId);
+	int countFavoritesByBoardBoardId(int boardId);
 
-	Optional<Favorite> findByMemberIdAndBoardIdANDFlagTrue(int memberId,int boardId);
-	Optional<Favorite> findByMemberIdAndBoardId(int memberId,int boardId);
+	Optional<Favorite> findByMemberIdAndBoardBoardIdAndFlagTrue(int memberId,int boardId);
+	Optional<Favorite> findByMemberIdAndBoardBoardId(int memberId,int boardId);
 
 }

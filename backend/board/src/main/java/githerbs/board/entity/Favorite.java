@@ -27,6 +27,5 @@ public class Favorite  extends BaseTime {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
 	Board board;
-	boolean check; // true는 좋아요 / false 비좋아요
 
 }

@@ -10,9 +10,8 @@ import githerbs.board.entity.Board;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board,Integer> {
-	int countFavoritesByBoardId(int boardId);
 
 	List<Board> findAllByFlagFalse();
-	Optional<Board> findByIdAndFlagFalse(int boardId);
+	Optional<Board> findByBoardIdAndFlagFalse(int boardId);
 
 }

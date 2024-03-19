@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -21,18 +22,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Table(name = "board")
+@ToString
 public class Board extends BaseTime{
 
 	@Id @GeneratedValue
 	@Column(name = "board_id")
 	int boardId;
 	int memberId;
-	int myHerbId;
-	double similar;
-	String herbName;
 	String imgUrl;
-
+	private boolean deleted;
 	@OneToMany(mappedBy = "board")
-	List<Favorite> favorites = new ArrayList<>();
+	final List<Favorite> favorites = new ArrayList<>();
 
 }

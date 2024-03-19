@@ -3,7 +3,6 @@ package githerbs.board.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import githerbs.favorite.entity.Favorite;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

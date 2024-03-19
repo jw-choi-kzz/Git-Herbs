@@ -13,5 +13,6 @@ public interface BoardRepository extends JpaRepository<Board,Integer> {
 	int countFavoritesByBoardId(int boardId);
 
 	List<Board> findAllByFlagFalse();
+	Optional<Board> findByIdAndFlagFalse(int boardId);
 
 }

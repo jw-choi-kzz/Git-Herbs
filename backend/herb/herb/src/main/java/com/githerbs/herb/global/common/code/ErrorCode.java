@@ -10,6 +10,8 @@ public enum ErrorCode {
 
 	USER_NOT_FOUND(404, "USER-001", "유저를 찾을 수 없는 경우"),
 
+	MY_HERB_NOT_FOUND(404, "MYHERB-001", "내 도감 사진을 찾을 수 없는 경우"),
+
 	BOOKMARK_NOT_FOUND(404, "STAR-001", "즐겨찾기를 찾을 수 없는 경우"),
 	BOOKMARK_DUPLICATED(404, "STAR-002", "이미 등록된 즐겨찾기인 경우");
 

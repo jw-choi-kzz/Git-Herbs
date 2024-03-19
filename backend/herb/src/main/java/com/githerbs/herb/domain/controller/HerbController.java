@@ -1,5 +1,7 @@
 package com.githerbs.herb.domain.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.githerbs.herb.domain.dto.response.HerbDetailResponseDto;
 import com.githerbs.herb.domain.dto.response.HerbResponseDto;
+import com.githerbs.herb.domain.dto.response.HerbSeasonResponseDto;
 import com.githerbs.herb.domain.service.HerbService;
 import com.githerbs.herb.global.common.response.BaseResponse;
 
@@ -31,6 +34,11 @@ public class HerbController {
 		Integer userId = 1;
 		return ResponseEntity.ok(
 			new BaseResponse<>(HttpStatus.OK.value(), herbService.getHerListByUserId(userId, pageable)));
+	}
+
+	@GetMapping("/seasons")
+	public ResponseEntity<BaseResponse<List<HerbSeasonResponseDto>>> getHerbSeasonList() {
+		return ResponseEntity.ok(new BaseResponse<>(HttpStatus.OK.value(), herbService.getHerbSeasonByHerdId()));
 	}
 
 	@GetMapping("/{herbId}")

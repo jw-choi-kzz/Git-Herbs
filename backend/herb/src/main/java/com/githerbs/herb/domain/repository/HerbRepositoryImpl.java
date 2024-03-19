@@ -6,6 +6,7 @@ import static com.githerbs.herb.domain.entity.QHerbMedicinalEffect.*;
 import static com.githerbs.herb.domain.entity.QMyHerb.*;
 import static com.querydsl.core.group.GroupBy.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Repository;
 import com.githerbs.herb.domain.dto.response.HerbDetailResponseDto;
 import com.githerbs.herb.domain.dto.response.HerbMedicinalEffectResponseDto;
 import com.githerbs.herb.domain.dto.response.HerbResponseDto;
+import com.githerbs.herb.domain.dto.response.HerbSeasonResponseDto;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -71,6 +74,20 @@ public class HerbRepositoryImpl implements HerbRepositoryCustomer {
 					set(Projections.constructor(HerbMedicinalEffectResponseDto.class,
 						herbMedicinalEffect.medicinalEffect))))
 			).get(0);
+	}
+
+	@Override
+	public List<HerbSeasonResponseDto> findHerbSeasonListByDate() {
+		return queryFactory
+			.select(Projections.constructor(HerbSeasonResponseDto.class,
+				herb.id,
+				herb.herbImg,
+				herb.herbName))
+			.from(herb)
+			.where(herb.herbHarvestingTime.like(LocalDateTime.now().getMonthValue() + "월"))
+			.orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc())
+			.limit(3)
+			.fetch();
 	}
 }
 

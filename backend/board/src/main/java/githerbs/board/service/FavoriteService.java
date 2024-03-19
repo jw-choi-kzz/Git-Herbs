@@ -21,30 +21,30 @@ public class FavoriteService {
 	private final BoardRepository boardRepository;
 
 	public boolean favoriteCheck(int memberId, int feedId) {
-		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardIdANDFlagTrue(memberId, feedId);
+		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardBoardIdAndFlagTrue(memberId, feedId);
 		return optionalFavorite.isPresent();
 	}
 
 	public boolean saveFavorite(int memberId, int boardId) {
-		Board board = boardRepository.findByIdAndFlagFalse(boardId)
+		Board board = boardRepository.findByBoardIdAndFlagFalse(boardId)
 			.orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
-		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardId(memberId, boardId);
+		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardBoardId(memberId, boardId);
 		boolean flag;
 		if (optionalFavorite.isPresent()) {
 			Favorite favorite = Favorite.builder()
 				.favoriteId(optionalFavorite.get().getFavoriteId())
 				.memberId(memberId)
-				.check(!optionalFavorite.get().isCheck())
 				.board(board)
 				.build();
+			favorite.setFlag(!optionalFavorite.get().isFlag());
 			favoriteRepository.save(favorite);
-			return favorite.isCheck();
+			return favorite.isFlag();
 		}
 		Favorite favorite = Favorite.builder()
 			.memberId(memberId)
 			.board(board)
-			.check(true)
 			.build();
+		favorite.setFlag(true);
 		favoriteRepository.save(favorite);
 
 		return true;
@@ -52,7 +52,7 @@ public class FavoriteService {
 	}
 
 	public int getFavoirteCnt(int boardId) {
-		return  favoriteRepository.countFavoritesByBoardId(boardId);
+		return  favoriteRepository.countFavoritesByBoardBoardId(boardId);
 
 	}
 }

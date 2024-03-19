@@ -12,30 +12,29 @@ import lombok.Data;
 @AllArgsConstructor
 public class BoardResponseDto {
 	int boardId;
-	int userId;
+	int memberId;
 	String userNickname;
 	String userImgUrl;
 	String imgUrl;
 	int likeCnt;
 	boolean likeCheck;
-	String herbName;
-	double similar;
-	int herbId;
 	LocalDate createAt;
 
 	public BoardResponseDto(){};
 	public BoardResponseDto entityTo(Board board) {
+		LocalDate createdAt = null;
+		if (board.getCreatedAt() != null) {
+			createdAt = LocalDate.from(board.getCreatedAt());
+		}
 		return BoardResponseDto.builder()
 			.boardId(board.getBoardId())
-			.userId(board.getMemberId())
+			.memberId(board.getMemberId())
+			.imgUrl(board.getImgUrl())
 			.userNickname("")
 			.userImgUrl("")
 			.likeCnt(0)
 			.likeCheck(false)
-			.herbName(board.getHerbName())
-			.similar(board.getSimilar())
-			.herbId(board.getMyHerbId())
-			.createAt(LocalDate.from(board.getCreatedAt()))
+			.createAt(createdAt)
 			.build();
 	}
 

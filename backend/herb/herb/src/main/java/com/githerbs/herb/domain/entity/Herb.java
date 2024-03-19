@@ -29,10 +29,14 @@ public class Herb {
 	@Column(length = 30)
 	private String herbName;
 
+	private String herbImg;
+
 	@Column(length = 100)
 	private String herbScientificName;
 
 	private String herbNickname;
+
+	private String herbMedicalPart;
 
 	private String herbHarvestingTime;
 
@@ -43,5 +47,4 @@ public class Herb {
 	@Lob
 	@Column(columnDefinition = "MEDIUMTEXT")
 	private String herbQuality;
-
 }

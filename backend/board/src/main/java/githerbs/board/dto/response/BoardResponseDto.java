@@ -1,5 +1,7 @@
 package githerbs.board.dto.response;
 
+import java.time.LocalDate;
+
 import githerbs.board.entity.Board;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +21,7 @@ public class BoardResponseDto {
 	String herbName;
 	double similar;
 	int herbId;
+	LocalDate createAt;
 
 	public BoardResponseDto(){};
 	public BoardResponseDto entityTo(Board board) {
@@ -32,6 +35,7 @@ public class BoardResponseDto {
 			.herbName(board.getHerbName())
 			.similar(board.getSimilar())
 			.herbId(board.getMyHerbId())
+			.createAt(LocalDate.from(board.getCreatedAt()))
 			.build();
 	}
 

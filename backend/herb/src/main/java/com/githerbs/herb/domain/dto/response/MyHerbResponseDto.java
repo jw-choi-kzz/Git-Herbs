@@ -1,4 +1,4 @@
-package com.githerbs.herb.domain.dto;
+package com.githerbs.herb.domain.dto.response;
 
 import java.time.LocalDateTime;
 

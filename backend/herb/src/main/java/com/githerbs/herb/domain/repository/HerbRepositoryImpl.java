@@ -13,9 +13,9 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
-import com.githerbs.herb.domain.dto.HerbDetailResponseDto;
-import com.githerbs.herb.domain.dto.HerbMedicinalEffectResponseDto;
-import com.githerbs.herb.domain.dto.HerbResponseDto;
+import com.githerbs.herb.domain.dto.response.HerbDetailResponseDto;
+import com.githerbs.herb.domain.dto.response.HerbMedicinalEffectResponseDto;
+import com.githerbs.herb.domain.dto.response.HerbResponseDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;

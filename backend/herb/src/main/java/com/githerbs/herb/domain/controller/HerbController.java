@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.githerbs.herb.domain.dto.HerbDetailResponseDto;
-import com.githerbs.herb.domain.dto.HerbResponseDto;
+import com.githerbs.herb.domain.dto.response.HerbDetailResponseDto;
+import com.githerbs.herb.domain.dto.response.HerbResponseDto;
 import com.githerbs.herb.domain.service.HerbService;
 import com.githerbs.herb.global.common.response.BaseResponse;
 

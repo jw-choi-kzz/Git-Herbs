@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.githerbs.herb.domain.dto.MyHerbRequestDto;
+import com.githerbs.herb.domain.dto.request.MyHerbRequestDto;
 import com.githerbs.herb.domain.service.MyHerbService;
 import com.githerbs.herb.global.common.response.BaseResponse;
 

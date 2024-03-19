@@ -9,7 +9,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
-import com.githerbs.herb.domain.dto.MyHerbResponseDto;
+import com.githerbs.herb.domain.dto.response.MyHerbResponseDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 

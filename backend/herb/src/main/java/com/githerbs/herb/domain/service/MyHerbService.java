@@ -7,8 +7,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.githerbs.herb.domain.dto.MyHerbRequestDto;
-import com.githerbs.herb.domain.dto.MyHerbResponseDto;
+import com.githerbs.herb.domain.dto.request.MyHerbRequestDto;
+import com.githerbs.herb.domain.dto.response.MyHerbResponseDto;
 import com.githerbs.herb.domain.entity.Herb;
 import com.githerbs.herb.domain.entity.Member;
 import com.githerbs.herb.domain.entity.MyHerb;

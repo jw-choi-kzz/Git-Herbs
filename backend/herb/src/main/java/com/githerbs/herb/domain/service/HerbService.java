@@ -5,8 +5,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.githerbs.herb.domain.dto.HerbDetailResponseDto;
-import com.githerbs.herb.domain.dto.HerbResponseDto;
+import com.githerbs.herb.domain.dto.response.HerbDetailResponseDto;
+import com.githerbs.herb.domain.dto.response.HerbResponseDto;
 import com.githerbs.herb.domain.repository.HerbRepository;
 
 import lombok.RequiredArgsConstructor;

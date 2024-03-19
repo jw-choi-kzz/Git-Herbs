@@ -27,7 +27,7 @@ public class FavoriteService {
 
 	public boolean saveFavorite(int memberId, int boardId) {
 		Board board = boardRepository.findByIdAndFlagFalse(boardId)
-			.orElseThrow(() -> new CustomException(ErrorCode.NO_EXIST));
+			.orElseThrow(() -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
 		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardId(memberId, boardId);
 		boolean flag;
 		if (optionalFavorite.isPresent()) {

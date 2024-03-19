@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo';
+  src: url("./assets/fonts/SpoqaHanSansNeo-Medium.ttf");
+}
+
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

@@ -2,10 +2,13 @@ package com.githerbs.herb.domain.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +28,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "my_herb")
+@EntityListeners(AuditingEntityListener.class)
+@SQLDelete(sql = "UPDATE my_herb SET deleted = true WHERE my_herb_id = ?")
 public class MyHerb {
 
 	@Id
@@ -34,11 +39,11 @@ public class MyHerb {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
-	private Member memberId;
+	private Member member;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "herb_id")
-	private Herb herbId;
+	private Herb herb;
 
 	@Column(length = 150)
 	private String imgId;
@@ -46,8 +51,13 @@ public class MyHerb {
 	private Double similarity;
 
 	@CreatedDate
-	@Column(updatable = false)
+	@Column(updatable = false, nullable = false)
 	private LocalDateTime createdAt;
 
-	private boolean deleted;
+	@Builder.Default
+	private boolean deleted = Boolean.FALSE;
+
+	public void deleteMyHerb() {
+		this.deleted = true;
+	}
 }

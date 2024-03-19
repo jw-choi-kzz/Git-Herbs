@@ -24,7 +24,7 @@ public class BookmarkController {
 
 	@PostMapping("/{herbId}/bookmark")
 	public ResponseEntity<BaseResponse<?>> addBookmark(@PathVariable Integer herbId) {
-		// (@AuthenticationPrincipal User user, @PathVariable Integer herbId)
+		// (@AuthenticationPrincipal User user, @PathVariable Integer herbId){
 		Integer userId = 1;
 		bookmarkService.addBookmark(userId, herbId);
 		return ResponseEntity.ok(

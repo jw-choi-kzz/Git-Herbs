@@ -28,7 +28,7 @@ public class BoardController {
 
 	// 자랑하기 글 작성
 	@PostMapping
-	public ResponseEntity<Object> writeBoard(@RequestBody BoardRequestDto request) throws IOException {
+	public ResponseEntity<Object> writeBoard(@RequestBody BoardRequestDto request)  {
 		int memberId = 1;
 		return ResponseEntity.ok().body(boardService.writeBoard(memberId,request));
 	}

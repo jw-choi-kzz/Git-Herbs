@@ -28,11 +28,14 @@ public class BoardService {
 	private final FavoriteService favoriteService;
 	private final MemberRepository memberRepository;
 
+
+
+	//해당 하는 멤버 찾기
 	public Member findMember(Integer memberId){
 		return memberRepository.findById(memberId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
 	}
 
-
+	//Dto - > Entity로 변경
 	public Board toEntity(BoardRequestDto boardRequestDto) {
 		return Board.builder()
 			.imgUrl(boardRequestDto.getImgUrl())
@@ -40,6 +43,7 @@ public class BoardService {
 			.build();
 	}
 
+	// 게시글 등록하기
 	@Transactional
 	public BoardResponseDto writeBoard(int memberId, BoardRequestDto boardRequestDto) {
 		boardRequestDto.setMemberId(memberId);
@@ -60,6 +64,8 @@ public class BoardService {
 			.build());
 	}
 
+
+	//전체 글 조회
 	public List<BoardResponseDto> getAll() {
 		List<Board> boards = boardRepository.findAllByFlagFalse();
 		ArrayList<BoardResponseDto> boardResponseDtos = new ArrayList<>();

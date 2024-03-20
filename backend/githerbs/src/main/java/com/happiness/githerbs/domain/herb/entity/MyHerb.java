@@ -2,7 +2,7 @@ package com.happiness.githerbs.domain.herb.entity;
 
 import java.time.LocalDateTime;
 
-import com.happiness.githerbs.domain.auth.entity.Member;
+import com.happiness.githerbs.domain.member.entity.Member;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

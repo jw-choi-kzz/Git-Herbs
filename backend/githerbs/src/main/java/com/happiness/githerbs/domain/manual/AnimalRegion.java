@@ -1,6 +1,6 @@
-package com.happiness.githerbs.domain.herb.entity;
+package com.happiness.githerbs.domain.manual;
 
-import com.happiness.githerbs.domain.member.entity.Member;
+import com.happiness.githerbs.domain.herb.entity.HerbRegion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,23 +18,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Builder
+@Table(name = "animal_region")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "bookmark")
-public class Bookmark {
+@Builder
+@Getter
+public class AnimalRegion {
 
 	@Id
-	@Column(name = "bookmark_id")
+	@Column(name = "animal_region_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id")
-	private Member member;
+	@JoinColumn(name = "animal_id")
+	private Animal animal;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "herb_id")
-	private Herb herb;
+	@JoinColumn(name = "region_id")
+	private HerbRegion region;
+
+
 }

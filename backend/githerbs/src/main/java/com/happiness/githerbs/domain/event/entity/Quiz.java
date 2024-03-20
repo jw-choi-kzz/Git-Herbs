@@ -1,15 +1,10 @@
-package com.happiness.githerbs.domain.herb.entity;
-
-import com.happiness.githerbs.domain.member.entity.Member;
+package com.happiness.githerbs.domain.event.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,23 +13,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Builder
+@Table(name = "quiz")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "bookmark")
-public class Bookmark {
+@Builder
+@Getter
+public class Quiz {
 
 	@Id
-	@Column(name = "bookmark_id")
+	@Column(name = "quiz_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id")
-	private Member member;
+	@Column(length = 100)
+	private String question;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "herb_id")
-	private Herb herb;
+	private Integer answer;
+
+	@Column(length = 150)
+	private String imgOne;
+
+	@Column(length = 150)
+	private String imgTwo;
+
+	@Column(length = 150)
+	private String imgThree;
+
+	@Column(length = 150)
+	private String imgFour;
+
 }

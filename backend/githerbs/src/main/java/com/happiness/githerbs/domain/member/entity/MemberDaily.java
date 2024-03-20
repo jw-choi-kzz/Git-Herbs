@@ -1,6 +1,6 @@
-package com.happiness.githerbs.domain.herb.entity;
+package com.happiness.githerbs.domain.member.entity;
 
-import com.happiness.githerbs.domain.member.entity.Member;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,15 +18,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Builder
+@Table(name = "member_daily")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "bookmark")
-public class Bookmark {
+@Builder
+@Getter
+public class MemberDaily {
 
 	@Id
-	@Column(name = "bookmark_id")
+	@Column(name = "daily_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
@@ -34,7 +34,17 @@ public class Bookmark {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "herb_id")
-	private Herb herb;
+	private LocalDate date;
+
+	private boolean favorite;
+
+	private boolean bookmark;
+
+	private boolean analysis;
+
+	private boolean board;
+
+	private boolean quiz;
+
+	private boolean answer;
 }

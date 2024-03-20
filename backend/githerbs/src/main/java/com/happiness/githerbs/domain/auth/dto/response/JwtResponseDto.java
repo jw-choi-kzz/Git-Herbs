@@ -26,4 +26,5 @@ public class JwtResponseDto extends AuthorizationTokenDto {
 	private String state;
 	@Schema(description = "기기 고유 아이디")
 	private String deviceId;
+
 }

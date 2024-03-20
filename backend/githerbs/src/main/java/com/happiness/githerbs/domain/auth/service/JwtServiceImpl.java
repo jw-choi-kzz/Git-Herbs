@@ -49,40 +49,47 @@ public class JwtServiceImpl implements JwtService{
 	@Transactional
 	public JwtResponseDto createToken(String deviceId, MemberInfoDto memberInfo, String state) {
 
-		long now = System.currentTimeMillis();
-		var refreshKey = Jwts.SIG.HS512.key().build();
 		if(deviceId == null || deviceId.trim().isEmpty()) {
 			deviceId = UUID.randomUUID().toString();
 		}
-		SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
-		String accessToken = Jwts.builder()
-			.header()
-			.add("typ", "JWT")
-			.and()
-			.subject("access-token")
-			.expiration(new Date(now + 1000 * accessTokenValidTime))
-			.claim("id", memberInfo.getMemberId())
-			.claim("nickname", memberInfo.getMemberNickname())
-			.claim("scope", memberInfo.getScope())
-			.signWith(key, Jwts.SIG.HS512)
-			.compact();
-		String refreshToken = Jwts.builder()
-			.header()
-			.add("typ", "JWT")
-			.and()
-			.subject("refresh-token")
-			.expiration(new Date(now + 1000 * refreshTokenValidTime))
-			.claim("id", memberInfo.getMemberId())
-			.signWith(refreshKey)
-			.compact();
+		var token = create(memberInfo);
 
-		var result = JwtResponseDto.builder().accessToken(accessToken).refreshToken(refreshToken).state(state).deviceId(deviceId).build();
-		service.setRefreshToken(memberInfo.getMemberId(), refreshToken, deviceId);
+		var result = JwtResponseDto.builder().accessToken(token.getAccessToken()).refreshToken(token.getRefreshToken()).state(state).deviceId(deviceId).build();
+		service.setRefreshToken(memberInfo.getMemberId(), token.getRefreshToken(), deviceId);
 		return result;
 	}
 
 	@Override
+	@Transactional
 	public JwtResponseDto reissueToken(String deviceId, AuthorizationTokenDto token, String state) {
+		Claims claims = null;
+		try {
+			claims = getClaims(token.getAccessToken());
+		}
+		catch (ExpiredJwtException e) {
+			claims = e.getClaims();
+		}
+		catch(MalformedJwtException | io.jsonwebtoken.security.SecurityException e) {
+			log.error("MalformedJwtException", e);
+			throw new BaseException("토큰 형식이 맞지 않습니다", ErrorCode.SECURITY_TOKEN_ERROR);
+		}
+		catch(UnsupportedJwtException e) {
+			log.error("UnsupportedJwtException", e);
+			throw new BaseException("지원하지 않는 토큰입니다", ErrorCode.UNSUPPORTED_TOKEN_ERROR);
+		}
+		catch(RequiredTypeException e) {
+			log.error("RequiredTypeException", e);
+			throw new BaseException("토큰 변환에 실패했습니다", ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		catch(Exception e) {
+			log.error("Exception", e);
+			throw new BaseException("적절하지 않은 토큰입니다", ErrorCode.WRONG_TOKEN_ERROR);
+		}
+		var redisObject = service.getRefreshToken(deviceId);
+
+		if(!token.getRefreshToken().equals(redisObject.getRefreshToken())) throw new BaseException("사용자의 토큰이 아닙니다", ErrorCode.NOT_MATCH_TOKEN_ERROR);
+		//TODO: 토큰 create 후 repo에 update
+
 		return null;
 	}
 
@@ -136,6 +143,7 @@ public class JwtServiceImpl implements JwtService{
 	}
 
 	@Override
+	@Transactional
 	public boolean revokeToken(String deviceId, AuthorizationTokenDto token) {
 		var result = validateToken(deviceId, token);
 		if(result != null) {
@@ -150,5 +158,33 @@ public class JwtServiceImpl implements JwtService{
 		SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
 		var jwt = Jwts.parser().verifyWith(key).build().parseSignedClaims(accessToken);
 		return jwt.getPayload();
+	}
+
+	@Override
+	public AuthorizationTokenDto create(MemberInfoDto memberInfo) {
+		long now = System.currentTimeMillis();
+		var refreshKey = Jwts.SIG.HS512.key().build();
+		SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
+		String accessToken = Jwts.builder()
+			.header()
+			.add("typ", "JWT")
+			.and()
+			.subject("access-token")
+			.expiration(new Date(now + 1000 * accessTokenValidTime))
+			.claim("id", memberInfo.getMemberId())
+			.claim("nickname", memberInfo.getMemberNickname())
+			.claim("scope", memberInfo.getScope())
+			.signWith(key, Jwts.SIG.HS512)
+			.compact();
+		String refreshToken = Jwts.builder()
+			.header()
+			.add("typ", "JWT")
+			.and()
+			.subject("refresh-token")
+			.expiration(new Date(now + 1000 * refreshTokenValidTime))
+			.claim("id", memberInfo.getMemberId())
+			.signWith(refreshKey)
+			.compact();
+		return AuthorizationTokenDto.builder().accessToken(accessToken).refreshToken(refreshToken).build();
 	}
 }

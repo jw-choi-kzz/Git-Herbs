@@ -15,5 +15,6 @@ public interface JwtService {
 	boolean revokeToken(String deviceId, AuthorizationTokenDto token);
 
 	Claims getClaims(String accessToken);
+	AuthorizationTokenDto create(MemberInfoDto memberInfo);
 
 }

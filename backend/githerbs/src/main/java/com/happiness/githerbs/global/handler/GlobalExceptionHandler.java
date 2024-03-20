@@ -3,6 +3,7 @@ package com.happiness.githerbs.global.handler;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.JsonParseException;
 import com.happiness.githerbs.global.common.code.ErrorCode;
 import com.happiness.githerbs.global.common.exception.BaseException;
 import com.happiness.githerbs.global.common.response.ErrorResponse;
@@ -99,13 +100,13 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(ErrorCode.IO_ERROR.getStatus()).body(res);
 	}
 
-	// /** gson exception */
-	// @ExceptionHandler(JsonParseException.class)
-	// protected ResponseEntity<ErrorResponse> handleJsonParseException(JsonParseException e) {
-	// 	log.error("JsonParseException", e);
-	// 	final ErrorResponse res = ErrorResponse.of(ErrorCode.JSON_PARSE_ERROR, e.getMessage());
-	// 	return ResponseEntity.status(ErrorCode.JSON_PARSE_ERROR.getStatus()).body(res);
-	// }
+	/** gson exception */
+	@ExceptionHandler(JsonParseException.class)
+	protected ResponseEntity<ErrorResponse> handleJsonParseException(JsonParseException e) {
+		log.error("JsonParseException", e);
+		final ErrorResponse res = ErrorResponse.of(ErrorCode.JSON_PARSE_ERROR, e.getMessage());
+		return ResponseEntity.status(ErrorCode.JSON_PARSE_ERROR.getStatus()).body(res);
+	}
 
 	/** jackson exception */
 	@ExceptionHandler(JsonProcessingException.class)

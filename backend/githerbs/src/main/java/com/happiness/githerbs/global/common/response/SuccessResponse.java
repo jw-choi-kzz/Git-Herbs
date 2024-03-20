@@ -3,11 +3,13 @@ package com.happiness.githerbs.global.common.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 @AllArgsConstructor
-public class BaseResponse<T> {
+public class SuccessResponse<T> {
 	private int code;
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private T data;

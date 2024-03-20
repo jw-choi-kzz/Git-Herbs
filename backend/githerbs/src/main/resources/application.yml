@@ -17,11 +17,31 @@ spring:
   sql:
     init:
       mode: always
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
 
-  spring:
-    servlet:
-      multipart:
-        max-file-size: 5MB
-        max-request-size: 5MB
-  server:
-    port: 8080
+
+  jwt:
+    header: Authorization
+    secret: JDJhJDEyJE5YVjB2MGlZMC5pL2E4MGNUTE9oMk83YldhOHlCTDRpcHducDltd0R2ZkhLNnoyZ2FleXFp
+    access-token-validity-in-seconds: 86400  # 1 day
+    refresh-token-validity-in-seconds: 604800  # 7 days
+
+
+redis:
+  master:
+    host: J10a205.p.ssafy.io
+    port: 6379
+  #  nodes:
+  #    - host: something
+  #      port: 6379
+  #    - host: something2
+  #      port: 6379
+  password: godqhraksEkd123@@
+
+
+
+server:
+  port: 8080

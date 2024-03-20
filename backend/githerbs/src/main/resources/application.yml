@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url:
-    username:
-    password:
+    url: jdbc:mysql://J10a205.p.ssafy.io:3306/temp
+    username: root
+    password: godqhraksEkd123@@
     hikari:
       maximum-pool-size: 10
   jpa:

@@ -28,12 +28,12 @@ public class Favorite   {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
-	Member memberId;
+	Member member;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
-	Board boardId;
+	Board board;
 
-	boolean flag;
+	boolean deleted;
 
 }

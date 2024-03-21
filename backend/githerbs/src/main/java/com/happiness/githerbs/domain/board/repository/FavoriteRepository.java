@@ -10,11 +10,12 @@ import com.happiness.githerbs.domain.board.entity.Favorite;
 
 @Repository
 public interface FavoriteRepository extends JpaRepository<Favorite,Integer> {
-	int countFavoritesByBoardBoardId(int boardId);
 
-	Optional<List<Favorite>> findByMemberMemberIdAndFlagFalse(int memberId);
+	//회원이 좋아요 한 거 반환
+	Optional<List<Favorite>> findByMemberIdAndDeletedTrue(int memberId);
 
-	Optional<Favorite> findByMemberMemberIdAndBoardBoardIdAndFlagTrue(int memberId,int boardId);
-	Optional<Favorite> findByMemberMemberIdAndBoardBoardId(int memberId,int boardId);
+
+	//좋아요 했는지 확인
+	Optional<Favorite> findByMemberIdAndBoardBoardIdAndDeletedTrue(int memberId,int boardId);
 
 }

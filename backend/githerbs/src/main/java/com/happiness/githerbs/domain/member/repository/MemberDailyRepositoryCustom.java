@@ -9,4 +9,6 @@ public interface MemberDailyRepositoryCustom {
 
 	List<RankingResponse> findRanker(LocalDate start, LocalDate now);
 
+	void updateDailyQuiz(Integer userId, boolean correct);
+
 }

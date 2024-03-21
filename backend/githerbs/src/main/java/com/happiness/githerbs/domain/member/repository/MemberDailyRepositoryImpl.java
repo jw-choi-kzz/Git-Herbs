@@ -48,4 +48,14 @@ public class MemberDailyRepositoryImpl implements MemberDailyRepositoryCustom {
 			.sum();
 	}
 
+	@Override
+	public void updateDailyQuiz(Integer userId, boolean correct) {
+		queryFactory
+			.update(memberDaily)
+			.set(memberDaily.quiz, true)
+			.set(memberDaily.answer, correct)
+			.where(memberDaily.member.id.eq(userId).and(memberDaily.date.eq(LocalDate.now())))
+			.execute();
+	}
+
 }

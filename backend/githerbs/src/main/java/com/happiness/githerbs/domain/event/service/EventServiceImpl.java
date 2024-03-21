@@ -2,19 +2,24 @@ package com.happiness.githerbs.domain.event.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
+import com.happiness.githerbs.domain.event.dto.request.QuizRequest;
 import com.happiness.githerbs.domain.event.dto.response.MonthlyHerbResponse;
 import com.happiness.githerbs.domain.event.dto.response.QuizResponse;
 import com.happiness.githerbs.domain.event.dto.response.RankingResponse;
 import com.happiness.githerbs.domain.event.entity.Quiz;
 import com.happiness.githerbs.domain.event.repository.QuizRepository;
 import com.happiness.githerbs.domain.herb.repository.HerbRepository;
+import com.happiness.githerbs.domain.member.entity.MemberDaily;
 import com.happiness.githerbs.domain.member.repository.MemberDailyRepository;
+import com.happiness.githerbs.domain.member.repository.MemberRepository;
 import com.happiness.githerbs.global.common.code.ErrorCode;
 import com.happiness.githerbs.global.common.exception.BaseException;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,6 +29,7 @@ public class EventServiceImpl implements EventService {
 	private final MemberDailyRepository memberDailyRepository;
 	private final HerbRepository herbRepository;
 	private final QuizRepository quizRepository;
+	private final MemberRepository memberRepository;
 
 	@Override
 	public List<RankingResponse> findRanker() {
@@ -47,6 +53,29 @@ public class EventServiceImpl implements EventService {
 			quiz.getImgThree(),
 			quiz.getImgFour()
 		);
+	}
+
+	@Override
+	@Transactional
+	public boolean solveQuiz(QuizRequest quizRequest) {
+		MemberDaily memberDaily = memberDailyRepository.findFirstByMemberOrderByDateDesc(
+			memberRepository.findById(quizRequest.userId())
+				.orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND)));
+
+		if (!memberDaily.getDate().equals(LocalDate.now())) {
+			throw new BaseException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+
+		if (memberDaily.getDate().equals(LocalDate.now()) && memberDaily.isQuiz()) {
+			throw new BaseException(ErrorCode.QUIZ_SOLVED);
+		}
+
+		Quiz quiz = quizRepository.findFirstBy().orElseThrow(() -> new BaseException(ErrorCode.INTERNAL_SERVER_ERROR));
+		boolean correct = Objects.equals(quiz.getAnswer(), quizRequest.answer());
+
+		memberDailyRepository.updateDailyQuiz(quizRequest.userId(), correct);
+
+		return correct;
 	}
 
 }

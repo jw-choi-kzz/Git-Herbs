@@ -54,7 +54,6 @@ public enum ErrorCode {
 	// 서버가 처리 할 방법을 모르는 경우 발생
 	INTERNAL_SERVER_ERROR(500, "G-999", "Internal Server Error Exception"),
 
-
 	/**  Business Exception */
 
 	HERB_NOT_FOUND(404, "HERB-001", "허브를 찾을 수 없는 경우"),
@@ -64,7 +63,9 @@ public enum ErrorCode {
 	MY_HERB_NOT_FOUND(404, "MYHERB-001", "내 도감 사진을 찾을 수 없는 경우"),
 
 	BOOKMARK_NOT_FOUND(404, "STAR-001", "즐겨찾기를 찾을 수 없는 경우"),
-	BOOKMARK_DUPLICATED(404, "STAR-002", "이미 등록된 즐겨찾기인 경우");
+	BOOKMARK_DUPLICATED(404, "STAR-002", "이미 등록된 즐겨찾기인 경우"),
+
+	QUIZ_SOLVED(404, "QUIZ-001", "이미 퀴즈에 참여한 경우");
 
 	private final int status;
 	private final String code;

@@ -19,7 +19,6 @@ import MyPage from "./pages/MyPage";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-//
   const router = createBrowserRouter([
     {
       path: "/",
@@ -87,7 +86,7 @@ function App() {
           ]
         },
         {
-          path: "/detail",
+          path: "/detail:herbId",
           element: <DetailPage />,
           errorElement: <ErrorPage />,
         },
@@ -116,4 +115,3 @@ function App() {
 }
 
 export default App;
-//relative mx-auto max-w-[412px] h-[100svh] overscroll-y-none touch-none

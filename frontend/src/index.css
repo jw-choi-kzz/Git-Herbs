@@ -1,10 +1,61 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@font-face {
+  font-family: 'SpoqaHanSansNeo';
+  font-weight: 300; /* Light */
+  src: url("./assets/fonts/SpoqaHanSansNeo-Light.ttf") format('truetype');
+}
 
 @font-face {
   font-family: 'SpoqaHanSansNeo';
-  src: url("./assets/fonts/SpoqaHanSansNeo-Medium.ttf");
+  font-weight: 400; /* Regular */
+  src: url("./assets/fonts/SpoqaHanSansNeo-Regular.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo';
+  font-weight: 500; /* Medium */
+  src: url("./assets/fonts/SpoqaHanSansNeo-Medium.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo';
+  font-weight: 700; /* Bold */
+  src: url("./assets/fonts/SpoqaHanSansNeo-Bold.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo';
+  font-weight: 100; /* Thin */
+  src: url("./assets/fonts/SpoqaHanSansNeo-Thin.ttf") format('truetype');
+}
+
+.regular {
+  font-family: 'SpoqaHanSansNeo', sans-serif;
+  color: #21351F;
+  font-weight: 400; /* Regular */
+}
+
+.light {
+  font-family: 'SpoqaHanSansNeo', sans-serif;
+  color: #21351F;
+  font-weight: 300; /* Light */
+}
+
+.medium {
+  font-family: 'SpoqaHanSansNeo', sans-serif;
+  color: #21351F;
+  font-weight: 500; /* Medium */
+}
+
+.bold {
+  font-family: 'SpoqaHanSansNeo', sans-serif;
+  color: #21351F;
+  font-weight: 700; /* Bold */
+}
+
+.thin {
+  font-family: 'SpoqaHanSansNeo', sans-serif;
+  color: #21351F;
+  font-weight: 100; /* Thin */
 }
 
 .centerContainer {
@@ -12,4 +63,3 @@
   justify-content: center;
   align-items: center;
 }
-

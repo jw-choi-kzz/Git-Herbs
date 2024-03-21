@@ -15,10 +15,11 @@ import com.happiness.githerbs.domain.board.service.BoardService;
 import com.happiness.githerbs.domain.board.service.FavoriteService;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/v1/board")
 @Slf4j
 public class BoardController {

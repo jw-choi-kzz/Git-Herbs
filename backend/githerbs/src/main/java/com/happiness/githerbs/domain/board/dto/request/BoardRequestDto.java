@@ -8,7 +8,6 @@ import lombok.ToString;
 @Data
 @Builder
 @AllArgsConstructor
-@ToString
 public class BoardRequestDto {
 	String imgUrl;
 	double similar;

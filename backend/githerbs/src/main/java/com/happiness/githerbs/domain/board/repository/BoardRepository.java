@@ -11,8 +11,11 @@ import com.happiness.githerbs.domain.board.entity.Board;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Integer> {
 
-	List<Board> findAllByFlagFalse();
+	Optional<List<Board>> findAllByDeletedFalse();
 
-	Optional<Board> findByBoardIdAndFlagFalse(int boardId);
+	//맴버 번호가 작성한 글 조회
+	Optional<List<Board>> findByMemberIdAndDeletedFalse(Integer memberId);
+
+	Optional<Board> findByBoardIdAndDeletedFalse(int boardId);
 
 }

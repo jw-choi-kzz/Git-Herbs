@@ -10,10 +10,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class BoardRequestDto {
-	String herbName;
 	String imgUrl;
 	double similar;
-	Integer herbId;
 	Integer memberId;
 }
 

@@ -3,6 +3,7 @@ package com.happiness.githerbs.domain.board.dto.response;
 import java.time.LocalDate;
 
 import com.happiness.githerbs.domain.board.entity.Board;
+import com.happiness.githerbs.domain.member.entity.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,12 +30,29 @@ public class BoardResponseDto {
 		}
 		return BoardResponseDto.builder()
 			.boardId(board.getBoardId())
-			.memberId(board.getMemberId().getId())
+			.memberId(board.getMember().getId())
 			.imgUrl(board.getImgUrl())
-			.userNickname("")
-			.userImgUrl("")
-			.likeCnt(0)
+			.userNickname(board.getMember().getNickname())
+			.userImgUrl(board.getMember().getImgId())
+			.likeCnt(board.getFavorites().size())
 			.likeCheck(false)
+			.createAt(createdAt)
+			.build();
+	}
+
+	public BoardResponseDto entityTo(Board board,int value) {
+		LocalDate createdAt = null;
+		if (board.getCreatedAt() != null) {
+			createdAt = LocalDate.from(board.getCreatedAt());
+		}
+		return BoardResponseDto.builder()
+			.boardId(board.getBoardId())
+			.memberId(board.getMember().getId())
+			.imgUrl(board.getImgUrl())
+			.userNickname(board.getMember().getNickname())
+			.userImgUrl(board.getMember().getImgId())
+			.likeCnt(board.getFavorites().size())
+			.likeCheck(true)
 			.createAt(createdAt)
 			.build();
 	}

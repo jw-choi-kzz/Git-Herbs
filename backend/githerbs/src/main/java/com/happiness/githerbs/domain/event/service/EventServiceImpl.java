@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import com.happiness.githerbs.domain.event.dto.request.QuizRequest;
 import com.happiness.githerbs.domain.event.dto.response.MonthlyHerbResponse;
 import com.happiness.githerbs.domain.event.dto.response.QuizResponse;
 import com.happiness.githerbs.domain.event.dto.response.RankingResponse;
@@ -57,9 +56,9 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	@Transactional
-	public boolean solveQuiz(QuizRequest quizRequest) {
+	public boolean solveQuiz(Integer memberId, Integer answer) {
 		MemberDaily memberDaily = memberDailyRepository.findFirstByMemberOrderByDateDesc(
-			memberRepository.findById(quizRequest.userId())
+			memberRepository.findById(memberId)
 				.orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND)));
 
 		if (!memberDaily.getDate().equals(LocalDate.now())) {
@@ -71,9 +70,9 @@ public class EventServiceImpl implements EventService {
 		}
 
 		Quiz quiz = quizRepository.findFirstBy().orElseThrow(() -> new BaseException(ErrorCode.INTERNAL_SERVER_ERROR));
-		boolean correct = Objects.equals(quiz.getAnswer(), quizRequest.answer());
+		boolean correct = Objects.equals(quiz.getAnswer(), answer);
 
-		memberDailyRepository.updateDailyQuiz(quizRequest.userId(), correct);
+		memberDailyRepository.updateDailyQuiz(memberId, correct);
 
 		return correct;
 	}

@@ -8,9 +8,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.happiness.githerbs.domain.auth.service.JwtService;
 import com.happiness.githerbs.domain.event.dto.request.QuizRequest;
 import com.happiness.githerbs.domain.event.dto.response.MonthlyHerbResponse;
 import com.happiness.githerbs.domain.event.dto.response.QuizResponse;
@@ -29,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class EventController {
 
 	private final EventService eventService;
+	private final JwtService jwtService;
 
 	@GetMapping("/rank")
 	public ResponseEntity<SuccessResponse<List<RankingResponse>>> findRanker() {
@@ -46,12 +49,15 @@ public class EventController {
 	}
 
 	@PostMapping("/quiz")
-	public ResponseEntity<SuccessResponse<Boolean>> solveQuiz(@Valid @RequestBody QuizRequest quizRequest,
+	public ResponseEntity<SuccessResponse<Boolean>> solveQuiz(@RequestHeader String authorization,
+		@Valid @RequestBody QuizRequest quizRequest,
 		BindingResult bindingResult) {
+		int memberId = jwtService.validateToken(authorization).getMemberId();
 		if (bindingResult.hasErrors()) {
 			throw new BaseException(ErrorCode.NOT_VALID_ERROR);
 		}
-		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, eventService.solveQuiz(quizRequest)));
+		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, eventService.solveQuiz(memberId,
+			quizRequest.answer())));
 	}
 
 }

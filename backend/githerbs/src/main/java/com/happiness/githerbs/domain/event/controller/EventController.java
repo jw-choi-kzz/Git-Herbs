@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.happiness.githerbs.domain.event.dto.response.MonthlyHerbResponse;
+import com.happiness.githerbs.domain.event.dto.response.QuizResponse;
 import com.happiness.githerbs.domain.event.dto.response.RankingResponse;
 import com.happiness.githerbs.domain.event.service.EventService;
 import com.happiness.githerbs.global.common.response.SuccessResponse;
@@ -31,4 +32,10 @@ public class EventController {
 	public ResponseEntity<SuccessResponse<MonthlyHerbResponse>> findMonthlyHerb() {
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, eventService.findMonthlyHerb()));
 	}
+
+	@GetMapping("/quiz")
+	public ResponseEntity<SuccessResponse<QuizResponse>> findQuiz() {
+		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, eventService.findQuiz()));
+	}
+
 }

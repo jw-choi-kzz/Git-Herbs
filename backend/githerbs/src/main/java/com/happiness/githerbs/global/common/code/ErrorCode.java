@@ -61,6 +61,7 @@ public enum ErrorCode {
 
 	BOARD_NOT_FOUND(404,"BOARD-001","게시글을 찾을 수 없습니다."),
 	NOT_MATCH_MEMBER(401,"BOARD-002","게시글을 삭제할 권한이 없습니다."),
+	NOT_VALID_FAVORITE(400 , "FAVORITE-001","좋아요를 누를 수 없는 게시글입니다."),
 	
 	HERB_NOT_FOUND(404, "HERB-001", "허브를 찾을 수 없는 경우"),
 

@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.happiness.githerbs.domain.auth.service.JwtService;
 import com.happiness.githerbs.domain.herb.dto.request.MyHerbRequestDto;
 import com.happiness.githerbs.domain.herb.service.MyHerbService;
 import com.happiness.githerbs.global.common.response.SuccessResponse;
@@ -26,11 +28,11 @@ import lombok.extern.slf4j.Slf4j;
 public class MyHerbController {
 
 	private final MyHerbService myHerbService;
-
+	private final JwtService jwtService;
 	@GetMapping("/{herbId}/my-herbs")
-	public ResponseEntity<SuccessResponse<?>> getMyHerbList(@PathVariable Integer herbId, Pageable pageable) {
-		// (@AuthenticationPrincipal User user, @PathVariable Integer herbId, Pageable pageable){
-		Integer userId = 1;
+	public ResponseEntity<SuccessResponse<?>> getMyHerbList(
+		@RequestHeader String authorization, @PathVariable Integer herbId, Pageable pageable) {
+		int userId = jwtService.validateToken(authorization).getMemberId();
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK.value(),
 			myHerbService.getMyHerbList(userId, herbId, pageable)));
 
@@ -38,17 +40,20 @@ public class MyHerbController {
 
 	/* 내 도감 사진에 사진 등록 */
 	@PostMapping("/my-herbs")
-	public ResponseEntity<SuccessResponse<?>> addMyHerb(@RequestBody MyHerbRequestDto myHerbRequestDto) {
-		// (@AuthenticationPrincipal User user, @RequestBody MyHerbRequestDto myHerbRequestDto){
-		Integer userId = 1;
+	public ResponseEntity<SuccessResponse<?>> addMyHerb(
+		@RequestHeader String authorization, @RequestBody MyHerbRequestDto myHerbRequestDto) {
+
+		int userId = jwtService.validateToken(authorization).getMemberId();
 		myHerbService.addMyHerb(userId, myHerbRequestDto);
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK.value(), null));
 	}
 
 	/* 내 도감 사진에서 사진 삭제 */
 	@PatchMapping("/my-herbs")
-	public ResponseEntity<SuccessResponse<?>> deleteHerb(@PathParam("myHerbId") Integer myHerbId) {
-		// (@AuthenticationPrincipal User user, @PathParam("myHerbId") Integer myHerbId){
+	public ResponseEntity<SuccessResponse<?>> deleteHerb(
+		@RequestHeader String authorization, @PathParam("myHerbId") Integer myHerbId) {
+
+		int userId = jwtService.validateToken(authorization).getMemberId();
 		myHerbService.deleteMyHerb(myHerbId);
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK.value(), null));
 	}

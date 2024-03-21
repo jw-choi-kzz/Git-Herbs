@@ -2,15 +2,18 @@ package com.happiness.githerbs.domain.herb.controller;
 
 import java.util.List;
 
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.happiness.githerbs.domain.auth.service.JwtService;
 import com.happiness.githerbs.domain.herb.dto.response.HerbDetailResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbSeasonResponseDto;
@@ -25,13 +28,15 @@ import lombok.RequiredArgsConstructor;
 public class HerbController {
 
 	private final HerbService herbService;
+	private final JwtService jwtService;
 
 	@GetMapping
-	public ResponseEntity<SuccessResponse<Slice<HerbResponseDto>>> getHerbList(Pageable pageable) {
-		// getHerbList(@AuthenticationPrincipal User user, Pageable pageable)
-		// Integer userId = user.getId()
-
-		Integer userId = 1;
+	public ResponseEntity<SuccessResponse<Slice<HerbResponseDto>>> getHerbList(
+		@RequestHeader String authorization, Pageable pageable) {
+		int userId = 0;
+		if(authorization != null){
+			userId = jwtService.validateToken(authorization).getMemberId();
+		}
 		return ResponseEntity.ok(
 			new SuccessResponse<>(HttpStatus.OK.value(), herbService.getHerListByUserId(userId, pageable)));
 	}

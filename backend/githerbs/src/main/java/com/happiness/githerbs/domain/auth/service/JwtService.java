@@ -16,5 +16,6 @@ public interface JwtService {
 
 	Claims getClaims(String accessToken);
 	AuthorizationTokenDto create(MemberInfoDto memberInfo);
+	MemberInfoDto convertFromClaims(Claims claims);
 
 }

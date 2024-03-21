@@ -26,4 +26,15 @@ public class JwtResponseDto extends AuthorizationTokenDto {
 	private String state;
 	@Schema(description = "기기 고유 아이디")
 	private String deviceId;
+
+	public static JwtResponseDto of(AuthorizationTokenDto token, String state, String deviceId) {
+		return JwtResponseDto.builder()
+			.accessToken(token.getAccessToken())
+			.refreshToken(token.getRefreshToken())
+			.tokenType("Bearer")
+			.state(state)
+			.deviceId(deviceId)
+			.build();
+	}
+
 }

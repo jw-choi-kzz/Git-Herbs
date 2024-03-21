@@ -17,4 +17,12 @@ import lombok.experimental.SuperBuilder;
 // @AllArgsConstructor
 @Schema(name = "JwtExtrationResponseDto", description = "JWT 정보추출 응답 클래스")
 public class JwtExtrationResponseDto extends MemberInfoDto {
+
+	public static JwtExtrationResponseDto of(MemberInfoDto memberInfo) {
+		return JwtExtrationResponseDto.builder()
+			.memberId(memberInfo.getMemberId())
+			.memberNickname(memberInfo.getMemberNickname())
+			.scope(memberInfo.getScope())
+			.build();
+	}
 }

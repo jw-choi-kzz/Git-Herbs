@@ -11,8 +11,6 @@ import com.happiness.githerbs.domain.herb.dto.response.HerbSeasonResponseDto;
 
 public interface HerbRepositoryCustomer {
 	Slice<HerbResponseDto> findHerbListByUserId(Integer userId, Pageable pageable);
-
 	HerbDetailResponseDto findHerbDetailByHerbId(Integer herbId);
-
 	List<HerbSeasonResponseDto> findHerbSeasonListByDate();
 }

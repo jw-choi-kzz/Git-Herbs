@@ -5,6 +5,7 @@ import static com.happiness.githerbs.global.common.code.ErrorCode.*;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.happiness.githerbs.domain.herb.entity.Bookmark;
 import com.happiness.githerbs.domain.herb.entity.Herb;
@@ -17,6 +18,7 @@ import com.happiness.githerbs.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BookmarkService {
 
@@ -24,6 +26,7 @@ public class BookmarkService {
 	private final HerbRepository herbRepository;
 	private final MemberRepository memberRepository;
 
+	@Transactional
 	public void addBookmark(Integer memberId, Integer herbId) {
 		Member member = memberRepository.findById(memberId).orElseThrow(() -> new BaseException(USER_NOT_FOUND));
 		Herb herb = herbRepository.findById(herbId).orElseThrow(() -> new BaseException(HERB_NOT_FOUND));
@@ -36,6 +39,7 @@ public class BookmarkService {
 		}
 	}
 
+	@Transactional
 	public void deleteBookmark(Integer memberId, Integer herbId) {
 		Bookmark bookmark = bookmarkRepository.findByHerbIdAndMemberId(herbId, memberId)
 			.orElseThrow(() -> new BaseException(BOOKMARK_NOT_FOUND));

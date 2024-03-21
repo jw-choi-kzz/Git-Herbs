@@ -39,6 +39,7 @@ public class BoardService {
 
 	@Transactional
 	public BoardResponseDto writeBoard(Integer memberId, BoardRequestDto boardRequestDto) {
+		boardRequestDto.setMemberId(memberId);
 		Board newBoard = boardRepository.save(toEntity(boardRequestDto));
 		return new BoardResponseDto().entityTo(newBoard);
 	}
@@ -71,7 +72,7 @@ public class BoardService {
 		List<Favorite> favoriteBoardIds = favoriteService.getFavoriteList(memberId);
 
 		for(Favorite favorite : favoriteBoardIds){
-			if(favorite.getBoard().isDeleted()) continue;;
+			if(favorite.getBoard().isDeleted()) continue;
 			boardResponseDtos.add(new BoardResponseDto().entityTo(favorite.getBoard(),1));
 		}
 		return boardResponseDtos;

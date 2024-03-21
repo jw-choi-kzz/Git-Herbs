@@ -45,7 +45,6 @@ public class FavoriteService {
 	@Transactional
 	public FavoriteResponseDto saveFavorite(Integer memberId, Integer boardId) {
 		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardBoardIdAndDeletedTrue(memberId, boardId);
-		boolean flag;
 		//좋아요 누른적이 있다면
 		if (optionalFavorite.isPresent()) {
 			if(optionalFavorite.get().getBoard().isDeleted()) throw new BaseException(ErrorCode.NOT_VALID_FAVORITE);

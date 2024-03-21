@@ -3,7 +3,6 @@ package com.happiness.githerbs.domain.board.dto.response;
 import java.time.LocalDate;
 
 import com.happiness.githerbs.domain.board.entity.Board;
-import com.happiness.githerbs.domain.member.entity.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +21,7 @@ public class BoardResponseDto {
 	boolean likeCheck;
 	LocalDate createAt;
 
-	public BoardResponseDto(){};
+	public BoardResponseDto(){}
 	public BoardResponseDto entityTo(Board board) {
 		LocalDate createdAt = null;
 		if (board.getCreatedAt() != null) {

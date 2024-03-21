@@ -1,7 +1,5 @@
 package com.happiness.githerbs.domain.board.controller;
 
-import java.io.IOException;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

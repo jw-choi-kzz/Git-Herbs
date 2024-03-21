@@ -4,11 +4,19 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div className="app-container">
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between', 
+      alignItems: 'center',
+      maxWidth: '375px',
+      minHeight: '100vh', 
+      margin: '0 auto',
+    }}>
       <Header />
-      {/* <div style={{ flex: 1 }}> */}
+      <main style={{ width: '100%', flex: 1, overflowY: 'auto' }}> 
         <Outlet />
-      {/* </div> */}
+      </main>
       <Footer />
     </div>
   );

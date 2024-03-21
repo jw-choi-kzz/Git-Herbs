@@ -1,12 +1,15 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import SearchResultList from "../components/search/SearchResultList";
+import SearchBar from "../components/search/SearchBar";
 
-const SearchResultage = () => {
+const SearchResultPage = () => {
     return (
         <>
-            <p>SearchResultage</p>
+            <SearchBar />
+            <SearchResultList />
         </>
     )
 }
 
-export default SearchResultage;
+export default SearchResultPage;

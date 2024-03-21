@@ -17,6 +17,16 @@ function Footer() {
 
   // MUI 테마 생성
   const theme = createTheme({
+    components: {
+      MuiBottomNavigationAction: {
+        styleOverrides: {
+          label: {
+            // 라벨의 글씨 크기를 설정합니다.
+            fontSize: '0.75rem', // 예시 크기입니다. 필요에 따라 조정하세요.
+          },
+        },
+      },
+    },
     palette: {
       primary: { main: '#407700' }, // 여기서 primary 색상을 변경합니다
     },
@@ -24,9 +34,7 @@ function Footer() {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* <div className="flex justify-center w-full h-16 bottom-0 border-t-0.3"> */}
-      <div className="fixed bottom-0 w-full">
-      <div style={{ maxWidth: '412px', width: '100%' }}>
+      <div style={{ width: '375px', borderTop: '0.3px solid', borderColor: '#D9D9D9'}}>
         <BottomNavigation
           value={value}
           onChange={(event, newValue) => {
@@ -35,13 +43,17 @@ function Footer() {
           }}
           showLabels
           sx={{
-            width: "100%", 
-            height: "100%" , 
+            width: "375px", 
+            height: "65px" , 
             bottom:0,     
             borderTop: '1px solid',
             borderColor: 'divider',
             '& .Mui-selected': {
               color: 'primary.main',
+              '& .MuiBottomNavigationAction-label': {
+                whiteSpace: 'nowrap', // 줄바꿈 방지
+                fontSize: '0.75rem',
+              },
             },
             '& .MuiBottomNavigationAction-root': {
               color: '#A5A5A5',
@@ -51,32 +63,31 @@ function Footer() {
           }}
         >
           <BottomNavigationAction
-          label="홈"
+          label="홈" className='regular'
           value="/"
-          icon={<BiHome fontSize='24px' />}
+          icon={<BiHome fontSize='30px' />}
         />
         <BottomNavigationAction
-          label="위기탈출"
+          label="위기탈출" className='regular'
           value="/escape"
-          icon={<BiDizzy fontSize='24px'  />}
+          icon={<BiDizzy fontSize='30px'  />}
         />
         <BottomNavigationAction
-          label="약초판별"
+          label="약초판별" className='regular'
           value="/picture"
-          icon={<BiCamera fontSize='24px'  />}
+          icon={<BiCamera fontSize='30px'  />}
         />
         <BottomNavigationAction
-          label="도감"
+          label="도감" className='regular'
           value="/pedia"
-          icon={<BiBookBookmark fontSize='24px' />}
+          icon={<BiBookBookmark fontSize='30px' />}
         />
         <BottomNavigationAction
-          label="심봤다"
+          label="심봤다" className='regular'
           value="/board"
-          icon={<BiGame fontSize='24px'  />}
+          icon={<BiGame fontSize='30px'  />}
         />
         </BottomNavigation>
-      </div>
       </div>
     </ThemeProvider>
   );

@@ -1,8 +1,8 @@
 .app-container {
-  max-width: 412px; /* or the width you prefer */
+  max-width: 375px; /* or the width you prefer */
   margin: 0 auto;
   height: 100vh;
-  overscroll-y: none;
+  /* overscroll-y: none; */
   background-color: #f5f5f5; /* Set your preferred background color */
   touch-action: none;
 }

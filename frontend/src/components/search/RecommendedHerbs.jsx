@@ -1,11 +1,24 @@
-import React from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  width: 375px;
+  height: 220px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  // align-items: center;
+  // justify-content: center;
+`;
+
+const BoldText = styled.div`
+  font-weight: bold;
+`;
 
 const RecommendedHerbs = () => {
   return (
-    <div className="example-component">
-      <h1>Welcome to ExampleComponent!</h1>
-      <p>This is a simple React functional component used for demonstration purposes.</p>
-    </div>
+    <Container>
+      <BoldText>이런 약초는 어때요?</BoldText>
+    </Container>
   );
 };
 

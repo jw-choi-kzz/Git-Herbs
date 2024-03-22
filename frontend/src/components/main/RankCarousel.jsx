@@ -1,41 +1,66 @@
 import { useState } from "react";
 import { Carousel } from 'antd';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const baseStyle = css`
+  font-family: 'SpoqaHanSansNeo', sans-serif;
+`;
 
 const Content = styled.div`
+  ${baseStyle}
   height: 160px;
   color: #21351F;
-  line-height: 160px;
-  text-align: center;
   background: #DDE5B6;
   position: relative;
-  padding: 10px;
+  padding: 20px;
   box-sizing: border-box;
 `;
 
+const BadgeTitle = styled.div`
+  ${baseStyle}
+  z-index: 2;
+  text-align: left;
+  font-size: 1.1em;
+  margin: 8px 0;
+  position: absolute;
+  top: 40px;
+`;
+
 const RankTitle = styled.div`
+  ${baseStyle}
+  z-index: 2;
   margin: 0;
-  line-height: 1.5em;
-  font-size: 1.5em;
+  position: absolute;
+  top: 80px; // Adjust as necessary
+  // right: 10px;
+  text-align: right;
+  font-size: 1.3em;
 `;
 
 const Nickname = styled.div`
+  ${baseStyle}
+  z-index: 2;
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  top: 110px; // Adjust as necessary
+  text-align: right;
+  font-size: 1.3em;
+  // right: 10px;
 `;
 
 const ProfileImage = styled.img`
+  ${baseStyle}
+  z-index: 1;
   border-radius: 50%;
-  object-fit: contain;
-  width: 100px;
-  height: 100px;
-  margin: 0.5em 0;
+  object-fit: cover; // Changed to 'cover' to ensure a perfect circle
+  width: 100px; // Reduced size as per design
+  height: 100px; // Reduced size as per design
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
 export default function RankCarousel() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  // let idx = 0;
   
   const rankList = [
     {
@@ -60,10 +85,17 @@ export default function RankCarousel() {
       <Carousel autoplay>
         {rankList.map((rankUser, index) => (
           <Content key={index}>
-            <img src="/logo.svg" className="h-12 cursor-pointer" alt="Logo"/>
-            <RankTitle>{index + 1}등</RankTitle>
-            <Nickname>{rankUser.nickname}</Nickname>
+            <div>
+            <img src="/logo.svg" className="h-12 cursor-pointer" style={{ width: '30%' }} alt="Logo"/>
+            <BadgeTitle>3월 뱃지왕</BadgeTitle>
+            {/* <div style={{textAlign: "right"}}> */}
+            <RankTitle className="bold">{index + 1}등</RankTitle>
+            <Nickname className="medium">{rankUser.nickname}</Nickname>
+            {/* </div> */}
+            </div>
+            <div>
             <ProfileImage src={rankUser.profileUrl} alt={rankUser.nickname} />
+            </div>
           </Content>
         ))}
       </Carousel>

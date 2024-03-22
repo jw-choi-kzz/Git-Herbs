@@ -6,36 +6,56 @@ import { useNavigate } from 'react-router-dom';
 //성능 저하 방지, 불필요한 리렌더링을 막기 위해
 //속성 이름은 camelCase가 아니라 - 사용
 const Container = styled.div`
-  width: 334px;
-  height: 200px;
+  width: 280px;
+  height: auto; /* Changed to auto to wrap content */
+  margin: auto;
   border-radius: 10px;
-  padding: 10px;
+  padding: 20px;
   box-sizing: border-box;
   background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start; /* Align items to start */
   cursor: pointer;
+`;
+
+const Title = styled.div`
+  width: 100%; /* Take full width */
+  font-size: 1.25em;
+  text-align: left;
+  color: #4A4A4A;
+  margin-bottom: 10px; /* Space between title and details */
+`;
+
+const DetailsContainer = styled.div`
+  display: flex;
+  align-items: flex-start; /* Align items to start */
+  justify-content: space-between; /* Space between image and text */
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const HerbName = styled.div`
   font-size: 1.25em;
   color: #4A4A4A;
-  margin: 5px 0;
+  margin: 0 10px;
+`;
+
+const SubTitle = styled.div`
+  font-size: 0.85em;
+  color: #4A4A4A;
+  margin: 10px 10px;
 `;
 
 const HerbImage = styled.img`
   width: 120px;
   height: 120px;
   object-fit: cover;
-`;
-
-const SubTitle = styled.div`
-  font-size: 0.85em;
-  color: #4A4A4A;
-  margin: 2px 0;
+  margin-right: 10px; /* Add margin to the right of the image */
 `;
 
 const TodayHerb = () => {
@@ -53,12 +73,17 @@ const TodayHerb = () => {
     };
 
     return (
-        <>
+      <>
         <Container onClick={handleClick}>
-          <HerbName className="bold">오늘의 약초</HerbName>
-          <HerbImage src={todayHerb.herbUrl} alt={todayHerb.herbName} />
-          <HerbName>{todayHerb.herbName}</HerbName>
-          <SubTitle>{todayHerb.latinName}</SubTitle>
+          <Title className="bold">오늘의 약초</Title>
+          <DetailsContainer>
+            <HerbImage src={todayHerb.herbUrl} alt={todayHerb.herbName} />
+            <TextContainer>
+              <HerbName>{todayHerb.herbName}</HerbName>
+              <SubTitle>{todayHerb.latinName}</SubTitle>
+              {/* If you have more text elements, they will go here */}
+            </TextContainer>
+          </DetailsContainer>
         </Container>
       </>
     );

@@ -5,11 +5,20 @@ import { BiHome, BiDizzy, BiCamera, BiBookBookmark, BiGame } from 'react-icons/b
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import styled from 'styled-components';
+
+const FooterContainer = styled.footer`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000; // 다른 요소들 위에 위치하도록 z-index 설정
+`;
+
 
 function Footer() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [value, setValue] = useState('/'); // Set the initial route
+  const [value, setValue] = useState('/'); 
 
   useEffect(() => {
     setValue(location.pathname);
@@ -21,20 +30,20 @@ function Footer() {
       MuiBottomNavigationAction: {
         styleOverrides: {
           label: {
-            // 라벨의 글씨 크기를 설정합니다.
-            fontSize: '0.75rem', // 예시 크기입니다. 필요에 따라 조정하세요.
+            fontSize: '12px',
+            whiteSpace: 'nowrap',
           },
         },
       },
     },
     palette: {
-      primary: { main: '#407700' }, // 여기서 primary 색상을 변경합니다
+      primary: { main: '#407700' },
     },
   });
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ width: '375px', borderTop: '0.3px solid', borderColor: '#D9D9D9'}}>
+      <FooterContainer>
         <BottomNavigation
           value={value}
           onChange={(event, newValue) => {
@@ -43,7 +52,7 @@ function Footer() {
           }}
           showLabels
           sx={{
-            width: "375px", 
+            width: "320px", 
             height: "65px" , 
             bottom:0,     
             borderTop: '1px solid',
@@ -52,7 +61,7 @@ function Footer() {
               color: 'primary.main',
               '& .MuiBottomNavigationAction-label': {
                 whiteSpace: 'nowrap', // 줄바꿈 방지
-                fontSize: '0.75rem',
+                fontSize: '16px',
               },
             },
             '& .MuiBottomNavigationAction-root': {
@@ -88,7 +97,7 @@ function Footer() {
           icon={<BiGame fontSize='30px'  />}
         />
         </BottomNavigation>
-      </div>
+        </FooterContainer>
     </ThemeProvider>
   );
 }

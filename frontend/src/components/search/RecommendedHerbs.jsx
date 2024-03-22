@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  width: 375px;
+  width: 320px;
   height: 220px;
   background-color: #fff;
   display: flex;
   flex-direction: row;
-  // align-items: center;
-  // justify-content: center;
 `;
 
 const BoldText = styled.div`

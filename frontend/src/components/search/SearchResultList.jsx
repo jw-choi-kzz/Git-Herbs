@@ -3,7 +3,7 @@ import SearchResultListItem from './SearchResultListItem';
 
 const Container = styled.div`
   margin-top: 0;
-  width: 375px;
+  width: 320px;
   height: auto;
   background-color: #fff;
   // display: flex;

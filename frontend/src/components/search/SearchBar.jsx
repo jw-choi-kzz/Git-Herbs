@@ -29,7 +29,7 @@ const theme = createTheme({
 
 const SearchContainer = styled.div`
   margin-top: 0;
-  width: 375px; 
+  width: 320px; 
   height: 100px; 
   background-color: #fff; 
   display: flex; 
@@ -67,7 +67,7 @@ const SearchBar = () => {
           </IconButton>
         }
         style={{
-          width: '324px', // Direct styling here could be moved to a styled component if desired
+          width: '280px',
           height: '43px',
         }}
       />

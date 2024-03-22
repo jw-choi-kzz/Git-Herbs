@@ -1,9 +1,5 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://J10a205.p.ssafy.io:3306/temp
-    username: root
-    password: godqhraksEkd123@@
     hikari:
       maximum-pool-size: 10
   jpa:
@@ -21,6 +17,9 @@ spring:
     multipart:
       max-file-size: 5MB
       max-request-size: 5MB
+  profiles:
+    include:
+      - secret
 
 
   jwt:
@@ -30,16 +29,7 @@ spring:
     refresh-token-validity-in-seconds: 604800  # 7 days
 
 
-redis:
-  master:
-    host: J10a205.p.ssafy.io
-    port: 6379
-  #  nodes:
-  #    - host: something
-  #      port: 6379
-  #    - host: something2
-  #      port: 6379
-  password: godqhraksEkd123@@
+
 
 
 

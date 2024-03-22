@@ -19,7 +19,6 @@ const Container = styled.div`
 const Title = styled.div`
   font-size: 1.25em;
   color: #4A4A4A;
-  margin: 5px 0;
   width: 100%;
   text-align: left;
 `;
@@ -33,38 +32,39 @@ const SubTitle = styled.div`
 `;
 
 const QuizImage = styled.img`
-  width: 120px;
-  height: 120px;
+  width: 110px;
+  height: 110px;
   object-fit: cover;
   cursor: pointer;
 `;
 
 const HerbQuiz = () => {
     const [quizState, setQuizState] = useState('quiz');
-    const quizId = 1; //response.data.quizId
+    //"question": string, "imgOne" : string, "imgTwo" : string, "imgThree" : string, "imgFour" : string    
     const question = "다음 중 칡 사진을 고르세요."; ///response.data.question
-    const answer = 1;
+    
     const QuizOptionsList = [ 
         {
-            id: 1, //약초 id
-            imageUrl: "./herbs/001_00000010_leaf.jpg" //약초 이미지 url
+          idx: 1,
+          herbUrl: "./herbs/001_00000010_leaf.jpg" //약초 이미지 url(imgOne~imgFour)
         },
         {
-            id: 2,
-            imageUrl: "./herbs/001_00000106_flower.jpg"
+          idx: 2,
+          herbUrl: "./herbs/001_00000106_flower.jpg"
         },
         {
-            id: 3,
-            imageUrl: "./herbs/001_00000176_root.jpg"
+          idx: 3,
+          herbUrl: "./herbs/001_00000176_root.jpg"
         },
         {
-            id: 4,
-            imageUrl: "./herbs/001_00000311_leaf.jpg"
+          idx: 4,
+          herbUrl: "./herbs/001_00000311_leaf.jpg"
         },
     ] //response.data.imageList
+    const answer = 1;//퀴즈 풀고 "answer" : int
 
     const handleImageClick = (id) => {
-      if (id === answer) {  //임의의 답
+      if (id === answer) {  //임의의 답(api 요청해서 정답 번호를 받아옴)
           setQuizState('answered');
       } else {
           // Handle wrong answer if needed
@@ -81,11 +81,11 @@ const HerbQuiz = () => {
       <SubTitle>{question}</SubTitle>
       <Row gutter={[16, 16]}>
           {QuizOptionsList.map((option, index) => (
-              <Col key={option.id} span={12}>
+              <Col key={option.idx} span={12}>
                   <QuizImage
-                      src={option.imageUrl}
+                      src={option.herbUrl}
                       alt={`Option ${index + 1}`}
-                      onClick={() => handleImageClick(option.id)}
+                      onClick={() => handleImageClick(option.idx)}
                   />
               </Col>
           ))}

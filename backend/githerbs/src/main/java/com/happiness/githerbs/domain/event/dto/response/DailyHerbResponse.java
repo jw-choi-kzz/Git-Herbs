@@ -1,8 +1,9 @@
 package com.happiness.githerbs.domain.event.dto.response;
 
-public record MonthlyHerbResponse(
+public record DailyHerbResponse(
 	Integer herbId,
 	String herbImg,
-	String herbName
+	String herbName,
+	String herbMedicalPart
 ) {
 }

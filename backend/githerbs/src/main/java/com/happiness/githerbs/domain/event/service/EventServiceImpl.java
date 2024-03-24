@@ -6,11 +6,13 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import com.happiness.githerbs.domain.event.dto.response.MonthlyHerbResponse;
+import com.happiness.githerbs.domain.event.dto.response.DailyHerbResponse;
 import com.happiness.githerbs.domain.event.dto.response.QuizResponse;
 import com.happiness.githerbs.domain.event.dto.response.RankingResponse;
 import com.happiness.githerbs.domain.event.entity.Quiz;
 import com.happiness.githerbs.domain.event.repository.QuizRepository;
+import com.happiness.githerbs.domain.herb.entity.Herb;
+import com.happiness.githerbs.domain.herb.repository.HerbDailyRepository;
 import com.happiness.githerbs.domain.herb.repository.HerbRepository;
 import com.happiness.githerbs.domain.member.entity.MemberDaily;
 import com.happiness.githerbs.domain.member.repository.MemberDailyRepository;
@@ -29,6 +31,7 @@ public class EventServiceImpl implements EventService {
 	private final HerbRepository herbRepository;
 	private final QuizRepository quizRepository;
 	private final MemberRepository memberRepository;
+	private final HerbDailyRepository herbDailyRepository;
 
 	@Override
 	public List<RankingResponse> findRanker() {
@@ -38,8 +41,13 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public MonthlyHerbResponse findMonthlyHerb() {
-		return herbRepository.findMonthlyHerb(LocalDate.now().getMonthValue());
+	public DailyHerbResponse findDailyHerb() {
+		Integer id = herbDailyRepository.findFirstBy()
+			.orElseThrow(() -> new BaseException(ErrorCode.HERB_NOT_FOUND))
+			.getHerb()
+			.getId();
+		Herb herb = herbRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.HERB_NOT_FOUND));
+		return new DailyHerbResponse(herb.getId(), herb.getHerbImg(), herb.getHerbName(), herb.getHerbMedicalPart());
 	}
 
 	@Override

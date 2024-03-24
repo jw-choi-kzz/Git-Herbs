@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.happiness.githerbs.domain.auth.service.JwtService;
 import com.happiness.githerbs.domain.event.dto.request.QuizRequest;
-import com.happiness.githerbs.domain.event.dto.response.MonthlyHerbResponse;
+import com.happiness.githerbs.domain.event.dto.response.DailyHerbResponse;
 import com.happiness.githerbs.domain.event.dto.response.QuizResponse;
 import com.happiness.githerbs.domain.event.dto.response.RankingResponse;
 import com.happiness.githerbs.domain.event.service.EventService;
@@ -38,9 +38,9 @@ public class EventController {
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, eventService.findRanker()));
 	}
 
-	@GetMapping("/monthly")
-	public ResponseEntity<SuccessResponse<MonthlyHerbResponse>> findMonthlyHerb() {
-		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, eventService.findMonthlyHerb()));
+	@GetMapping("/daily")
+	public ResponseEntity<SuccessResponse<DailyHerbResponse>> findMonthlyHerb() {
+		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, eventService.findDailyHerb()));
 	}
 
 	@GetMapping("/quiz")

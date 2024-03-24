@@ -14,7 +14,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
-import com.happiness.githerbs.domain.event.dto.response.MonthlyHerbResponse;
 import com.happiness.githerbs.domain.herb.dto.response.HerbDetailResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbMedicinalEffectResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbResponseDto;
@@ -89,17 +88,6 @@ public class HerbRepositoryImpl implements HerbRepositoryCustomer {
 			.orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc())
 			.limit(3)
 			.fetch();
-	}
-
-	@Override
-	public MonthlyHerbResponse findMonthlyHerb(int month) {
-		return queryFactory
-			.select(Projections.constructor(MonthlyHerbResponse.class, herb.id, herb.herbName, herb.herbImg))
-			.from(herb)
-			.where(herb.herbHarvestingTime.like("%" + month + "%"))
-			.orderBy(Expressions.numberTemplate(Double.class, "RAND()").asc())
-			.limit(1)
-			.fetchOne();
 	}
 
 }

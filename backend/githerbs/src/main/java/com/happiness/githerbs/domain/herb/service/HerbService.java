@@ -15,22 +15,20 @@ import com.happiness.githerbs.domain.herb.repository.HerbRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class HerbService {
 
 	private final HerbRepository herbRepository;
 
-	@Transactional(readOnly = true)
 	public Slice<HerbResponseDto> getHerListByUserId(Integer userId, Pageable pageable) {
 		return herbRepository.findHerbListByUserId(userId, pageable);
 	}
 
-	@Transactional(readOnly = true)
 	public List<HerbSeasonResponseDto> getHerbSeasonByHerdId() {
 		return herbRepository.findHerbSeasonListByDate();
 	}
 
-	@Transactional(readOnly = true)
 	public HerbDetailResponseDto getHerbDetailByHerbId(Integer herbId) {
 		return herbRepository.findHerbDetailByHerbId(herbId);
 	}

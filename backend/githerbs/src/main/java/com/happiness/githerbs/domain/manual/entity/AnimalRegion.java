@@ -1,4 +1,4 @@
-package com.happiness.githerbs.domain.manual;
+package com.happiness.githerbs.domain.manual.entity;
 
 import com.happiness.githerbs.domain.herb.entity.HerbRegion;
 

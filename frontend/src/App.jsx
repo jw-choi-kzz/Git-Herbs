@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { } from 'react-dom';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './App.css';
+import useGlobalStyles from './utils/useGlobalStyles';
 import Layout from "./pages/Layout";
 import MainPage from "./pages/MainPage";
 import ErrorPage from "./pages/ErrorPage";
@@ -19,6 +20,7 @@ import MyPage from "./pages/MyPage";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
+  useGlobalStyles();
   const router = createBrowserRouter([
     {
       path: "/",

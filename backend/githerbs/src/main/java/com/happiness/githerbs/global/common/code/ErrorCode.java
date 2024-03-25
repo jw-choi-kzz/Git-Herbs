@@ -55,14 +55,12 @@ public enum ErrorCode {
 	INTERNAL_SERVER_ERROR(500, "G-999", "Internal Server Error Exception"),
 
 
-	
-	
 	/**  Business Exception */
 
 	BOARD_NOT_FOUND(404,"BOARD-001","게시글을 찾을 수 없습니다."),
 	NOT_MATCH_MEMBER(401,"BOARD-002","게시글을 삭제할 권한이 없습니다."),
 	NOT_VALID_FAVORITE(400 , "FAVORITE-001","좋아요를 누를 수 없는 게시글입니다."),
-	
+
 	HERB_NOT_FOUND(404, "HERB-001", "허브를 찾을 수 없는 경우"),
 
 	USER_NOT_FOUND(404, "USER-001", "유저를 찾을 수 없는 경우"),
@@ -72,11 +70,10 @@ public enum ErrorCode {
 	BOOKMARK_NOT_FOUND(404, "STAR-001", "즐겨찾기를 찾을 수 없는 경우"),
 	BOOKMARK_DUPLICATED(404, "STAR-002", "이미 등록된 즐겨찾기인 경우"),
 
-
 	LOCATION_ERROR(404,"LOCATION-001","위치를 찾을 수 없는 경우"),
-	REGION_ERROR(404,"REGION-001","주소가 없는 경우");
+	REGION_ERROR(404,"REGION-001","주소가 없는 경우"),
 
-
+	QUIZ_SOLVED(404, "QUIZ-001", "이미 퀴즈에 참여한 경우");
 
 	private final int status;
 	private final String code;

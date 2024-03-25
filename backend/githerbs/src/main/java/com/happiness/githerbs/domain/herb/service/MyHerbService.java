@@ -20,6 +20,7 @@ import com.happiness.githerbs.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MyHerbService {
 
@@ -27,7 +28,6 @@ public class MyHerbService {
 	private final MemberRepository memberRepository;
 	private final MyHerbRepository myHerbRepository;
 
-	@Transactional(readOnly = true)
 	public Slice<MyHerbResponseDto> getMyHerbList(Integer memberId, Integer herbId, Pageable pageable) {
 		Member member = memberRepository.findById(memberId).orElseThrow(() -> new BaseException(USER_NOT_FOUND));
 		Herb herb = herbRepository.findById(herbId)
@@ -50,7 +50,8 @@ public class MyHerbService {
 	}
 
 	@Transactional
-	public void deleteMyHerb(Integer myHerbId) {
+	public void deleteMyHerb(Integer memberId, Integer myHerbId) {
+		memberRepository.findById(memberId).orElseThrow(() -> new BaseException(USER_NOT_FOUND));
 		MyHerb myHerb = myHerbRepository.findByIdAndDeleted(myHerbId, false)
 			.orElseThrow(() -> new BaseException(MY_HERB_NOT_FOUND));
 

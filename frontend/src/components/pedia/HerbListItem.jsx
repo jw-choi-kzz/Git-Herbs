@@ -48,7 +48,7 @@ const HerbListItem = ({ herb }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/detail/1`);
+    navigate('/detail/1');
   };
 
   return (

@@ -71,6 +71,54 @@ const PediaPage = () => {
         bookmark: 4,
         acquireCheck: 0,
       },
+      {
+        herbId: 7,
+        herbName: "곰보배추",
+        bookmark: 0,
+        acquireCheck: 3,
+      },
+      {
+        herbId: 8,
+        herbName: "당귀",
+        bookmark: 2,
+        acquireCheck: 0,
+      },
+      {
+        herbId: 9,
+        herbName: "도라지",
+        bookmark: 2,
+        acquireCheck: 3,
+      },
+      {
+        herbId: 10,
+        herbName: "산삼",
+        bookmark: 2,
+        acquireCheck: 3,
+      },
+      {
+        herbId: 11,
+        herbName: "쑥부쟁이",
+        bookmark: 2,
+        acquireCheck: 0,
+      },
+      {
+        herbId: 12,
+        herbName: "칡",
+        bookmark: 4,
+        acquireCheck: 0,
+      },
+      {
+        herbId: 13,
+        herbName: "곰보배추",
+        bookmark: 0,
+        acquireCheck: 3,
+      },
+      {
+        herbId: 14,
+        herbName: "당귀",
+        bookmark: 2,
+        acquireCheck: 0,
+      },
     ]);
   
     /* 서버에서 데이터를 가져오는 부분을 주석 처리합니다.

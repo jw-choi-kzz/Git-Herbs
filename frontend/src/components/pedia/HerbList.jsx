@@ -12,7 +12,7 @@ const ListContainer = styled.div`
 
 const HerbList = ({ herbsData }) => {
   return (
-    <ListContainer>
+    <ListContainer style={{ overflowY: 'auto', height: 'calc(100vh - 200px)',  justifyContent: 'center' }}>
       {herbsData.map((herb) => (
         <HerbListItem key={herb.herbId} herb={herb} />
       ))}

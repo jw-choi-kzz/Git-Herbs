@@ -30,7 +30,7 @@ const BookmarkIcon = styled.div`
 const HerbProfile = ({ data }) => {
   // 이 부분에서 bookmark 값이 있는지 확인하고, 없다면 임의의 값으로 설정합니다.
   // 추후에 실제 bookmark 데이터가 추가되면 해당 데이터를 사용하시면 됩니다.
-  const isBookmarked = data.bookmark > 0;
+  const isBookmarked = data.herbBookmark > 0;
 
   return (
     <Container>

@@ -1,6 +1,4 @@
-package com.happiness.githerbs.domain.herb.entity;
-
-import com.happiness.githerbs.domain.manual.entity.RegionTwoDepth;
+package com.happiness.githerbs.domain.manual.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,28 +16,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "herb_location")
+@Table(name = "animal_region")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Getter
-public class HerbLocation {
+public class AnimalRegion {
 
 	@Id
-	@Column(name = "herb_location_id")
+	@Column(name = "animal_region_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "animal_id")
+	private Animal animal;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "region_two_depth")
 	private RegionTwoDepth regionTwoDepth;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "herb_id")
-	private Herb herb;
-
-	private Double latitude;
-
-	private Double longitude;
 
 }

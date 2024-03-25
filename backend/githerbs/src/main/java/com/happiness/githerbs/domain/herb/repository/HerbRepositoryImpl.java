@@ -7,24 +7,31 @@ import static com.happiness.githerbs.domain.herb.entity.QMyHerb.*;
 import static com.querydsl.core.group.GroupBy.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import com.happiness.githerbs.domain.herb.dto.response.HerbDetailResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbMedicinalEffectResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbSeasonResponseDto;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class HerbRepositoryImpl implements HerbRepositoryCustomer {
@@ -33,6 +40,9 @@ public class HerbRepositoryImpl implements HerbRepositoryCustomer {
 
 	@Override
 	public Slice<HerbResponseDto> findHerbListByUserId(Integer userId, Pageable pageable) {
+
+		OrderSpecifier[] orderSpecifiers = createOrderSpecifier(pageable.getSort());
+
 		List<HerbResponseDto> herblist = queryFactory
 			.select(Projections.constructor(HerbResponseDto.class,
 				herb.id,
@@ -49,7 +59,8 @@ public class HerbRepositoryImpl implements HerbRepositoryCustomer {
 						myHerb.member.id.eq(userId))
 			))
 			.from(herb)
-			.orderBy(herb.herbName.asc()) // pageable.getSort()
+			// .orderBy(herb.herbName.asc())
+			.orderBy(orderSpecifiers)
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.fetch();
@@ -90,6 +101,15 @@ public class HerbRepositoryImpl implements HerbRepositoryCustomer {
 			.fetch();
 	}
 
+	private OrderSpecifier[] createOrderSpecifier(Sort sort){
+		List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
+		if(sort.isEmpty()){
+			orderSpecifiers.add(new OrderSpecifier(Order.ASC, herb.herbName));
+		}else{
+			orderSpecifiers.add(new OrderSpecifier(Order.DESC, herb.herbName));
+		}
+		return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
+	}
 }
 
 

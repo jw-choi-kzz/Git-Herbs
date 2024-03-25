@@ -4,10 +4,6 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.4'
 }
 
-ext {
-	springCloudVersion = "2023.0.0"
-}
-
 group = 'org.happiness'
 version = '0.0.1-SNAPSHOT'
 
@@ -57,12 +53,6 @@ dependencies {
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-gson', version: '0.12.5'
-}
-
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
-	}
 }
 
 tasks.named('test') {

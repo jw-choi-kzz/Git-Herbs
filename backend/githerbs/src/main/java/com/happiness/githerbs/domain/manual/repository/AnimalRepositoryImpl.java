@@ -20,7 +20,7 @@ public class AnimalRepositoryImpl implements AnimalRepositoryCustom {
 	public List<String> findAnimal(Integer regionCode) {
 		return queryFactory.select(animalRegion.animal.name)
 			.from(animalRegion)
-			.where(animalRegion.region.region.eq(regionCode))
+			.where(animalRegion.regionTwoDepth.id.eq(regionCode))
 			.fetch();
 	}
 

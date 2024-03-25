@@ -1,9 +1,7 @@
-package com.happiness.githerbs.domain.herb.entity;
+package com.happiness.githerbs.domain.manual.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -13,17 +11,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "herb_region")
+@Table(name = "region_one_depth")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Getter
-public class HerbRegion {
-
+public class RegionOneDepth {
 	@Id
-	@Column(name = "region_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "region_one_depth")
 	private Integer id;
-
-	private Integer region;
 }

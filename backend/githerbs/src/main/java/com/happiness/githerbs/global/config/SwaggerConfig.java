@@ -46,8 +46,9 @@ public class SwaggerConfig {
 				.version("0.1.1"))
 			.components(components)
 			.servers(List.of(
-				new Server().url(localUrl),
-				new Server().url(productionUrl)
+				new Server().url(productionUrl),
+				new Server().url(localUrl)
+
 			))
 			.addSecurityItem(securityRequirement);
 	}

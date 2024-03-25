@@ -1,13 +1,20 @@
 package com.happiness.githerbs.domain.manual.dto.response;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import com.happiness.githerbs.global.common.code.ErrorCode;
+import com.happiness.githerbs.global.common.exception.BaseException;
 
 public class RegionCode {
 	private RegionCode() {
 	}
 
 	protected static final Map<String, Map<String, Integer>> map;
+	private static final List<Integer> list;
 
 	public static Integer getCode(String region, String district) {
 		Map<String, Integer> districts = map.get(region);
@@ -17,7 +24,43 @@ public class RegionCode {
 		return null;
 	}
 
+	public static String findKeysByCode(int code) {
+
+		for (Map.Entry<String, Map<String, Integer>> entry : map.entrySet()) {
+			String regionKey = entry.getKey();
+			Map<String, Integer> regionMap = entry.getValue();
+
+			for (Map.Entry<String, Integer> subEntry : regionMap.entrySet()) {
+				String subRegionKey = subEntry.getKey();
+				int subRegionCode = subEntry.getValue();
+
+				if (subRegionCode == code) {
+					String result = regionKey + " ";
+					result += subRegionKey;
+					return result;
+				}
+			}
+		}
+
+		return null; // 해당하는 키가 없을 경우 null 반환
+	}
+
+	public static Integer findRandomCode() {
+
+		int num = 0;
+		try {
+			num = SecureRandom.getInstanceStrong().nextInt(list.size());
+		} catch (NoSuchAlgorithmException e) {
+			throw new BaseException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+
+		return list.get(num);
+	}
+
 	static {
+		list = List.of(43130, 43150, 43800, 44180, 44770, 45790, 46800, 46860, 46870, 46910, 47280, 47760, 47770, 47930,
+			43760, 31710, 48330, 46130, 46770);
+
 		map = new HashMap<>();
 		Map<String, Integer> seoul = new HashMap<>();
 		seoul.put("종로구", 11110);

@@ -5,12 +5,12 @@ import Tab from '@mui/joy/Tab';
 import TabPanel from '@mui/joy/TabPanel';
 import Typography from '@mui/joy/Typography';
 
-const HerbDetailIndex = ({ selectedTab, onTabChange, handleMyHerbsClick }) => {
+const HerbDetailIndex = ({ selectedTab, onTabChange}) => {
   return (
     <Tabs aria-label="Herb details" value={selectedTab} onChange={onTabChange}>
       <TabList>
         <Tab>상세 설명</Tab>
-        <Tab onClick={handleMyHerbsClick}>내가 찍은 이미지</Tab>
+        <Tab>내가 찍은 이미지</Tab>
       </TabList>
       <TabPanel value={0}>
         {/* 상세 설명 컨텐츠 */}

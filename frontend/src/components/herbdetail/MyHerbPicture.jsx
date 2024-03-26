@@ -6,28 +6,6 @@ import Typography from '@mui/joy/Typography';
 import IconButton from '@mui/joy/IconButton';
 import CreateNewFolder from '@mui/icons-material/CreateNewFolder';
 
-// 데이터 배열 예시
-const herbData = [
-  {
-    "myHerbId": 1,
-    "imgId": "2",
-    "similarity": 56.37,
-    "createdAt": "2024-03-18T17:01:30.007084"
-  },
-  {
-    "myHerbId": 8,
-    "imgId": "1",
-    "similarity": 80.2,
-    "createdAt": "2024-03-18T16:31:06.004408"
-  },
-  {
-    "myHerbId": 1,
-    "imgId": "1",
-    "similarity": 80.12,
-    "createdAt": "2024-03-13T09:00:00"
-  }
-];
-
 const CardContainer = styled.div`
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -56,8 +34,28 @@ const DateStamp = styled.div`
   color: #999;
 `;
 
-const MyHerbPicture = ({ myHerb }) => {
-  const { herbId } = useParams(); // URL로부터 herbId를 가져온다
+const herbData = [
+  {
+    "myHerbId": 1,
+    "imgId": "2",
+    "similarity": 56.37,
+    "createdAt": "2024-03-18T17:01:30.007084"
+  },
+  {
+    "myHerbId": 8,
+    "imgId": "1",
+    "similarity": 80.2,
+    "createdAt": "2024-03-18T16:31:06.004408"
+  },
+  {
+    "myHerbId": 1,
+    "imgId": "1",
+    "similarity": 80.12,
+    "createdAt": "2024-03-13T09:00:00"
+  }
+];
+
+const MyHerbPicture = ({ myHerb, herbId }) => {
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString('ko-KR', options);
@@ -67,15 +65,28 @@ const MyHerbPicture = ({ myHerb }) => {
     return `/herbs/002_plant_userpic${imgId}.png`;
   };
 
-  // 현재 페이지의 herbId와 myHerbId가 일치하는지 확인
-  if (myHerb.myHerbId.toString() !== herbId) {
-      return null; // 일치하지 않으면 아무것도 렌더링하지 않음
+  // // myHerb 객체와 myHerbId 프로퍼티가 있는지 확인
+  // if (!myHerb || typeof myHerb.myHerbId === 'undefined') {
+  //   // 적절한 처리를 수행하거나, null을 반환하여 렌더링하지 않음
+  //   return null;
+  // }
+
+  // // 현재 페이지의 herbId와 myHerbId가 일치하는지 확인
+  // if (myHerb.herbId.toString() !== herbId) {
+  //     return null; // 일치하지 않으면 아무것도 렌더링하지 않음
+  // }
+
+  // Filter for the herb with the matching ID
+  const myHerb = herbData.find(h => h.myHerbId.toString() === herbId);
+
+  if (!myHerb) {
+    return <Typography>No matching herb picture found.</Typography>;
   }
   
   return (
-    <Card variant="outlined" sx={{ maxWidth: 345 }}>
+    <CardContainer variant="outlined" sx={{ maxWidth: 345 }}>
       <CardCover>
-        <img 
+        <HerbImage 
           src={getImageUrl(myHerb.imgId)} // 경로 확인 필요
           alt="Herb"
           style={{ width: '100%', height: 'auto' }}
@@ -93,7 +104,7 @@ const MyHerbPicture = ({ myHerb }) => {
       <Typography variant="body2" color="text.secondary">
         Added on: {formatDate(myHerb.createdAt)}
       </Typography>
-    </Card>
+    </CardContainer>
   );
 };
 

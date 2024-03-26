@@ -21,10 +21,6 @@ const DetailPage = () => {
     setSelectedTab(newValue);
   };
 
-  const handleMyHerbsClick = () => {
-    setSelectedTab(1); // "내가 찍은 이미지" 탭의 인덱스로 상태를 업데이트합니다.
-  };
-
   const fetchHerbDetail = async (herbId) => {
     const tempData = {
       herbId: 1,
@@ -102,10 +98,9 @@ const DetailPage = () => {
       <HerbDetailIndex 
       selectedTab={selectedTab} 
       onTabChange={handleTabChange} 
-      handleMyHerbsClick={handleMyHerbsClick}
     />
     {selectedTab === 0 && <HerbInfoBox data={herbs} />}
-    {selectedTab === 1 && <MyHerbPicture data={herbs} />}
+    {selectedTab === 1 && <MyHerbPicture myHerb={herbs} herbId={herbId} />}
       <Snackbar
         open={openSnackbar}
         onClose={() => setOpenSnackbar(false)}

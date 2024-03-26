@@ -175,7 +175,7 @@ const Container = styled.div`
 const Div2 = styled.div`
   display: flex;
   gap: 11px;
-  font-size: 24px;
+  font-size: 20px;
   color: #407700;
   font-weight: 700;
 `;

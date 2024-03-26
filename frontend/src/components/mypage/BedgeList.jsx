@@ -4,11 +4,11 @@ import styled from 'styled-components';
 
 const Title = styled.div`
   font-size: 20px;
-  padding: 0 0 20px 0;
+  padding: 0 0 10px 0;
 `;
 
 const Container = styled.div`
-  width: 280px;
+  width: 320px;
   margin: auto;
   border-radius: 10px;
   padding: 20px;
@@ -23,7 +23,7 @@ const Container = styled.div`
 const Explain = styled.div`
   font-size: 0.85em;
   color: #4A4A4A;
-  // margin: 2px 0;
+  margin: 10px 0;
   width: 100%;
   text-align: start;
 `;
@@ -40,7 +40,6 @@ const BedgeList = () => {
   return (
     <>
       <Title className='bold'>획득한 뱃지 목록</Title>
-      <br/>
       <Explain>전체 뱃지 50개 중 4개를 획득했어요.</Explain>
       <Container>
         <GridContainer>

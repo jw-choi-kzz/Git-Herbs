@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 //성능 저하 방지, 불필요한 리렌더링을 막기 위해
 //속성 이름은 camelCase가 아니라 - 사용
 const Container = styled.div`
-  width: 280px;
+  width: 320px;
   height: auto; /* Changed to auto to wrap content */
   margin: auto;
   border-radius: 10px;

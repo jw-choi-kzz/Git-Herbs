@@ -97,7 +97,7 @@ const MyPage = () => {
     }
 
     return (
-        <div style={{ overflowY: 'auto', height: 'calc(100vh - 131px)',  justifyContent: 'center' }}>
+        <div style={{ overflowY: 'auto', height: 'calc(100vh - 100px)',  justifyContent: 'center' }}>
             <Container>
             <MyProfile nickname={userData.userNickname}  profileImg={userData.userImgurl} rank={userData.rank}/>
             <br />

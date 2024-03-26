@@ -43,7 +43,7 @@ function Footer() {
 
   return (
     <ThemeProvider theme={theme}>
-      <FooterContainer>
+      <FooterContainer position="static">
         <BottomNavigation
           value={value}
           onChange={(event, newValue) => {
@@ -52,8 +52,8 @@ function Footer() {
           }}
           showLabels
           sx={{
-            width: "320px", 
-            height: "65px" , 
+            width: "375px", 
+            height: "50px" , 
             bottom:0,     
             borderTop: '1px solid',
             borderColor: 'divider',
@@ -61,7 +61,7 @@ function Footer() {
               color: 'primary.main',
               '& .MuiBottomNavigationAction-label': {
                 whiteSpace: 'nowrap', // 줄바꿈 방지
-                fontSize: '16px',
+                fontSize: '12px',
               },
             },
             '& .MuiBottomNavigationAction-root': {
@@ -74,27 +74,27 @@ function Footer() {
           <BottomNavigationAction
           label="홈" className='regular'
           value="/"
-          icon={<BiHome fontSize='30px' />}
+          icon={<BiHome fontSize='25px' />}
         />
         <BottomNavigationAction
           label="위기탈출" className='regular'
           value="/escape"
-          icon={<BiDizzy fontSize='30px'  />}
+          icon={<BiDizzy fontSize='25px'  />}
         />
         <BottomNavigationAction
           label="약초판별" className='regular'
           value="/picture"
-          icon={<BiCamera fontSize='30px'  />}
+          icon={<BiCamera fontSize='25px'  />}
         />
         <BottomNavigationAction
           label="도감" className='regular'
           value="/pedia"
-          icon={<BiBookBookmark fontSize='30px' />}
+          icon={<BiBookBookmark fontSize='25px' />}
         />
         <BottomNavigationAction
           label="심봤다" className='regular'
           value="/board"
-          icon={<BiGame fontSize='30px'  />}
+          icon={<BiGame fontSize='25px'  />}
         />
         </BottomNavigation>
         </FooterContainer>

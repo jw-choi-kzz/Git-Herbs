@@ -11,7 +11,6 @@ const Container = styled.div`
   margin: 10px;
 `;
 
-// 배경색이 적용되지 않은 ItemName 스타일을 정의합니다.
 const ItemName = styled.div`
   margin-top: 8px; // 아이콘과의 간격 조정
   font-size: 16px; // 폰트 크기 조정
@@ -21,7 +20,6 @@ const ItemName = styled.div`
   word-wrap: break-word; // 단어가 너무 길면 줄바꿈합니다.
 `;
 
-// ItemContainer에 배경색이 적용됩니다.
 const ItemContainer = styled.div`
   display: flex;
   position: relative; // ItemBookMark를 올바르게 위치시키기 위해 relative로 설정
@@ -59,7 +57,7 @@ const HerbListItem = ({ herb }) => {
           <ItemBookMark>
             <PiStarFill style={{ color: '#F49349' }} />
           </ItemBookMark>
-        ) : <ItemBookMark><PiStarBold style={{ color: 'F49349' }} /></ItemBookMark>}
+        ) : <ItemBookMark><PiStarBold style={{ color: '#F49349' }} /></ItemBookMark>}
       </ItemContainer>
       <ItemName>{herb.herbName}</ItemName>
     </Container>

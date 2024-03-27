@@ -81,7 +81,7 @@ const LoadingText = styled.div`
 
 
 const Div = styled.div`
-  width : 260px;
+  width : 300px;
   height : auto;
   margin : auto;
   border-radius: 10px;
@@ -107,7 +107,7 @@ const Div2 = styled.div`
   border-width: 1px;
   white-space: nowrap;
   text-align: center;
-  padding: 20px 14px;
+  padding: 10px 10px;
   font: 24px ABeeZee, sans-serif;
 `;
 

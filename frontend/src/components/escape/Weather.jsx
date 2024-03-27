@@ -14,12 +14,8 @@ const Weather = ({ weatherdata }) => {
   const [loading, setLoading] = useState(true);
 
   
-
-
-
   useEffect(() => {
     setLoading(true);
-
 
     if (weatherdata && weatherdata.coord) {
       const x = weatherdata.coord.lon;
@@ -38,9 +34,8 @@ const Weather = ({ weatherdata }) => {
           setRegionCode(response.data);
           axios.get(`https://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=${tmCoordinates[0]}&tmY=${tmCoordinates[1]}&returnType=JSON&serviceKey=${API_KEYY}&ver=1.2`)
             .then(response => {
-              // console.log(response.data.response.body.items[0].stationName);
 
-              axios.get(`http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey=${API_KEYY}&returnType=JSON&numOfRows=1&pageNo=1&dataTerm=DAILY&ver=1.2&stationName=${response.data.response.body.items[0].stationName}
+              axios.get(`https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey=${API_KEYY}&returnType=JSON&numOfRows=1&pageNo=1&dataTerm=DAILY&ver=1.2&stationName=${response.data.response.body.items[0].stationName}
             `)
                 .then(response => {
                   const so2Grade = response.data.response.body.items[0].so2Grade;
@@ -67,7 +62,6 @@ const Weather = ({ weatherdata }) => {
         });
     }
 
-    // console.log(dustStatus)
   }, [weatherdata]);
 
   const convertToTM = (longitude, latitude) => {
@@ -134,7 +128,7 @@ if (loading) {
   }
 
 
-  const weathericon = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+  const weathericon = `https://openweathermap.org/img/wn/${icon}@2x.png`;
   
   return (
     <>

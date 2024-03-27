@@ -7,11 +7,17 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import styled from 'styled-components';
 
+// const FooterContainer = styled.footer`
+//   display: flex; 
+//   align-items: center; 
+//   width: 100%;
+//   z-index: 1000; // 다른 요소들 위에 위치하도록 z-index 설정
+// `;
 const FooterContainer = styled.footer`
-  position: fixed;
-  bottom: 0;
   width: 100%;
-  z-index: 1000; // 다른 요소들 위에 위치하도록 z-index 설정
+  // position: fixed; // 화면 하단에 고정
+  // bottom: 0; // 하단에서 0의 위치에 있도록 설정
+  // z-index: 1000; // 다른 요소들 위에 위치하도록 z-index 설정
 `;
 
 
@@ -29,6 +35,9 @@ function Footer() {
     components: {
       MuiBottomNavigationAction: {
         styleOverrides: {
+          root: {
+            width: '100%',
+          },
           label: {
             fontSize: '12px',
             whiteSpace: 'nowrap',
@@ -43,7 +52,7 @@ function Footer() {
 
   return (
     <ThemeProvider theme={theme}>
-      <FooterContainer>
+      <FooterContainer position="static">
         <BottomNavigation
           value={value}
           onChange={(event, newValue) => {
@@ -52,8 +61,8 @@ function Footer() {
           }}
           showLabels
           sx={{
-            width: "320px", 
-            height: "65px" , 
+            width: "100%", 
+            height: "50px" , 
             bottom:0,     
             borderTop: '1px solid',
             borderColor: 'divider',
@@ -61,7 +70,7 @@ function Footer() {
               color: 'primary.main',
               '& .MuiBottomNavigationAction-label': {
                 whiteSpace: 'nowrap', // 줄바꿈 방지
-                fontSize: '16px',
+                fontSize: '12px',
               },
             },
             '& .MuiBottomNavigationAction-root': {
@@ -74,27 +83,27 @@ function Footer() {
           <BottomNavigationAction
           label="홈" className='regular'
           value="/"
-          icon={<BiHome fontSize='30px' />}
+          icon={<BiHome fontSize='25px' />}
         />
         <BottomNavigationAction
           label="위기탈출" className='regular'
           value="/escape"
-          icon={<BiDizzy fontSize='30px'  />}
+          icon={<BiDizzy fontSize='25px'  />}
         />
         <BottomNavigationAction
           label="약초판별" className='regular'
           value="/picture"
-          icon={<BiCamera fontSize='30px'  />}
+          icon={<BiCamera fontSize='25px'  />}
         />
         <BottomNavigationAction
           label="도감" className='regular'
           value="/pedia"
-          icon={<BiBookBookmark fontSize='30px' />}
+          icon={<BiBookBookmark fontSize='25px' />}
         />
         <BottomNavigationAction
           label="심봤다" className='regular'
           value="/board"
-          icon={<BiGame fontSize='30px'  />}
+          icon={<BiGame fontSize='25px'  />}
         />
         </BottomNavigation>
         </FooterContainer>

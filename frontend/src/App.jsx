@@ -17,6 +17,7 @@ import DetailPage from "./pages/DetailPage";
 import SearchPage from "./pages/SearchPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import MyPage from "./pages/MyPage";
+import BedgePage from "./pages/BedgePage";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
@@ -93,26 +94,30 @@ function App() {
           errorElement: <ErrorPage />,
         },
         {
-          path: "",
-          element: <PrivateRoute />,
-          children: [
-            {
+          // path: "",
+          // element: <PrivateRoute />,
+          // children: [
+          //   {
               path: "/mypage",
               element: <MyPage />,
               errorElement: <ErrorPage />,
-            },
-          ]
-        }
+        },
+        {
+                  path: "/mypage/bedge",
+                  element: <BedgePage />,
+                  errorElement: <ErrorPage />,
+                }
+        //   ]
+        // }
       ],
     },
   ]);
   return (
     <>
-      <div className="app-container">
+      {/* <div className="relative mx-auto max-w-[375px] h-[100svh] overscroll-y-none touch-none"> */}
         <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
-      </div>
-
-    </>
+      {/* </div> */}
+      </>
   )
 }
 

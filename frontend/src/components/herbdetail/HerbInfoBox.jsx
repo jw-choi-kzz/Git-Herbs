@@ -3,7 +3,7 @@ import React from 'react';
 const styles = {
   container: {
     padding: '20px',
-    maxWidth: '280px',
+    maxWidth: '320px',
     backgroundColor: '#F5F5F5', // Assuming a white background
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Optional shadow for depth
   },

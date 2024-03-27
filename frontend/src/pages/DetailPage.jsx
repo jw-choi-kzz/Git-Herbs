@@ -88,7 +88,8 @@ const DetailPage = () => {
   }, [herbId, setHerbs]);
 
   return (
-    <div style={{ overflowY: 'auto', height: 'calc(100vh - 131px)',  justifyContent: 'center' }}>
+    // 스크롤을 허용하는 컨테이너를 추가합니다.
+    <div style={{ overflowY: 'auto', height: 'calc(100vh - 105px)',  justifyContent: 'center' }}>
     <React.Fragment>
       <HerbProfile data={herbs} />
       <HerbDetailIndex 

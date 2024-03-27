@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { BiMessageCheck } from "react-icons/bi";
 
 const Container = styled.div`
-  width: 280px;
+  width: 320px;
   margin: auto;
   border-radius: 10px;
   padding: 20px;

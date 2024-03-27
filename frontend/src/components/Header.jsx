@@ -12,6 +12,7 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
+          width: '375px',
           backgroundColor: '#fff',
           boxShadow: 'none',
           borderBottom: '1px solid #d7d7d7',
@@ -21,8 +22,8 @@ const theme = createTheme({
     MuiToolbar: {
       styleOverrides: {
         root: {
-          maxHeight: '50px !important',
-          minHeight: '50px !important',
+          maxHeight: '55px !important',
+          minHeight: '55px !important',
           padding: '0 18px', 
         },
       },

@@ -114,11 +114,10 @@ function App() {
   ]);
   return (
     <>
-      <div className="app-container">
+      {/* <div className="relative mx-auto max-w-[375px] h-[100svh] overscroll-y-none touch-none"> */}
         <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
-      </div>
-
-    </>
+      {/* </div> */}
+      </>
   )
 }
 

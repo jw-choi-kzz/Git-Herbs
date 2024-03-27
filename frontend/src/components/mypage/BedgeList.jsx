@@ -8,7 +8,7 @@ const Title = styled.div`
 `;
 
 const Container = styled.div`
-  width: 320px;
+  // width: 320px;
   margin: auto;
   border-radius: 10px;
   padding: 20px;

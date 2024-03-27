@@ -16,7 +16,7 @@ import styled from 'styled-components';
 const FooterContainer = styled.footer`
   width: 100%;
   // position: fixed; // 화면 하단에 고정
-  bottom: 0; // 하단에서 0의 위치에 있도록 설정
+  // bottom: 0; // 하단에서 0의 위치에 있도록 설정
   z-index: 1000; // 다른 요소들 위에 위치하도록 z-index 설정
 `;
 
@@ -35,6 +35,9 @@ function Footer() {
     components: {
       MuiBottomNavigationAction: {
         styleOverrides: {
+          root: {
+            width: '100%',
+          },
           label: {
             fontSize: '12px',
             whiteSpace: 'nowrap',
@@ -58,7 +61,7 @@ function Footer() {
           }}
           showLabels
           sx={{
-            width: "375px", 
+            width: "100%", 
             height: "50px" , 
             bottom:0,     
             borderTop: '1px solid',

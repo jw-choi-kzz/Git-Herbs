@@ -12,7 +12,13 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          width: '375px',
+          // width: '375px',
+          // backgroundColor: '#fff',
+          // boxShadow: 'none',
+          // borderBottom: '1px solid #d7d7d7',
+          maxWidth: '375px',
+          width: '100%', // 부모 컨테이너의 너비에 따라 조정되도록 변경
+          margin: '0 auto', // 가운데 정렬을 위해 추가
           backgroundColor: '#fff',
           boxShadow: 'none',
           borderBottom: '1px solid #d7d7d7',

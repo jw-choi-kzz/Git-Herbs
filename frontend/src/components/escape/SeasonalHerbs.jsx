@@ -102,7 +102,7 @@ const Nickname2 = styled.div`
   text-align: left;
   font-size: 1.1em;
   // font-weight: bold;
-  right: 170px;
+  right: 200px;
 `;
 
 

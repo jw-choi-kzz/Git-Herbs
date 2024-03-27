@@ -29,7 +29,7 @@ function App() {
       errorElement: <ErrorPage />,
       children: [
         {
-          path:"/",
+          path: "/",
           element: <MainPage />,
           errorElement: <ErrorPage />,
         },
@@ -44,7 +44,7 @@ function App() {
           errorElement: <ErrorPage />,
         },
         {
-          path:"/escape",
+          path: "/escape",
           element: <EscapePage />,
           errorElement: <ErrorPage />,
         },
@@ -89,7 +89,7 @@ function App() {
           ]
         },
         {
-          path: "/detail/1",
+          path: "/detail/:herbId",
           element: <DetailPage />,
           errorElement: <ErrorPage />,
         },
@@ -98,15 +98,15 @@ function App() {
           // element: <PrivateRoute />,
           // children: [
           //   {
-              path: "/mypage",
-              element: <MyPage />,
-              errorElement: <ErrorPage />,
+          path: "/mypage",
+          element: <MyPage />,
+          errorElement: <ErrorPage />,
         },
         {
-                  path: "/mypage/bedge",
-                  element: <BedgePage />,
-                  errorElement: <ErrorPage />,
-                }
+          path: "/mypage/bedge",
+          element: <BedgePage />,
+          errorElement: <ErrorPage />,
+        }
         //   ]
         // }
       ],
@@ -115,9 +115,9 @@ function App() {
   return (
     <>
       {/* <div className="relative mx-auto max-w-[375px] h-[100svh] overscroll-y-none touch-none"> */}
-        <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
+      <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
       {/* </div> */}
-      </>
+    </>
   )
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Typography from '@mui/joy/Typography';
 import { FaCirclePlus } from "react-icons/fa6";
+import MySnackbar from '../MySnackbar';
 
 const CardContainer = styled.div`
   border-radius: 12px;
@@ -100,6 +101,19 @@ const MyHerbPicture = ({ herbId }) => {
     return `/herbs/002_plant_userpic${imgId}.png`;
   };
 
+  const handlePlus = () => {
+    return (
+      <MySnackbar
+        buttonTexts={{ confirmText: '네, 계속하겠습니다', cancelText: '아니요, 그만두겠습니다' }}
+      >
+        <div>
+          <h3>잠깐만요!</h3>
+          <p>주문을 확인하지 않고 이 페이지를 떠나시겠습니까?</p>
+        </div>
+      </MySnackbar>
+    );
+  };
+
   if (!herbId) {
     return <Typography>No Herb ID provided.</Typography>;
   }
@@ -121,7 +135,7 @@ const MyHerbPicture = ({ herbId }) => {
       <HerbDetails>
         <StyledDateStamp>{formatDate(herbData.createdAt)}</StyledDateStamp>
         <StyledSimilarity>유사도: {herbData.similarity}%</StyledSimilarity>
-        <StyledFaCirclePlus />
+        <StyledFaCirclePlus onClick={handlePlus} />
       </HerbDetails>
     </CardContainer>
   ));

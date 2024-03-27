@@ -35,7 +35,7 @@ public class HerbController {
 
 	@GetMapping
 	public ResponseEntity<SuccessResponse<Slice<HerbResponseDto>>> getHerbList(
-		@RequestHeader String authorization,
+		@RequestHeader(required = false) String authorization,
 		@RequestParam(required = false, defaultValue = "0") int page,
 		@RequestParam(required = false, defaultValue = "100")  int size, String criteria) {
 		int userId = 0;

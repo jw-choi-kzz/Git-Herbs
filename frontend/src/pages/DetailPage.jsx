@@ -21,10 +21,6 @@ const DetailPage = () => {
     setSelectedTab(newValue);
   };
 
-  const handleMyHerbsClick = () => {
-    setSelectedTab(1); // "내가 찍은 이미지" 탭의 인덱스로 상태를 업데이트합니다.
-  };
-
   const fetchHerbDetail = async (herbId) => {
     const tempData = {
       herbId: 1,
@@ -53,7 +49,7 @@ const DetailPage = () => {
 
         // 실제 서버 요청 코드 (현재는 주석 처리)
     // try {
-    //   const response = await axios.get(`https://example.com/herbs/${herbId}`);
+    //   const response = await axios.get(`https://example.com/herbs/${herbId}`);d
     //   setHerbs(response.data);
     // } catch (error) {
     //   console.error("Herb details fetch error:", error);
@@ -61,7 +57,6 @@ const DetailPage = () => {
   };
 
   useEffect(() => {
-    // 스크롤바 스타일을 여기서 정의합니다.
     const customScrollStyle = () => {
       document.body.style.overflowY = 'auto';
       document.body.style.msOverflowStyle = 'scrollbar';
@@ -78,13 +73,11 @@ const DetailPage = () => {
 
     customScrollStyle(); // 스타일 적용
 
-    // 여기서 임시 데이터를 상태에 설정합니다.
     fetchHerbDetail(herbId);
 
     // 실제 애플리케이션에서는 여기에서 API 호출을 할 수 있습니다.
 
     return () => {
-      // 글로벌 스타일로 되돌림
       document.body.style.overflowY = '';
       document.body.style.msOverflowStyle = '';
       document.body.style.scrollbarWidth = '';
@@ -102,10 +95,9 @@ const DetailPage = () => {
       <HerbDetailIndex 
       selectedTab={selectedTab} 
       onTabChange={handleTabChange} 
-      handleMyHerbsClick={handleMyHerbsClick}
     />
     {selectedTab === 0 && <HerbInfoBox data={herbs} />}
-    {selectedTab === 1 && <MyHerbPicture data={herbs} />}
+    {selectedTab === 1 && <MyHerbPicture  herbId={herbId} />}
       <Snackbar
         open={openSnackbar}
         onClose={() => setOpenSnackbar(false)}

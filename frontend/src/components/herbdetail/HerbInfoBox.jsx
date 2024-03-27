@@ -60,7 +60,7 @@ const HerbInfoBox = ({ data }) => {
 
   // 실제 이미지 경로는 서버의 이미지 저장 구조에 따라 달라질 수 있습니다.
   // 예시: `const imageUrl = `/images/herbs/${herbImg}.jpg`;`
-  const imageUrl = `/herbs/001_00000176_root.jpg`;
+  const imageUrl = `/herbs/002_plant.png`;
 
   return (
     <div style={styles.container}>

@@ -1,6 +1,7 @@
 package com.happiness.githerbs.domain.search.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -14,9 +15,11 @@ import org.springframework.data.elasticsearch.core.query.highlight.HighlightFiel
 import org.springframework.stereotype.Service;
 
 import com.happiness.githerbs.domain.herb.entity.Herb;
+import com.happiness.githerbs.domain.herb.repository.BookmarkRepository;
 import com.happiness.githerbs.domain.herb.repository.HerbRepository;
 import com.happiness.githerbs.domain.member.repository.MemberRepository;
 import com.happiness.githerbs.domain.search.dto.response.SearchResponseDto;
+import com.happiness.githerbs.domain.search.dto.response.keywordResponseDto;
 import com.happiness.githerbs.domain.search.entity.HerbDocument;
 import com.happiness.githerbs.domain.search.entity.SearchLog;
 import com.happiness.githerbs.domain.search.repository.SearchLogRepository;
@@ -33,7 +36,9 @@ public class SearchServiceImpl implements SearchService {
 	private final HerbRepository herbRepository;
 	private final MemberRepository memberRepository;
 	private final SearchLogRepository searchLogRepository;
+	private final BookmarkRepository bookmarkRepository;
 	private final ElasticsearchOperations elasticsearchOperations;
+	private final FastApiClient fastApiClient;
 
 	@Override
 	@Transactional
@@ -99,4 +104,16 @@ public class SearchServiceImpl implements SearchService {
 		return searchLogRepository.findRecent(memberId);
 	}
 
+	@Override
+	@Transactional
+	public List<keywordResponseDto> recommendKeyword(Integer herbId) {
+		FastApiClient.keywordListResponseDto keywords = fastApiClient.getKeyword(herbId);
+		List<keywordResponseDto> result = new ArrayList<>();
+
+		for(int id : keywords.herbIds){
+			Herb herb = herbRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.HERB_NOT_FOUND));
+			result.add(new keywordResponseDto(id, herb.getHerbName()));
+		}
+		return result;
+	}
 }

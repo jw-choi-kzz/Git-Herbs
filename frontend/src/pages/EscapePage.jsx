@@ -74,7 +74,7 @@ const EscapePage = () => {
   const weatherdata = useGlobalStyles(); 
   useGlobalStyles1(); 
   return (
-    <div style={{ overflowY: 'auto', height: 'calc(100vh - 131px)',  justifyContent: 'center' }}>
+    <div style={{ overflowY: 'auto', height: 'calc(100vh - 105px)',  justifyContent: 'center' }}>
       <>
       <br></br>
         <Weather weatherdata={weatherdata}></Weather>

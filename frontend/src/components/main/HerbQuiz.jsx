@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import AfterHerbQuiz from './AfterHerbQuiz';
 
 const Container = styled.div`
-  width: 280px;
+  width: 320px;
   margin: auto;
   border-radius: 10px;
   padding: 20px;
@@ -24,16 +24,17 @@ const Title = styled.div`
 `;
 
 const SubTitle = styled.div`
-  font-size: 0.85em;
+  font-size: 14px;
   color: #4A4A4A;
-  margin: 2px 0;
+  margin: 4px 0;
   width: 100%;
-  text-align: center;
+  text-align: left;
 `;
 
 const QuizImage = styled.img`
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
+  margin: 4px;
   object-fit: cover;
   cursor: pointer;
 `;
@@ -79,18 +80,19 @@ const HerbQuiz = () => {
       <Container>
       <Title className='bold'>오늘의 약초 퀴즈</Title>
       <SubTitle>{question}</SubTitle>
-      <Row gutter={[16, 16]}>
-          {QuizOptionsList.map((option, index) => (
-              <Col key={option.idx} span={12}>
-                  <QuizImage
-                      src={option.herbUrl}
-                      alt={`Option ${index + 1}`}
-                      onClick={() => handleImageClick(option.idx)}
-                  />
-              </Col>
-          ))}
+      <br />
+      <Row gutter={[26, 26]} justify="space-around">
+        {QuizOptionsList.map((option, index) => (
+          <Col key={option.idx} span={12}>
+            <QuizImage
+              src={option.herbUrl}
+              alt={`Option ${index + 1}`}
+              onClick={() => handleImageClick(option.idx)}
+            />
+          </Col>
+        ))}
       </Row>
-  </Container>
+    </Container>
     );
 }
 

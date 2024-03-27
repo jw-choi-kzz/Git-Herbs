@@ -50,7 +50,7 @@ export default function SeasonalHerbs() {
   );
 }
 const Container = styled.div`
-  width: 280px;
+  width: 320px;
   height: auto; /* Changed to auto to wrap content */
   margin: auto;
   border-radius: 10px;

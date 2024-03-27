@@ -8,23 +8,14 @@ import styled from 'styled-components';
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  width: 100%;
+  justify-content: center;
+  width: 375px;
   // height: 100vh;
   margin: 0 auto;
 `;
 
 const SearchPage = () => {
     return (
-        // <div className="search-page" style={{
-        //     display: 'flex',
-        //     flexDirection: 'column',
-        //     justifyContent: 'flex-start',
-        //     alignItems: 'center',
-        //     width: '100%',
-        //     maxWidth: '375px',
-        //     margin: '0 auto',
-        // }}>
         <PageContainer>
       <SearchBar />
       <RecentSearch />

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Carousel } from 'antd';
 import styled, { css } from 'styled-components';
+import { Link } from "react-router-dom";
 
 
 
 export default function SeasonalHerbs() {
+
 
   const herbList = [
     {
@@ -13,12 +15,12 @@ export default function SeasonalHerbs() {
       imgId: "https://i.ibb.co/Ybdyn7R/image.png"
     },
     {
-      userId: 2,
+      herbId: 2,
       herbName: "만드라고라",
       imgId: "https://i.ibb.co/jzbWCDq/image.png"
     },
     {
-      userId: 3,
+      herbId: 3,
       herbName: "당귀",
       imgId: "https://i.ibb.co/jvF7mGt/image.png"
     }
@@ -36,7 +38,9 @@ export default function SeasonalHerbs() {
                 </div>
 
                 <Nickname className="medium">{herb.herbName}</Nickname>
-                <Nickname2> 상세 보기</Nickname2>
+                <Link  to={`/detail/${herb.herbId}`}>
+                <Nickname2 > 상세 보기</Nickname2>
+                </Link>
               </div>
             </Content>
           ))}
@@ -81,7 +85,7 @@ const Nickname = styled.div`
   ${baseStyle}
   z-index: 2;
   position: absolute;
-  top: 25px; // Adjust as necessary
+  top: 25px; 
   text-align: right;
   font-size: 1.4em;
   font-weight: bold;

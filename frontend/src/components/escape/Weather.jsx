@@ -11,12 +11,16 @@ proj4.defs("EPSG:5178", "+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=10000
 const Weather = ({ weatherdata }) => {
   const [regionCode, setRegionCode] = useState(null);
   const [dust, setDust] = useState(null);
-  const [dustStatus, setDustStatus] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  
 
 
 
   useEffect(() => {
+    setLoading(true);
+
+
     if (weatherdata && weatherdata.coord) {
       const x = weatherdata.coord.lon;
       const y = weatherdata.coord.lat;
@@ -32,7 +36,7 @@ const Weather = ({ weatherdata }) => {
       axios.get(`https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${x}&y=${y}`, config)
         .then(response => {
           setRegionCode(response.data);
-          axios.get(`http://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=${tmCoordinates[0]}&tmY=${tmCoordinates[1]}&returnType=JSON&serviceKey=${API_KEYY}&ver=1.2`)
+          axios.get(`https://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=${tmCoordinates[0]}&tmY=${tmCoordinates[1]}&returnType=JSON&serviceKey=${API_KEYY}&ver=1.2`)
             .then(response => {
               // console.log(response.data.response.body.items[0].stationName);
 
@@ -43,6 +47,7 @@ const Weather = ({ weatherdata }) => {
                   const dustStatus = getDustStatus(so2Grade);
 
                   setDust(dustStatus);
+                  setLoading(false); 
                 })
                 .catch(error => {
 
@@ -79,9 +84,17 @@ const Weather = ({ weatherdata }) => {
     return statusMap[so2Grade] || "정보없음";
 };
 
+if (loading) {
+  return (
+    <Container>
+      <LoadingIndicator>날씨 불러오는 중...</LoadingIndicator>
+    </Container>
+  );
+}
+
 
   if (!weatherdata || weatherdata.length === 0) {
-    return null; // or handle loading state
+    return <div>No weather data available.</div>;
   }
   const icon = weatherdata.weather[0].icon;
   const id = weatherdata.weather[0].id;
@@ -102,11 +115,11 @@ const Weather = ({ weatherdata }) => {
       960, 961, 962];
     var w_kor_arr = ["천둥구름", "천둥구름", "폭우", "천둥구름",
       "천둥구름", "천둥구름", "천둥구름", "천둥구름", "천둥구름",
-      "안개비", "안개비", "안개비", "안개비", "적은비", "적은비",
-      "적은비", "소나기", "소나기", "소나기", "악한 비", "중간 비", "강한 비",
+      "안개비", "안개비", "안개비", "안개비", "이슬비", "이슬비",
+      "이슬비", "소나기", "소나기", "소나기", "이슬비", "중간 비", "강한 비",
       "강한 비", "폭우", "우박", "소나기", "소나기", "소나기", "소나기",
       "가벼운 눈", "눈", "눈", "진눈깨비", "소나기", "비와 눈", "비와 눈", "비,눈",
-      "비,눈", "비, 눈", "박무", "연기", "연무", "모래 먼지", "안개", "모래", "먼지", "화산재", "돌풍",
+      "비,눈", "비, 눈", "박무", "연기", "연무", "황사", "안개", "모래", "먼지", "화산재", "돌풍",
       "토네이도", "맑음", "살짝흐림", "흐림", "맑음",
       "흐림", "토네이도", "태풍", "허리케인", "한랭", "고온", "바람부는", "우박", "바람없는",
       "약한 바람", "바람", "중간 바람", "신선한 바람", "센 바람", "돌풍", "돌풍",
@@ -233,4 +246,12 @@ const Div6 = styled.div`
   font-weight: 700;
   // flex-direction: row; /* 아이템을 가로로 나란히 표시 */
   justify-content: space-between;
+`;
+
+
+const LoadingIndicator = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
 `;

@@ -79,12 +79,14 @@ const EscapePage = () => {
       <br></br>
         <Weather weatherdata={weatherdata}></Weather>
         <p>야생동물 서식 구역</p>
-        <WildlifeArea></WildlifeArea>
+        <WildlifeArea weatherdata={weatherdata} ></WildlifeArea>
         <p>제철약초</p>
         <SeasonalHerbs></SeasonalHerbs>
         <p>위급 상황시 행동 요령</p>
         <BehaviorTips></BehaviorTips>
       </>
+      <br></br>
+      <br></br>
     </div>
   );
 };

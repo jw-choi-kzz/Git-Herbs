@@ -54,7 +54,7 @@ const HerbListItem = ({ herb }) => {
   return (
     <Container onClick={handleClick}>
       <ItemContainer>
-        <ItemIcon src={herb.acquireCheck > 0 ? "public/pediaimg/plant_acquired.svg" : "public/pediaimg/plant_isNotAcquired.svg"} />
+        <ItemIcon src={herb.acquireCheck > 0 ? "/pediaimg/plant_acquired.svg" : "/pediaimg/plant_isNotAcquired.svg"} />
         {herb.bookmark > 0 ? (
           <ItemBookMark>
             <PiStarFill style={{ color: '#F49349' }} />

@@ -11,11 +11,9 @@ const BehaviorTips = () => {
         />
         <Div3>기본 요령</Div3>
       </Div2>
-      <Div4>
-        - 1단계 : 위급상황을 인식하고 어떻게 행동할지를 결정하는 것(Check) 
-        <br />- 2단계 : 도움을 요청하는 것(Call) 
-        <br />- 3단계 : 응급의료기관에 인계할 때까지 적절한 처치를 하는 것(Care)
-      </Div4>
+      <Div4>- 1단계 : 위급상황을 인식하고 어떻게 행동할지를 결정하는 것(Check)  </Div4>
+      <Div4>- 2단계 : 도움을 요청하는 것(Call)    </Div4>
+      <Div4>- 3단계 : 응급의료기관에 인계할 때까지 적절한 처치를 하는 것(Care) </Div4>
     </Container>
   );
 };
@@ -34,12 +32,19 @@ const Container = styled.div`
   align-items: flex-start; /* Align items to start */
   cursor: pointer;
 `;
+const tip = styled.div`
+  display: flex;
+  gap: 11px;
+  font-size: 20px;
+  color: #407700;
+  font-weight: 700;
+`;
 
 
 const Div2 = styled.div`
   display: flex;
   gap: 11px;
-  font-size: 24px;
+  font-size: 20px;
   color: #407700;
   font-weight: 700;
 `;
@@ -48,7 +53,7 @@ const Img = styled.img`
   aspect-ratio: 1;
   object-fit: auto;
   object-position: center;
-  width: 35px;
+  width: 30px;
 `;
 
 const Div3 = styled.div`
@@ -61,7 +66,7 @@ const Div3 = styled.div`
 const Div4 = styled.div`
   color: #21351f;
   margin-top: 11px;
-  font: 400 18px Spoqa Han Sans Neo, -apple-system, Roboto, Helvetica,
+  font: 500 14px Spoqa Han Sans Neo, -apple-system, Roboto, Helvetica,
     sans-serif;
 `;
 

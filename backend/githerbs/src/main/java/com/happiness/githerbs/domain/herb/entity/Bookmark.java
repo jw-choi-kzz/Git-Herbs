@@ -1,5 +1,9 @@
 package com.happiness.githerbs.domain.herb.entity;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+
 import com.happiness.githerbs.domain.member.entity.Member;
 
 import jakarta.persistence.Column;
@@ -37,4 +41,8 @@ public class Bookmark {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "herb_id")
 	private Herb herb;
+
+	@CreatedDate
+	@Column(updatable = false, nullable = false)
+	private LocalDateTime createdAt;
 }

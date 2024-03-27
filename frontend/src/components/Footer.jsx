@@ -17,7 +17,7 @@ const FooterContainer = styled.footer`
   width: 100%;
   // position: fixed; // 화면 하단에 고정
   // bottom: 0; // 하단에서 0의 위치에 있도록 설정
-  z-index: 1000; // 다른 요소들 위에 위치하도록 z-index 설정
+  // z-index: 1000; // 다른 요소들 위에 위치하도록 z-index 설정
 `;
 
 

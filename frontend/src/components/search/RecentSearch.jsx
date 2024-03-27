@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BiTime } from "react-icons/bi";
 
 const Container = styled.div`
-  width: 320px;
+  width: 375px;
   height: 192px;
   background-color: #fff;
   padding: 16px;

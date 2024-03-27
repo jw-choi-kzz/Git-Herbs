@@ -29,7 +29,7 @@ const theme = createTheme({
 
 const SearchContainer = styled.div`
   margin-top: 0;
-  width: 320px; 
+  width: 375px; 
   height: 100px; 
   background-color: #fff; 
   display: flex; 
@@ -67,8 +67,8 @@ const SearchBar = () => {
           </IconButton>
         }
         style={{
-          width: '280px',
-          height: '43px',
+          width: '320px',
+          height: '40px',
         }}
       />
     </SearchContainer>

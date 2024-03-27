@@ -8,26 +8,27 @@ import IconButton from '@mui/material/IconButton';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
-    components: {
-      MuiAppBar: {
-        styleOverrides: {
-          root: {
-            backgroundColor: '#f5f5f5',
-            boxShadow: 'none',
-            borderBottom: '1px solid #d7d7d7',
-          },
-        },
-      },
-      MuiToolbar: { 
-        styleOverrides: {
-          root: {
-            minHeight: '66px',
-            padding: '0 18px', 
-          },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#fff',
+          boxShadow: 'none',
+          borderBottom: '1px solid #d7d7d7',
         },
       },
     },
-  });
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          maxHeight: '50px !important',
+          minHeight: '50px !important',
+          padding: '0 18px', 
+        },
+      },
+    },
+  },
+});
 
 function Header() {
     const navigate = useNavigate();
@@ -41,6 +42,7 @@ function Header() {
                   src="/logo.svg"
                   alt="Git Herbs Logo"
                   className="h-12 cursor-pointer"
+                  style={{ userSelect: 'none' }} 
                   onClick={() => navigate('/')}
                 />
               </Box>
@@ -51,7 +53,7 @@ function Header() {
                   aria-label="search"
                   onClick={() => navigate('/search')}
                 >
-                  <HiOutlineSearch style={{ fontSize: '2.25rem', color: '#407700'}} />
+                  <HiOutlineSearch style={{ fontSize: '35px', color: '#407700'}} />
                 </IconButton>
                 <IconButton
                   edge="end"
@@ -59,7 +61,7 @@ function Header() {
                   aria-label="user account"
                   onClick={() => navigate('/mypage')}
                 >
-                  <BiUserCircle style={{ fontSize: '2.25rem', color: '#407700'}} />
+                  <BiUserCircle style={{ fontSize: '35px', color: '#407700'}} />
                 </IconButton>
               </Box>
             </Toolbar>

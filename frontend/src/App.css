@@ -1,9 +1,4 @@
 
-/* If the header and footer are within app-container, ensure their background is set */
-.app-container header, .app-container footer {
-  background-color: #ffffff;
-}
-
 .card {
   padding: 2em;
 }

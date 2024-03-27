@@ -39,12 +39,13 @@ const useGlobalStyles = () => {
 const MainPage = () => {
     useGlobalStyles(); 
     return (
-        <div style={{ overflowY: 'auto', height: 'calc(100vh - 131px)',  justifyContent: 'center' }}>
+        <div style={{ overflowY: 'auto', height: 'calc(100vh - 100px)',  justifyContent: 'center' }}>
           <RankCarousel />
-          <br />
+          <br /><br />
           <TodayHerb />
-          <br />
+          <br /><br />
           <HerbQuiz />
+          <br /><br />
         </div>
     )
 }

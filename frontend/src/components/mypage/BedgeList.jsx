@@ -30,10 +30,10 @@ const Explain = styled.div`
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr); // Creates four columns
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px; // Space between grid items
   justify-items: center;
-  padding: 20px; // Adjust the padding as necessary
+  padding: 20px; 
 `;
 
 const BedgeList = () => {

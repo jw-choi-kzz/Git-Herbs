@@ -104,11 +104,11 @@ const MyHerbPicture = ({ herbId }) => {
   const handlePlus = () => {
     return (
       <MySnackbar
-        buttonTexts={{ confirmText: '네, 계속하겠습니다', cancelText: '아니요, 그만두겠습니다' }}
+        buttonTexts={{ confirmText: '등록하기', cancelText: '취소' }}
       >
         <div>
           <h3>잠깐만요!</h3>
-          <p>주문을 확인하지 않고 이 페이지를 떠나시겠습니까?</p>
+          <p>'심봤다 게시판'에 사진을 등록할까요?</p>
         </div>
       </MySnackbar>
     );

@@ -50,8 +50,7 @@ public class MyHerbService {
 	}
 
 	@Transactional
-	public void deleteMyHerb(Integer memberId, Integer myHerbId) {
-		memberRepository.findById(memberId).orElseThrow(() -> new BaseException(USER_NOT_FOUND));
+	public void deleteMyHerb(Integer myHerbId) {
 		MyHerb myHerb = myHerbRepository.findByIdAndDeleted(myHerbId, false)
 			.orElseThrow(() -> new BaseException(MY_HERB_NOT_FOUND));
 

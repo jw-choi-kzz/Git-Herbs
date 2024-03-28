@@ -1,15 +1,20 @@
 package com.happiness.githerbs.domain.member.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.happiness.githerbs.domain.auth.service.JwtService;
+import com.happiness.githerbs.domain.member.dto.request.KakaoAuthorizeParameterDto;
+import com.happiness.githerbs.domain.member.dto.response.UserTokenResponseDto;
 import com.happiness.githerbs.domain.member.service.MemberService;
+import com.happiness.githerbs.global.common.response.SuccessResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,8 +34,9 @@ public class MemberController {
 
 	@GetMapping("/login")
 	@Operation(summary = "로그인", description = "카카오 로그인")
-	public ResponseEntity<?> loginController() {
-		return null;
+	public ResponseEntity<Object> loginController() {
+		var url = service.loginService();
+		return ResponseEntity.status(HttpStatus.SEE_OTHER).header("Location", url).build();
 	}
 
 	@DeleteMapping("/")
@@ -57,9 +63,12 @@ public class MemberController {
 		return null;
 	}
 
-	@PostMapping("/token")
+	@GetMapping("/token")
 	@Operation(summary = "redirect url", description = "카카오 로그인 redirect url, 카카오 요구사항")
-	public ResponseEntity<?> tokenController() {
+	public ResponseEntity<SuccessResponse<UserTokenResponseDto>> tokenController(@RequestParam KakaoAuthorizeParameterDto dto) {
+		// TODO : 카카오 access token 발급
+		// TODO : jwt 발급
+		// TODO : response에 access jwt, refresh jwt, member 정보 담고, device-id set-cookie 설정하기
 		return null;
 	}
 	

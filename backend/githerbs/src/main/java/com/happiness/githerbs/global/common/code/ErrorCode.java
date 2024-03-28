@@ -64,6 +64,7 @@ public enum ErrorCode {
 	HERB_NOT_FOUND(404, "HERB-001", "허브를 찾을 수 없는 경우"),
 
 	USER_NOT_FOUND(404, "USER-001", "유저를 찾을 수 없는 경우"),
+	USER_INVALID_STATE(410, "USER-002", "state가 유효하지 않습니다"),
 
 	MY_HERB_NOT_FOUND(404, "MYHERB-001", "내 도감 사진을 찾을 수 없는 경우"),
 

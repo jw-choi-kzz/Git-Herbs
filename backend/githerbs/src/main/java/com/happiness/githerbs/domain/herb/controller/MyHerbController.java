@@ -54,7 +54,7 @@ public class MyHerbController {
 		@RequestHeader String authorization, @PathParam("myHerbId") Integer myHerbId) {
 
 		int userId = jwtService.validateToken(authorization).getMemberId();
-		myHerbService.deleteMyHerb(userId, myHerbId);
+		myHerbService.deleteMyHerb(myHerbId);
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK.value(), null));
 	}
 }

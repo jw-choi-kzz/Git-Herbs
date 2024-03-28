@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.happiness.githerbs.domain.auth.service.JwtService;
+import com.happiness.githerbs.domain.herb.entity.Bookmark;
+import com.happiness.githerbs.domain.herb.service.BookmarkService;
 import com.happiness.githerbs.domain.search.dto.response.SearchResponseDto;
+import com.happiness.githerbs.domain.search.dto.response.keywordResponseDto;
 import com.happiness.githerbs.domain.search.service.SearchService;
 import com.happiness.githerbs.global.common.response.SuccessResponse;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class SearchController {
 
 	private final SearchService searchService;
+	private final BookmarkService bookmarkService;
 	private final JwtService jwtService;
 
 	@GetMapping("/search")
@@ -41,4 +46,14 @@ public class SearchController {
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, searchService.findRecent(memberId)));
 	}
 
+	@GetMapping("/search/recommend")
+	public ResponseEntity<SuccessResponse<?>> recommendKeyword(@RequestHeader String authorization){
+		int memberId = jwtService.validateToken(authorization).getMemberId();
+		Integer herbId = bookmarkService.recentBookmark(memberId);
+
+		Object keywords = null;
+		if(herbId != 0) keywords = searchService.recommendKeyword(herbId);
+
+		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, keywords));
+	}
 }

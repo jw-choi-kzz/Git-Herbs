@@ -81,7 +81,9 @@ public class JwtServiceImpl implements JwtService {
 	public JwtResponseDto reissueToken(String deviceId, AuthorizationTokenDto token, String state) {
 		Claims claims = null;
 		try {
-			claims = getClaims(token.getAccessToken());
+			var split = token.getAccessToken().split(" ");
+			if(!split[0].equalsIgnoreCase("Bearer")) throw new BaseException("토큰 타입이 일치하지 않습니다", ErrorCode.WRONG_TOKEN_ERROR);
+			claims = getClaims(split[1]);
 		} catch (ExpiredJwtException e) {
 			// 만료된 토큰과 상관없이 claim을 가져온다
 			claims = e.getClaims();

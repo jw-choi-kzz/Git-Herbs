@@ -13,12 +13,8 @@ const HerbDetailIndex = ({ selectedTab, onTabChange}) => {
         <Tab>내가 찍은 이미지</Tab>
       </TabList>
       <TabPanel value={0}>
-        {/* 상세 설명 컨텐츠 */}
-        {/* <Typography level="body1">이곳에는 식물의 상세 설명이 표시됩니다.</Typography> */}
       </TabPanel>
       <TabPanel value={1}>
-        {/* 내가 찍은 이미지 컨텐츠 */}
-        <Typography level="body1">이곳에는 사용자가 찍은 식물의 사진이 표시됩니다.</Typography>
       </TabPanel>
     </Tabs>
   );

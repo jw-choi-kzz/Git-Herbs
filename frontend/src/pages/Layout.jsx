@@ -14,7 +14,7 @@ const LayoutContainer = styled.div`
   // background-color: #f5f5f5;
   max-width: 375px; /* 모바일 화면에 최적화된 너비를 최대 너비로 설정 */
   width: 100%; /* 디바이스의 너비에 따라 유연하게 조정되도록 함 */
-  height: 100dvh;
+  height: 100%;
   margin: 0 auto; /* 가운데 정렬 */
   background-color: #f5f5f5;
   `;

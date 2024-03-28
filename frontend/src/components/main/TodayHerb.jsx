@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 //속성 이름은 camelCase가 아니라 - 사용
 const Container = styled.div`
   width: 320px;
-  height: auto; /* Changed to auto to wrap content */
+  height: auto; 
   margin: auto;
   border-radius: 10px;
   padding: 20px;
@@ -16,22 +16,22 @@ const Container = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to start */
+  align-items: flex-start;
   cursor: pointer;
 `;
 
 const Title = styled.div`
-  width: 100%; /* Take full width */
+  width: 100%;
   font-size: 1.25em;
   text-align: left;
-  color: #4A4A4A;
-  margin-bottom: 10px; /* Space between title and details */
+  color: #21351F;
+  margin-bottom: 10px;
 `;
 
 const DetailsContainer = styled.div`
   display: flex;
-  align-items: flex-start; /* Align items to start */
-  justify-content: space-between; /* Space between image and text */
+  align-items: flex-start;
+  justify-content: space-between;
 `;
 
 const TextContainer = styled.div`
@@ -41,13 +41,13 @@ const TextContainer = styled.div`
 
 const HerbName = styled.div`
   font-size: 1.25em;
-  color: #4A4A4A;
+  color: #21351F;
   margin: 0 10px;
 `;
 
 const SubTitle = styled.div`
   font-size: 0.85em;
-  color: #4A4A4A;
+  color: #757575;
   margin: 10px 10px;
 `;
 
@@ -55,7 +55,7 @@ const HerbImage = styled.img`
   width: 120px;
   height: 120px;
   object-fit: cover;
-  margin-right: 10px; /* Add margin to the right of the image */
+  margin-right: 10px; 
 `;
 
 const TodayHerb = () => {
@@ -75,13 +75,12 @@ const TodayHerb = () => {
     return (
       <>
         <Container onClick={handleClick}>
-          <Title className="bold">오늘의 약초</Title>
+          <Title className='bold'>오늘의 약초</Title>
           <DetailsContainer>
             <HerbImage src={todayHerb.herbUrl} alt={todayHerb.herbName} />
             <TextContainer>
-              <HerbName>{todayHerb.herbName}</HerbName>
-              <SubTitle>{todayHerb.latinName}</SubTitle>
-              {/* If you have more text elements, they will go here */}
+              <HerbName className='medium'>{todayHerb.herbName}</HerbName>
+              <SubTitle className='regular'>{todayHerb.latinName}</SubTitle>
             </TextContainer>
           </DetailsContainer>
         </Container>

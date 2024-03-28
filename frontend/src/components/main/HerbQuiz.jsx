@@ -18,14 +18,14 @@ const Container = styled.div`
 
 const Title = styled.div`
   font-size: 1.25em;
-  color: #4A4A4A;
+  color: #21351F;
   width: 100%;
   text-align: left;
 `;
 
 const SubTitle = styled.div`
-  font-size: 14px;
-  color: #4A4A4A;
+  font-size: 16px;
+  color: #21351F;
   margin: 4px 0;
   width: 100%;
   text-align: left;
@@ -79,7 +79,7 @@ const HerbQuiz = () => {
     return (
       <Container>
       <Title className='bold'>오늘의 약초 퀴즈</Title>
-      <SubTitle>{question}</SubTitle>
+      <SubTitle className='medium'>{question}</SubTitle>
       <br />
       <Row gutter={[26, 26]} justify="space-around">
         {QuizOptionsList.map((option, index) => (

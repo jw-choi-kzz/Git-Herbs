@@ -50,6 +50,12 @@ const SearchBar = () => {
     }
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
     <SearchContainer>
@@ -57,6 +63,7 @@ const SearchBar = () => {
         placeholder="검색어를 입력하세요."
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
+        onKeyDown={handleKeyDown}
         endAdornment={
           <IconButton
             edge="end"

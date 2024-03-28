@@ -23,7 +23,7 @@ const MainContent = styled.main`
   width: 100%;
   flex: 1;
   overflow-y: auto;
-  min-height: calc(100vh - 105px);
+  min-height: calc(100dvh - 105px);
   // padding-bottom: 55px; // 내용물과 푸터 사이의 간격을 조정하려면 다시 추가
 `;
 

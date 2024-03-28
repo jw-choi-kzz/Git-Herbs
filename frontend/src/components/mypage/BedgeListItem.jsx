@@ -23,7 +23,7 @@ const BedgeListItem = () => {
       imageHeight: 120,
       imageAlt: '뱃지 아이콘',
       background: 'rgba(0,0,0,0.75)',
-      width: '80%',
+      width: '320',
       padding: '10',
       confirmButtonText: '닫기',
       confirmButtonColor: '#407700', // 버튼 색상 설정

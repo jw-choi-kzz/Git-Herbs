@@ -42,7 +42,7 @@ const MainPage = () => {
   //  useGlobalStyles(); 
     return (
       <>
-        <div style={{ overflowY: 'auto', height: 'calc(100vh - 105px)',  justifyContent: 'center' }}>
+        <div style={{ overflowY: 'auto', height: 'calc(100dvh - 105px)',  justifyContent: 'center' }}>
           <RankCarousel />
           <br /><br />
           <TodayHerb />

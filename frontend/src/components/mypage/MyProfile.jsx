@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { BiEdit, BiCaretUp } from "react-icons/bi";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+
 
 import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
 
@@ -63,25 +65,64 @@ const NicknameAndEditContainer = styled.div`
 `;
 
 const MyProfile = ({ nickname, profileImg, rank }) => {
-  const [previewImage, setPreviewImage] = useState();
-  const [validNickname, setValidNickname] = useState(true);
+  const [previewImage, setPreviewImage] = useState(profileImg);
+  const [newNickname, setNewNickname] = useState(nickname);
   const [nicknameLength, setNicknameLength] = useState();
   const [isDeleting, setIsDeleting] = useState(false);
   const imgRef = useRef();
   const nicknameDialogRef = useRef();
   const profileImageDialogRef = useRef();
   const navigate = useNavigate();
+  const handleImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        setPreviewImage(e.target.result);
+      };
+      fileReader.readAsDataURL(event.target.files[0]);
+    }
+  };
 
+  const clickModifyImgButton = () => {
+    imgRef.current.click();
+  };
+
+  const editNickname = () => {
+    Swal.fire({
+      title: '별명 변경',
+      input: 'text',
+      inputValue: nickname,
+      showCancelButton: true,
+      confirmButtonText: '변경',
+      cancelButtonText: '취소',
+      inputValidator: (value) => {
+        if (!value) {
+          return '별명을 입력해야 합니다!';
+        }
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // 여기서 별명 상태를 업데이트하는 로직을 추가합니다.
+        setNewNickname(result.value);
+      }
+    });
+  };
   return (
     <>
+      <input
+        ref={imgRef}
+        type="file"
+        style={{ display: 'none' }}
+        onChange={handleImageChange}
+      />
     <ProfileContainer>
       <ProfileImgContainer>
-        <ProfileImage src={profileImg} alt="Profile" />
-        <ModifyImgButton><BiEdit size="1.5em" /></ModifyImgButton>
+      <ProfileImage src={previewImage || profileImg} alt="프로필 이미지" />
+        <ModifyImgButton onClick={clickModifyImgButton}><BiEdit size="1.5em" /></ModifyImgButton>
       </ProfileImgContainer>
       <NicknameAndEditContainer>
-        <NicknameText className='medium'>{nickname}</NicknameText>
-        <BiEdit size="1.5em" />
+        <NicknameText className='medium'>{newNickname}</NicknameText>
+        <BiEdit onClick={editNickname} size="1.5em" />
         <RankingText><BiCaretUp />상위 {rank}%</RankingText>
       </NicknameAndEditContainer>
     </ProfileContainer>

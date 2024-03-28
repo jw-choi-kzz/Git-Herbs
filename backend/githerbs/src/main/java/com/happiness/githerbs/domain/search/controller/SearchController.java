@@ -11,15 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.happiness.githerbs.domain.auth.service.JwtService;
-import com.happiness.githerbs.domain.herb.entity.Bookmark;
 import com.happiness.githerbs.domain.herb.service.BookmarkService;
 import com.happiness.githerbs.domain.search.dto.response.SearchResponseDto;
-import com.happiness.githerbs.domain.search.dto.response.keywordResponseDto;
 import com.happiness.githerbs.domain.search.service.SearchService;
 import com.happiness.githerbs.global.common.response.SuccessResponse;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor

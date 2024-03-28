@@ -2,7 +2,6 @@ package com.happiness.githerbs.domain.herb.service;
 
 import static com.happiness.githerbs.global.common.code.ErrorCode.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +14,6 @@ import com.happiness.githerbs.domain.herb.repository.BookmarkRepository;
 import com.happiness.githerbs.domain.herb.repository.HerbRepository;
 import com.happiness.githerbs.domain.member.entity.Member;
 import com.happiness.githerbs.domain.member.repository.MemberRepository;
-import com.happiness.githerbs.global.common.code.ErrorCode;
 import com.happiness.githerbs.global.common.exception.BaseException;
 
 import lombok.RequiredArgsConstructor;

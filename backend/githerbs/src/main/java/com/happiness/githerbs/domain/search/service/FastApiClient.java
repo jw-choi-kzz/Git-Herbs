@@ -12,10 +12,10 @@ import lombok.Data;
 public interface FastApiClient {
 
 	@GetMapping("search")
-	keywordListResponseDto getKeyword(@RequestParam("herbId") Integer herbId);
+	KeywordListResponseDto getKeyword(@RequestParam("herbId") Integer herbId);
 
 	@Data
-	class keywordListResponseDto {
+	class KeywordListResponseDto {
 		List<Integer> herbIds;
 	}
 }

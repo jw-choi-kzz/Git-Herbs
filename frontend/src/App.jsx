@@ -1,5 +1,3 @@
-import { useState, useEffect, useRef } from 'react';
-import { } from 'react-dom';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './App.css';
 import useGlobalStyles from './utils/useGlobalStyles';
@@ -18,7 +16,6 @@ import SearchPage from "./pages/SearchPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import MyPage from "./pages/MyPage";
 import BedgePage from "./pages/BedgePage";
-import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   useGlobalStyles();

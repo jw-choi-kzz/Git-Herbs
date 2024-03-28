@@ -21,10 +21,10 @@ const FooterContainer = styled.footer`
 `;
 
 
-function Footer() {
+function Footer({ onPictureButtonClick }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const [value, setValue] = useState('/'); 
+  const [value, setValue] = useState('/');
 
   useEffect(() => {
     setValue(location.pathname);
@@ -61,9 +61,9 @@ function Footer() {
           }}
           showLabels
           sx={{
-            width: "100%", 
-            height: "50px" , 
-            bottom:0,     
+            width: "100%",
+            height: "50px",
+            bottom: 0,
             borderTop: '1px solid',
             borderColor: 'divider',
             '& .Mui-selected': {
@@ -81,32 +81,38 @@ function Footer() {
           }}
         >
           <BottomNavigationAction
-          label="홈" className='regular'
-          value="/"
-          icon={<BiHome fontSize='25px' />}
-        />
-        <BottomNavigationAction
-          label="위기탈출" className='regular'
-          value="/escape"
-          icon={<BiDizzy fontSize='25px'  />}
-        />
-        <BottomNavigationAction
+            label="홈" className='regular'
+            value="/"
+            icon={<BiHome fontSize='25px' />}
+          />
+          <BottomNavigationAction
+            label="위기탈출" className='regular'
+            value="/escape"
+            icon={<BiDizzy fontSize='25px' />}
+          />
+          {/* <BottomNavigationAction
           label="약초판별" className='regular'
           value="/picture"
           icon={<BiCamera fontSize='25px'  />}
-        />
-        <BottomNavigationAction
-          label="도감" className='regular'
-          value="/pedia"
-          icon={<BiBookBookmark fontSize='25px' />}
-        />
-        <BottomNavigationAction
-          label="심봤다" className='regular'
-          value="/board"
-          icon={<BiGame fontSize='25px'  />}
-        />
+        /> */}
+          <BottomNavigationAction
+            label="약초판별"
+            className="regular"
+            icon={<BiCamera fontSize="25px" />}
+            onClick={onPictureButtonClick}
+          />
+          <BottomNavigationAction
+            label="도감" className='regular'
+            value="/pedia"
+            icon={<BiBookBookmark fontSize='25px' />}
+          />
+          <BottomNavigationAction
+            label="심봤다" className='regular'
+            value="/board"
+            icon={<BiGame fontSize='25px' />}
+          />
         </BottomNavigation>
-        </FooterContainer>
+      </FooterContainer>
     </ThemeProvider>
   );
 }

@@ -56,40 +56,40 @@ const DetailPage = () => {
 
   useEffect(() => {
     // 스크롤바 보이게 설정
-    const customScrollStyle = () => {
-      document.body.style.overflowY = 'auto';
-      document.body.style.msOverflowStyle = 'scrollbar';
-      document.body.style.scrollbarWidth = 'thin';
-      document.body.style['&::-webkit-scrollbar'] = {
-        width: '12px',
-        background: '#f0f0f0',
-      };
-      document.body.style['&::-webkit-scrollbar-thumb'] = {
-        background: '#888',
-        borderRadius: '6px',
-      };
-    };
+    // const customScrollStyle = () => {
+    //   document.body.style.overflowY = 'auto';
+    //   document.body.style.msOverflowStyle = 'scrollbar';
+    //   document.body.style.scrollbarWidth = 'thin';
+    //   document.body.style['&::-webkit-scrollbar'] = {
+    //     width: '12px',
+    //     background: '#f0f0f0',
+    //   };
+    //   document.body.style['&::-webkit-scrollbar-thumb'] = {
+    //     background: '#888',
+    //     borderRadius: '6px',
+    //   };
+    // };
 
     // 스타일 적용
-    customScrollStyle();
+    // customScrollStyle();
 
     fetchHerbDetail(herbId);
 
     // 실제 애플리케이션에서는 여기에서 API 호출을 할 수 있습니다.
 
-    return () => {
-      document.body.style.overflowY = '';
-      document.body.style.msOverflowStyle = '';
-      document.body.style.scrollbarWidth = '';
-      document.body.style['&::-webkit-scrollbar'] = {};
-      document.body.style['&::-webkit-scrollbar-thumb'] = {};
-    };
+    // return () => {
+    //   document.body.style.overflowY = '';
+    //   document.body.style.msOverflowStyle = '';
+    //   document.body.style.scrollbarWidth = '';
+    //   document.body.style['&::-webkit-scrollbar'] = {};
+    //   document.body.style['&::-webkit-scrollbar-thumb'] = {};
+    // };
 
   }, [herbId, setHerbs]);
 
   return (
     // 스크롤을 허용하는 컨테이너 overflowY: 'auto', height: 'calc(100vh - 105px)', 
-    <div style={{ justifyContent: 'center' }}>
+    // <div style={{ justifyContent: 'center' }}>
       <React.Fragment>
         <HerbProfile data={herbs} />
         <HerbDetailIndex
@@ -108,7 +108,7 @@ const DetailPage = () => {
           </Typography>
         </Snackbar>
       </React.Fragment>
-    </div>
+    // </div>
   );
 };
 

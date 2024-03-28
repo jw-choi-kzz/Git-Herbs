@@ -36,7 +36,6 @@ public class SearchServiceImpl implements SearchService {
 	private final HerbRepository herbRepository;
 	private final MemberRepository memberRepository;
 	private final SearchLogRepository searchLogRepository;
-	private final BookmarkRepository bookmarkRepository;
 	private final ElasticsearchOperations elasticsearchOperations;
 	private final FastApiClient fastApiClient;
 

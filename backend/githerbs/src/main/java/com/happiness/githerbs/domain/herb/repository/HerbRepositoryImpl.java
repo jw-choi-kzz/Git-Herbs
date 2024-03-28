@@ -95,7 +95,7 @@ public class HerbRepositoryImpl implements HerbRepositoryCustomer {
 				herb.herbImg,
 				herb.herbName))
 			.from(herb)
-			.where(herb.herbHarvestingTime.like(LocalDateTime.now().getMonthValue() + "월"))
+			.where(herb.herbHarvestingTime.contains(LocalDateTime.now().getMonthValue() + "월"))
 			.orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc())
 			.limit(3)
 			.fetch();

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import RankCarousel from "../components/main/RankCarousel";
 import TodayHerb from "../components/main/TodayHerb";
 import HerbQuiz from "../components/main/HerbQuiz";
-// import useGlobalStyles from './utils/useGlobalStyles';
+import useGlobalStyles from '../utils/useGlobalStyles';
 
 // const useGlobalStyles = () => {
 //   useEffect(() => {
@@ -37,12 +37,12 @@ import HerbQuiz from "../components/main/HerbQuiz";
 //   }, []);
 // };
 
-
+//overflowY: 'auto', height: 'calc(100dvh - 105px)', 
 const MainPage = () => {
-  //  useGlobalStyles(); 
+   useGlobalStyles(); 
     return (
       <>
-        <div style={{ overflowY: 'auto', height: 'calc(100dvh - 105px)',  justifyContent: 'center' }}>
+        <div style={{  justifyContent: 'center' }}>
           <RankCarousel />
           <br /><br />
           <TodayHerb />

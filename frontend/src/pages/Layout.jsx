@@ -14,7 +14,7 @@ const LayoutContainer = styled.div`
   // background-color: #f5f5f5;
   max-width: 375px; /* 모바일 화면에 최적화된 너비를 최대 너비로 설정 */
   width: 100%; /* 디바이스의 너비에 따라 유연하게 조정되도록 함 */
-  min-height: 100vh;
+  height: 100dvh;
   margin: 0 auto; /* 가운데 정렬 */
   background-color: #f5f5f5;
   `;
@@ -22,8 +22,8 @@ const LayoutContainer = styled.div`
 const MainContent = styled.main`
   width: 100%;
   flex: 1;
+  height: calc(100dvh - 105px);
   overflow-y: auto;
-  min-height: calc(100dvh - 105px);
   // padding-bottom: 55px; // 내용물과 푸터 사이의 간격을 조정하려면 다시 추가
 `;
 

@@ -15,7 +15,6 @@ import org.springframework.data.elasticsearch.core.query.highlight.HighlightFiel
 import org.springframework.stereotype.Service;
 
 import com.happiness.githerbs.domain.herb.entity.Herb;
-import com.happiness.githerbs.domain.herb.repository.BookmarkRepository;
 import com.happiness.githerbs.domain.herb.repository.HerbRepository;
 import com.happiness.githerbs.domain.member.repository.MemberRepository;
 import com.happiness.githerbs.domain.search.dto.response.SearchResponseDto;

@@ -8,40 +8,6 @@ import "../components/escape/escape.css";
 import axios from "axios";
 import useGlobalStyles from '../utils/useGlobalStyles';
 
-// const useGlobalStyles1 = () => {
-//   useEffect(() => {
-//     const style = document.createElement("style");
-//     style.innerHTML = `
-//       body {
-//         overflow-y: auto;
-//       }
-//       body::-webkit-scrollbar,
-//       body *::-webkit-scrollbar {
-//         display: none; /* Hide scrollbar for Chrome, Safari and Opera */
-//       }
-//       body,
-//       body * {
-//         -ms-overflow-style: none; /* IE and Edge */
-//         scrollbar-width: none; /* Firefox */
-//       }
-//       @keyframes fadeIn {
-//         from {
-//           opacity: 0;
-//         }
-//         to {
-//           opacity: 1;
-//         }
-//       }
-//     `;
-//     document.head.appendChild(style);
-//     return () => {
-//       document.head.removeChild(style);
-//     };
-//   }, []);
-// };
-
-
-
 const useGlobalStyle = () => {
   const [weatherdata, setWeather] = useState(null);
 
@@ -70,12 +36,12 @@ const useGlobalStyle = () => {
 
   return weatherdata; // 
 };
-
+//overflowY: 'auto', height: 'calc(100vh - 105px)',
 const EscapePage = () => {
   const weatherdata = useGlobalStyle(); 
   useGlobalStyles(); 
   return (
-    <div style={{ overflowY: 'auto', height: 'calc(100vh - 105px)',  justifyContent: 'center' }}>
+    <div style={{ justifyContent: 'center' }}>
       <>
       <br></br>
         <Weather weatherdata={weatherdata}></Weather>

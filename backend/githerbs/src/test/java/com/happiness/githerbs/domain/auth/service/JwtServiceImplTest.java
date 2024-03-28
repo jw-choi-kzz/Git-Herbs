@@ -57,7 +57,7 @@ class JwtServiceImplTest {
 	@Test
 	void validateToken() {
 		String uuid = "209a4920-a142-4739-a4e5-ac83a2f3288e";
-		String accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJleHAiOjE3MTEwNzA1ODIsImlkIjoxLCJuaWNrbmFtZSI6InRlc3QiLCJzY29wZSI6Ik1FTUJFUiJ9.A39IPNi_mjIyCUzL4dULh566OlCRAEtUXkcbCg8txEb8TVoDmYiB4CCLAVRYVqQSSzLGC1ux_g9x4Wf2qO3eyg";
+		String accessToken = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJleHAiOjE3MTEwNzA1ODIsImlkIjoxLCJuaWNrbmFtZSI6InRlc3QiLCJzY29wZSI6Ik1FTUJFUiJ9.A39IPNi_mjIyCUzL4dULh566OlCRAEtUXkcbCg8txEb8TVoDmYiB4CCLAVRYVqQSSzLGC1ux_g9x4Wf2qO3eyg";
 		String refreshToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyZWZyZXNoLXRva2VuIiwiZXhwIjoxNzExNTg4OTgyLCJpZCI6MX0.laVMyfC2OR86x0Y7p8cqD6aGxnTug07PjNaTpejDje9MDBQA0-wokdDrssxyyUnXexkvtP1JtlcuOZwtQ9pYqg";
 
 		int memberId = 1;
@@ -65,7 +65,7 @@ class JwtServiceImplTest {
 
 		var access = AuthorizationTokenDto.builder().accessToken(accessToken).build();
 		var refresh = AuthorizationTokenDto.builder().refreshToken(refreshToken).build();
-		var accessResult = service.validateToken(uuid, access);
+		var accessResult = service.validateToken(accessToken);
 		var refreshResult = service.validateToken(uuid, refresh);
 		assertNotNull(accessResult);
 		assertNotNull(refreshResult);

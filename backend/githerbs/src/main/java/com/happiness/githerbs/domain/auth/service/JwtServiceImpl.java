@@ -137,8 +137,12 @@ public class JwtServiceImpl implements JwtService {
 
 	@Override
 	public JwtExtrationResponseDto validateToken(String accessToken) {
+
 		try {
-			var claims = getClaims(accessToken);
+			var split = accessToken.split(" ");
+			if(!split[0].equalsIgnoreCase("Bearer")) throw new BaseException("토큰 타입이 일치하지 않습니다", ErrorCode.WRONG_TOKEN_ERROR);
+			var token = split[1];
+			var claims = getClaims(token);
 			return JwtExtrationResponseDto.of(convertFromClaims(claims));
 		} catch (ExpiredJwtException e) {
 			log.error("ExpiredJwtException ", e);

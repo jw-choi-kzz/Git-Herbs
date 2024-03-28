@@ -37,25 +37,25 @@ const PediaPage = () => {
       // 임시 데이터 유지
       {
         herbId: 1,
-        herbName: "곰보배추",
+        herbName: "가는잎향유",
         bookmark: 0,
         acquireCheck: 3,
       },
       {
         herbId: 2,
-        herbName: "당귀",
+        herbName: "갯방풍",
         bookmark: 2,
         acquireCheck: 0,
       },
       {
         herbId: 3,
-        herbName: "도라지",
+        herbName: "결명자",
         bookmark: 2,
         acquireCheck: 3,
       },
       {
         herbId: 4,
-        herbName: "산삼",
+        herbName: "골무꽃",
         bookmark: 2,
         acquireCheck: 3,
       },
@@ -73,52 +73,58 @@ const PediaPage = () => {
       },
       {
         herbId: 7,
-        herbName: "곰보배추",
+        herbName: "당귀",
         bookmark: 0,
         acquireCheck: 3,
       },
       {
         herbId: 8,
-        herbName: "당귀",
+        herbName: "더덕",
         bookmark: 2,
-        acquireCheck: 0,
+        acquireCheck: 3,
       },
       {
         herbId: 9,
-        herbName: "도라지",
+        herbName: "도꼬마리",
         bookmark: 2,
         acquireCheck: 3,
       },
       {
         herbId: 10,
-        herbName: "산삼",
-        bookmark: 2,
-        acquireCheck: 3,
-      },
-      {
-        herbId: 11,
-        herbName: "쑥부쟁이",
+        herbName: "두릅나무",
         bookmark: 2,
         acquireCheck: 0,
       },
       {
-        herbId: 12,
-        herbName: "칡",
+        herbId: 11,
+        herbName: "둥근잎나팔꽃",
         bookmark: 4,
         acquireCheck: 0,
       },
       {
+        herbId: 12,
+        herbName: "들깨",
+        bookmark: 0,
+        acquireCheck: 3,
+      },
+      {
         herbId: 13,
-        herbName: "곰보배추",
+        herbName: "등칡",
         bookmark: 0,
         acquireCheck: 3,
       },
       {
         herbId: 14,
-        herbName: "당귀",
+        herbName: "산삼",
         bookmark: 2,
         acquireCheck: 0,
       },
+      {
+        herbId: 15,
+        herbName: "쑥부쟁이",
+        bookmark: 2,
+        acquireCheck: 0,
+      }
     ]);
   
     /* 서버에서 데이터를 가져오는 부분을 주석 처리합니다.

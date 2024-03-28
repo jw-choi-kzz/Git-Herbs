@@ -86,7 +86,7 @@ function App() {
           ]
         },
         {
-          path: "/detail/1",
+          path: "/detail/:herbId",
           element: <DetailPage />,
           errorElement: <ErrorPage />,
         },

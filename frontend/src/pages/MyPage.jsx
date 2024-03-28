@@ -5,37 +5,9 @@ import BedgeList from "../components/mypage/BedgeList";
 import styled from 'styled-components';
 import MyProfile from "../components/mypage/MyProfile";
 import { BiCalendar, BiTrophy, BiChevronRight } from "react-icons/bi";
-// const useGlobalStyles = () => {
-//     useEffect(() => {
-//       const style = document.createElement("style");
-//       style.innerHTML = `
-//         body {
-//           overflow-y: auto;
-//         }
-//         body::-webkit-scrollbar,
-//         body *::-webkit-scrollbar {
-//           display: none; /* Hide scrollbar for Chrome, Safari and Opera */
-//         }
-//         body,
-//         body * {
-//           -ms-overflow-style: none; /* IE and Edge */
-//           scrollbar-width: none; /* Firefox */
-//         }
-//         @keyframes fadeIn {
-//           from {
-//             opacity: 0;
-//           }
-//           to {
-//             opacity: 1;
-//           }
-//         }
-//       `;
-//       document.head.appendChild(style);
-//       return () => {
-//         document.head.removeChild(style);
-//       };
-//     }, []);
-//   };
+import useGlobalStyles from '../utils/useGlobalStyles';
+
+
 const Container = styled.div`
     padding: 24px;
 `;
@@ -65,7 +37,7 @@ const IconAndTitle = styled.div`
 //response.data: [{"userId" : int, "userNickname" : string, "userImgurl" : string, "rank" : int, "grass" : [{"date" : date, "count" : int},]}]}
 
 const MyPage = () => {
-    // useGlobalStyles(); 
+    useGlobalStyles(); 
     // const [userData, setUserData] = useState([]);
     const navigate = useNavigate()
     const navigateToBadgeList = () => {
@@ -95,9 +67,9 @@ const MyPage = () => {
             }, 
         ]
     }
-
+// overflowY: 'auto', height: 'calc(100vh - 105px)', 
     return (
-        <div style={{ overflowY: 'auto', height: 'calc(100vh - 105px)',  justifyContent: 'center' }}>
+        <div style={{ justifyContent: 'center' }}>
             <Container>
             <MyProfile nickname={userData.userNickname}  profileImg={userData.userImgurl} rank={userData.rank}/>
             <br />

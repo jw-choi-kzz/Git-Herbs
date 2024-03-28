@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Typography from '@mui/joy/Typography';
+import Button from '@mui/joy/Button';
 import { FaCirclePlus } from "react-icons/fa6";
 import MySnackbar from '../MySnackbar';
 
@@ -101,18 +102,34 @@ const MyHerbPicture = ({ herbId }) => {
     return `/herbs/002_plant_userpic${imgId}.png`;
   };
 
-  const handlePlus = () => {
-    return (
-      <MySnackbar
-        buttonTexts={{ confirmText: '등록하기', cancelText: '취소' }}
-      >
-        <div>
-          <h3>잠깐만요!</h3>
-          <p>'심봤다 게시판'에 사진을 등록할까요?</p>
-        </div>
-      </MySnackbar>
-    );
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarStep, setSnackbarStep] = useState(1);
+
+  const handlePlusClick = () => {
+    setSnackbarStep(1);
+    setSnackbarOpen(true);
   };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
+  const handleRegisterClick = () => {
+    setSnackbarStep(2);
+  };
+
+  const snackbarContent = snackbarStep === 1 ? (
+    <>
+      <Typography>'심봤다 게시판'에 사진을 등록할까요?</Typography>
+      <Button onClick={handleCloseSnackbar}>취소</Button>
+      <Button onClick={handleRegisterClick}>등록하기</Button>
+    </>
+  ) : (
+    <>
+      <Typography>'심봤다 게시판'에 사진 등록이 완료되었습니다!</Typography>
+      <Button onClick={handleCloseSnackbar}>확인하기</Button>
+    </>
+  );
 
   if (!herbId) {
     return <Typography>No Herb ID provided.</Typography>;
@@ -126,19 +143,24 @@ const MyHerbPicture = ({ herbId }) => {
     return <Typography>No matching herb picture found.</Typography>;
   }
 
-  return filteredHerbPictures.map((herbData, index) => (
-    <CardContainer key={index} variant="outlined">
-      <HerbImage
-        src={getImageUrl(herbData.imgId)}
-        alt="Herb"
-      />
-      <HerbDetails>
-        <StyledDateStamp>{formatDate(herbData.createdAt)}</StyledDateStamp>
-        <StyledSimilarity>유사도: {herbData.similarity}%</StyledSimilarity>
-        <StyledFaCirclePlus onClick={handlePlus} />
-      </HerbDetails>
-    </CardContainer>
-  ));
+  return (
+    <>
+      {herbData.filter(data => data.myHerbId === parseInt(herbId, 10)).map((herbData, index) => (
+        <CardContainer key={index}>
+          <HerbImage src={getImageUrl(herbData.imgId)} alt="Herb" />
+          <HerbDetails>
+            <StyledDateStamp>{formatDate(herbData.createdAt)}</StyledDateStamp>
+            <StyledSimilarity>유사도: {herbData.similarity}%</StyledSimilarity>
+            <StyledFaCirclePlus onClick={handlePlusClick} />
+          </HerbDetails>
+        </CardContainer>
+      ))}
+
+      <MySnackbar open={snackbarOpen} onClose={handleCloseSnackbar}>
+        {snackbarContent}
+      </MySnackbar>
+    </>
+  );
 };
 
 export default MyHerbPicture;

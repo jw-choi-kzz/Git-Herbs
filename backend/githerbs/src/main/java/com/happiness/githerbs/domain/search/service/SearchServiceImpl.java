@@ -17,8 +17,9 @@ import org.springframework.stereotype.Service;
 import com.happiness.githerbs.domain.herb.entity.Herb;
 import com.happiness.githerbs.domain.herb.repository.HerbRepository;
 import com.happiness.githerbs.domain.member.repository.MemberRepository;
-import com.happiness.githerbs.domain.search.dto.response.SearchResponseDto;
 import com.happiness.githerbs.domain.search.dto.response.KeywordResponseDto;
+import com.happiness.githerbs.domain.search.dto.response.RecentSearchResponseDto;
+import com.happiness.githerbs.domain.search.dto.response.SearchResponseDto;
 import com.happiness.githerbs.domain.search.entity.HerbDocument;
 import com.happiness.githerbs.domain.search.entity.SearchLog;
 import com.happiness.githerbs.domain.search.repository.SearchLogRepository;
@@ -98,7 +99,7 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public List<String> findRecent(Integer memberId) {
+	public List<RecentSearchResponseDto> findRecent(Integer memberId) {
 		return searchLogRepository.findRecent(memberId);
 	}
 
@@ -108,7 +109,7 @@ public class SearchServiceImpl implements SearchService {
 		FastApiClient.KeywordListResponseDto keywords = fastApiClient.getKeyword(herbId);
 		List<KeywordResponseDto> result = new ArrayList<>();
 
-		for(int id : keywords.herbIds){
+		for (int id : keywords.herbIds) {
 			Herb herb = herbRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.HERB_NOT_FOUND));
 			result.add(new KeywordResponseDto(id, herb.getHerbName()));
 		}

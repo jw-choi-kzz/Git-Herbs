@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.Data;
 
-@FeignClient(name = "fastApi", url = "http://127.0.0.1:8000/v1/m1")
+@FeignClient(name = "fastApi", url = "${feign.fast-api.url}")
 public interface FastApiClient {
 
 	@GetMapping("search")

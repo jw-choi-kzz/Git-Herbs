@@ -15,11 +15,10 @@ import org.springframework.data.elasticsearch.core.query.highlight.HighlightFiel
 import org.springframework.stereotype.Service;
 
 import com.happiness.githerbs.domain.herb.entity.Herb;
-import com.happiness.githerbs.domain.herb.repository.BookmarkRepository;
 import com.happiness.githerbs.domain.herb.repository.HerbRepository;
 import com.happiness.githerbs.domain.member.repository.MemberRepository;
 import com.happiness.githerbs.domain.search.dto.response.SearchResponseDto;
-import com.happiness.githerbs.domain.search.dto.response.keywordResponseDto;
+import com.happiness.githerbs.domain.search.dto.response.KeywordResponseDto;
 import com.happiness.githerbs.domain.search.entity.HerbDocument;
 import com.happiness.githerbs.domain.search.entity.SearchLog;
 import com.happiness.githerbs.domain.search.repository.SearchLogRepository;
@@ -36,7 +35,6 @@ public class SearchServiceImpl implements SearchService {
 	private final HerbRepository herbRepository;
 	private final MemberRepository memberRepository;
 	private final SearchLogRepository searchLogRepository;
-	private final BookmarkRepository bookmarkRepository;
 	private final ElasticsearchOperations elasticsearchOperations;
 	private final FastApiClient fastApiClient;
 
@@ -106,13 +104,13 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	@Transactional
-	public List<keywordResponseDto> recommendKeyword(Integer herbId) {
-		FastApiClient.keywordListResponseDto keywords = fastApiClient.getKeyword(herbId);
-		List<keywordResponseDto> result = new ArrayList<>();
+	public List<KeywordResponseDto> recommendKeyword(Integer herbId) {
+		FastApiClient.KeywordListResponseDto keywords = fastApiClient.getKeyword(herbId);
+		List<KeywordResponseDto> result = new ArrayList<>();
 
 		for(int id : keywords.herbIds){
 			Herb herb = herbRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.HERB_NOT_FOUND));
-			result.add(new keywordResponseDto(id, herb.getHerbName()));
+			result.add(new KeywordResponseDto(id, herb.getHerbName()));
 		}
 		return result;
 	}

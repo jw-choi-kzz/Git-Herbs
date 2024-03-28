@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.happiness.githerbs.domain.member.dto.request.KakaoAuthorizeParameterDto;
+import com.happiness.githerbs.domain.member.dto.request.KakaoTokenRequestDto;
 import com.happiness.githerbs.domain.member.dto.response.UserTokenResponseDto;
 import com.happiness.githerbs.domain.member.entity.StateRedisEntity;
 import com.happiness.githerbs.domain.member.repository.StateRedisRepository;
@@ -26,11 +27,10 @@ public class MemberServiceImpl  implements MemberService {
 	private String redirectUri;
 	@Value("${feign.kakao.authorize}")
 	private String authorizeUrl;
-	@Value("${feign.kakao.token}")
-	private String tokenUrl;
+
 
 	private final StateRedisRepository redis;
-
+	private final KakaoFeignClient kakao;
 
 
 	/**
@@ -54,7 +54,6 @@ public class MemberServiceImpl  implements MemberService {
 
 	/**
 	 * 카카오 인가 코드로 access token 발급
-	 *
 	 * */
 	@Override
 	public UserTokenResponseDto tokenService(KakaoAuthorizeParameterDto dto) {
@@ -63,6 +62,8 @@ public class MemberServiceImpl  implements MemberService {
 		redis.delete(entity);
 
 		// TODO : 카카오 access token 발급
+		var tokenRequest = KakaoTokenRequestDto.builder().clientId(clientId).code(dto.code()).redirectUri(redirectUri).build();
+		var token = kakao.tokenClient(tokenRequest);
 
 		// TODO : access token으로 카카오 회원번호 조회
 

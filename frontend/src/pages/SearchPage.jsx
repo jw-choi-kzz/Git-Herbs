@@ -15,14 +15,14 @@ const PageContainer = styled.div`
 `;
 
 const SearchPage = () => {
-    return (
-        <PageContainer>
+  return (
+    <PageContainer>
       <SearchBar />
       <RecentSearch />
       <br />
       <RecommendedHerbs />
-      </PageContainer>
-    )
+    </PageContainer>
+  )
 }
 
 export default SearchPage;

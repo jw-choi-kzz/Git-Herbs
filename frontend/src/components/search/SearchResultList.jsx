@@ -21,6 +21,30 @@ const SearchResultList = () => {
       herbScientificName: "Angelicae Gigantis Radix",
       herbMedicalPart: "뿌리",
       description: "바람으로 인한 모든 질환, 혈액으로 인한 모든 질환, 모든 허약증을 치료한다."
+    },
+    {
+      herbId: 2,
+      herbImg: "/herbs/001_00000176_root.jpg",
+      herbName: "당귀",
+      herbScientificName: "Angelicae Gigantis Radix",
+      herbMedicalPart: "뿌리",
+      description: "바람으로 인한 모든 질환, 혈액으로 인한 모든 질환, 모든 허약증을 치료한다."
+    },
+    {
+      herbId: 3,
+      herbImg: "/herbs/001_00000176_root.jpg",
+      herbName: "당귀",
+      herbScientificName: "Angelicae Gigantis Radix",
+      herbMedicalPart: "뿌리",
+      description: "바람으로 인한 모든 질환, 혈액으로 인한 모든 질환, 모든 허약증을 치료한다."
+    },
+    {
+      herbId: 4,
+      herbImg: "/herbs/001_00000176_root.jpg",
+      herbName: "당귀",
+      herbScientificName: "Angelicae Gigantis Radix",
+      herbMedicalPart: "뿌리",
+      description: "바람으로 인한 모든 질환, 혈액으로 인한 모든 질환, 모든 허약증을 치료한다."
     }
   ];
   return (

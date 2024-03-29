@@ -7,6 +7,9 @@ import BehaviorTips from "../components/escape/BehaviorTips";
 import "../components/escape/escape.css";
 import axios from "axios";
 import useGlobalStyles from '../utils/useGlobalStyles';
+import Monthtip from "../components/escape/Monthtip";
+
+
 
 const useGlobalStyle = () => {
   const [weatherdata, setWeather] = useState(null);
@@ -51,6 +54,8 @@ const EscapePage = () => {
         <SeasonalHerbs></SeasonalHerbs>
         <p>위급 상황시 행동 요령</p>
         <BehaviorTips></BehaviorTips>
+        <p>월별 Tip</p>
+        <Monthtip></Monthtip>
       </>
       <br></br>
       <br></br>

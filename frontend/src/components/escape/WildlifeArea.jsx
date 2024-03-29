@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import {manuualService} from '../../apis/manual';
+
 
 const WildlifeArea = ({ weatherdata }) => {
   const [loading, setLoading] = useState(true);
@@ -13,9 +15,9 @@ const WildlifeArea = ({ weatherdata }) => {
       const x = weatherdata.coord.lon;
       const y = weatherdata.coord.lat;
 
-      axios.get(`https://j10a205.p.ssafy.io/api/v1/manual/animal?lat=${x}&lng=${y}`)
+      manuualService.getAnimal(x,y)
         .then(response => {
-          setResponse(response.data.data);
+          setResponse(response);
           setLoading(false);
         })
         .catch(e => {
@@ -29,18 +31,6 @@ const WildlifeArea = ({ weatherdata }) => {
   const parsedRegion = response1 && response1.region ? response1.region.split(' ') : [];
 
   return (
-    //   <Div>
-    //   <Div2>
-    //     충청북도
-    //     <br />
-    //     <br />
-    //     제천
-    //   </Div2>
-    //   <Div3>
-    //     고라니, 멧돼지, 고슴도치, 멧밭쥐, 청설모, 오소리, 두더지, 족제비,
-    //     멧토끼, 너구리, 개, 노루, 다람쥐
-    //   </Div3>
-    // </Div>
 
     <Div>
       {loading ? (

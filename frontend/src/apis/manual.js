@@ -33,7 +33,7 @@ export const manuualService = {
      * @returns  [region ,animals = 배열형태 ]
      */
     getAnimal : (lat, lng) =>{
-        return axios.get(`/manual?lat=${lat}&lon=${lng}`)
+        return axios.get(`/manual/animal?lat=${lat}&lon=${lng}`)
         .then(response => {
             return response.data.data;
         })

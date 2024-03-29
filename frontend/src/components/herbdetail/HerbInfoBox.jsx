@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import HerbMap from "./HerbMap";
 
 const Container = styled.div`
   padding: 20px;
@@ -158,7 +159,7 @@ const HerbInfoBox = ({ data }) => {
           <SectionSubHeader>Habitat / Location</SectionSubHeader>
         </HeaderContainer>
         <SectionDivisionLine></SectionDivisionLine>
-        <Content>지도 들어갈위치</Content>
+        <Content><HerbMap /></Content>
       </Section>
     </Container>
   );

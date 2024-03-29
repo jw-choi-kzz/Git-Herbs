@@ -90,24 +90,24 @@ const DetailPage = () => {
   return (
     // 스크롤을 허용하는 컨테이너 overflowY: 'auto', height: 'calc(100vh - 105px)', 
     // <div style={{ justifyContent: 'center' }}>
-      <React.Fragment>
-        <HerbProfile data={herbs} />
-        <HerbDetailIndex
-          selectedTab={selectedTab}
-          onTabChange={handleTabChange}
-        />
-        {selectedTab === 0 && <HerbInfoBox data={herbs} />}
-        {selectedTab === 1 && <MyHerbPicture herbId={herbId} />}
-        <Snackbar
-          open={openSnackbar}
-          onClose={() => setOpenSnackbar(false)}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        >
-          <Typography>
-            로그인이 필요한 서비스입니다.
-          </Typography>
-        </Snackbar>
-      </React.Fragment>
+    <React.Fragment>
+      <HerbProfile data={herbs} />
+      <HerbDetailIndex
+        selectedTab={selectedTab}
+        onTabChange={handleTabChange}
+      />
+      {selectedTab === 0 && <HerbInfoBox data={herbs} />}
+      {selectedTab === 1 && <MyHerbPicture herbId={herbId} />}
+      <Snackbar
+        open={openSnackbar}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Typography>
+          로그인이 필요한 서비스입니다.
+        </Typography>
+      </Snackbar>
+    </React.Fragment>
     // </div>
   );
 };

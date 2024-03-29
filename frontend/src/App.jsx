@@ -16,9 +16,18 @@ import SearchPage from "./pages/SearchPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import MyPage from "./pages/MyPage";
 import BedgePage from "./pages/BedgePage";
+import HerbMap from "./components/herbdetail/HerbMap"
+
+const NAVER_CLIENT_KEY = 'miynss7cb8';
 
 function App() {
   useGlobalStyles();
+
+  const script = document.createElement("script");
+  script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${NAVER_CLIENT_KEY}&callback=map_callback`;
+  script.async = true;
+  document.head.appendChild(script);
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -102,6 +111,11 @@ function App() {
         {
           path: "/mypage/bedge",
           element: <BedgePage />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path:"/map",
+          element:<HerbMap/>,
           errorElement: <ErrorPage />,
         }
         //   ]

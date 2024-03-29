@@ -4,7 +4,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import styled from 'styled-components';
-import useSearchStore from '../../store/searchStore'; 
+import {searchService} from '../../apis/search'; 
+import { useState } from 'react';
 
 const theme = createTheme({
   components: {
@@ -42,45 +43,42 @@ const SearchContainer = styled.div`
 
 const SearchBar = () => {
   const navigate = useNavigate();
-  const { keyword, setKeyword } = useSearchStore();
+  const [keyword, setKeyword] = useState(""); // 수정됨
 
-  const handleSearch = () => {
-    if (keyword.trim() !== "") {
-      navigate('/search/result');
-    }
-  }
+  const handleSearch = async (searchQuery) => {
+    navigate(`/search/result?keyword=${searchQuery}`); // 예시
+  };
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch();
+    if (event.key === 'Enter') { // 'Enter' 키를 눌렀을 때만 검색 실행
+      handleSearch(keyword); // 수정됨
     }
-  }
+  };
 
   return (
     <ThemeProvider theme={theme}>
-    <SearchContainer>
-      <OutlinedInput
-        placeholder="검색어를 입력하세요."
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
-        onKeyDown={handleKeyDown}
-        endAdornment={
-          <IconButton
-            edge="end"
-            aria-label="search"
-            onClick={handleSearch}
-          >
-            <HiOutlineSearch style={{ color: '#407700' }} />
-          </IconButton>
-        }
-        style={{
-          width: '80%',
-          height: '40px',
-        }}
-      />
-    </SearchContainer>
-  </ThemeProvider>
-
+      <SearchContainer>
+        <OutlinedInput
+          placeholder="검색어를 입력하세요."
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          onKeyDown={handleKeyDown}
+          endAdornment={
+            <IconButton
+              edge="end"
+              aria-label="search"
+              onClick={() => handleSearch(keyword)}
+            >
+              <HiOutlineSearch style={{ color: '#407700' }} />
+            </IconButton>
+          }
+          style={{
+            width: '80%',
+            height: '40px',
+          }}
+        />
+      </SearchContainer>
+    </ThemeProvider>
   );
 };
 

@@ -2,7 +2,6 @@ package com.happiness.githerbs.domain.herb.controller;
 
 import java.util.List;
 
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.happiness.githerbs.domain.auth.service.JwtService;
 import com.happiness.githerbs.domain.herb.dto.response.HerbDetailResponseDto;
+import com.happiness.githerbs.domain.herb.dto.response.HerbMapResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbSeasonResponseDto;
 import com.happiness.githerbs.domain.herb.service.HerbService;
@@ -35,9 +35,10 @@ public class HerbController {
 
 	@GetMapping
 	public ResponseEntity<SuccessResponse<Slice<HerbResponseDto>>> getHerbList(
-		@RequestHeader String authorization,
+		@RequestHeader(required = false) String authorization,
 		@RequestParam(required = false, defaultValue = "0") int page,
-		@RequestParam(required = false, defaultValue = "100")  int size, String criteria) {
+		@RequestParam(required = false, defaultValue = "100") int size,
+		@RequestParam(required = false) String criteria) {
 		int userId = 0;
 		if (authorization != null) {
 			userId = jwtService.validateToken(authorization).getMemberId();
@@ -63,4 +64,11 @@ public class HerbController {
 		return ResponseEntity.ok(
 			new SuccessResponse<>(HttpStatus.OK.value(), herbService.getHerbDetailByHerbId(herbId)));
 	}
+
+	@GetMapping("/{herbId}/map")
+	public ResponseEntity<SuccessResponse<List<HerbMapResponseDto>>> getHerbMap(@PathVariable Integer herbId) {
+		return ResponseEntity.ok(
+			new SuccessResponse<>(HttpStatus.OK.value(), herbService.getHerbMap(herbId)));
+	}
+
 }

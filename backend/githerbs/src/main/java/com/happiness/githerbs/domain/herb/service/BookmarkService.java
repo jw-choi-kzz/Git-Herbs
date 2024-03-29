@@ -2,6 +2,7 @@ package com.happiness.githerbs.domain.herb.service;
 
 import static com.happiness.githerbs.global.common.code.ErrorCode.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -44,5 +45,14 @@ public class BookmarkService {
 		Bookmark bookmark = bookmarkRepository.findByHerbIdAndMemberId(herbId, memberId)
 			.orElseThrow(() -> new BaseException(BOOKMARK_NOT_FOUND));
 		bookmarkRepository.delete(bookmark);
+	}
+
+	public Integer recentBookmark(Integer memberId){
+		List<Bookmark> bookmarkList = bookmarkRepository.findByMemberIdOrderByCreatedAtDesc(memberId);
+
+		if(!bookmarkList.isEmpty()){
+			return bookmarkList.get(0).getHerb().getId();
+		}
+		return 0;
 	}
 }

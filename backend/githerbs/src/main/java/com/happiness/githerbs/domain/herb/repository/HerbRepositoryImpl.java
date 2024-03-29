@@ -2,6 +2,7 @@ package com.happiness.githerbs.domain.herb.repository;
 
 import static com.happiness.githerbs.domain.herb.entity.QBookmark.*;
 import static com.happiness.githerbs.domain.herb.entity.QHerb.*;
+import static com.happiness.githerbs.domain.herb.entity.QHerbLocation.*;
 import static com.happiness.githerbs.domain.herb.entity.QHerbMedicinalEffect.*;
 import static com.happiness.githerbs.domain.herb.entity.QMyHerb.*;
 import static com.querydsl.core.group.GroupBy.*;
@@ -9,7 +10,6 @@ import static com.querydsl.core.group.GroupBy.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import com.happiness.githerbs.domain.herb.dto.response.HerbDetailResponseDto;
+import com.happiness.githerbs.domain.herb.dto.response.HerbMapResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbMedicinalEffectResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbSeasonResponseDto;
@@ -95,21 +96,33 @@ public class HerbRepositoryImpl implements HerbRepositoryCustomer {
 				herb.herbImg,
 				herb.herbName))
 			.from(herb)
-			.where(herb.herbHarvestingTime.like(LocalDateTime.now().getMonthValue() + "월"))
+			.where(herb.herbHarvestingTime.contains(LocalDateTime.now().getMonthValue() + "월"))
 			.orderBy(Expressions.numberTemplate(Double.class, "function('rand')").asc())
 			.limit(3)
 			.fetch();
 	}
 
-	private OrderSpecifier[] createOrderSpecifier(Sort sort){
+	private OrderSpecifier[] createOrderSpecifier(Sort sort) {
 		List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
-		if(sort.isEmpty()){
+		if (sort.isEmpty()) {
 			orderSpecifiers.add(new OrderSpecifier(Order.ASC, herb.herbName));
-		}else{
+		} else {
 			orderSpecifiers.add(new OrderSpecifier(Order.DESC, herb.herbName));
 		}
 		return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
 	}
+
+	@Override
+	public List<HerbMapResponseDto> getHerbMap(Integer herbId) {
+		return queryFactory.select(
+				Projections.constructor(HerbMapResponseDto.class, herbLocation.regionTwoDepth.id,
+					herbLocation.count().castToNum(Integer.class)))
+			.from(herbLocation)
+			.where(herbLocation.herb.id.eq(herbId))
+			.groupBy(herbLocation.regionTwoDepth.id)
+			.fetch();
+	}
+
 }
 
 

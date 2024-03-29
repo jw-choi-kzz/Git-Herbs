@@ -1,15 +1,7 @@
-package com.happiness.githerbs.domain.herb.entity;
-
-import java.time.LocalDateTime;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.happiness.githerbs.domain.member.entity.Member;
+package com.happiness.githerbs.domain.manual.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,28 +16,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Builder
+@Table(name = "animal_region")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-@Table(name = "bookmark")
-public class Bookmark {
+@Builder
+@Getter
+public class AnimalRegion {
 
 	@Id
-	@Column(name = "bookmark_id")
+	@Column(name = "animal_region_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id")
-	private Member member;
+	@JoinColumn(name = "animal_id")
+	private Animal animal;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "herb_id")
-	private Herb herb;
+	@JoinColumn(name = "region_two_depth")
+	private RegionTwoDepth regionTwoDepth;
 
-	@CreatedDate
-	@Column(updatable = false, nullable = false)
-	private LocalDateTime createdAt;
+
 }

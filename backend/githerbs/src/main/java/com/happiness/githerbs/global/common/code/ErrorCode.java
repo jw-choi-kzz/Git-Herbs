@@ -74,6 +74,9 @@ public enum ErrorCode {
 	BOOKMARK_NOT_FOUND(404, "STAR-001", "즐겨찾기를 찾을 수 없는 경우"),
 	BOOKMARK_DUPLICATED(404, "STAR-002", "이미 등록된 즐겨찾기인 경우"),
 
+	LOCATION_ERROR(404,"LOCATION-001","위치를 찾을 수 없는 경우"),
+	REGION_ERROR(404,"REGION-001","주소가 없는 경우"),
+
 	QUIZ_SOLVED(404, "QUIZ-001", "이미 퀴즈에 참여한 경우");
 
 	private final int status;

@@ -1,4 +1,4 @@
-package com.happiness.githerbs.domain.manual;
+package com.happiness.githerbs.domain.manual.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,18 +13,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "animal")
+@Table(name = "tip")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Getter
-public class Animal {
+public class Tip {
 
 	@Id
-	@Column(name = "animal_id")
+	@Column(name = "tip_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private String name;
+	private String month;
+
+	private String content;
 
 }

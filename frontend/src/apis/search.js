@@ -5,17 +5,6 @@ const axios = apiInstance;
 
 
 export const searchService = {
-
-    getBoard : (config) =>{
-        return axios.get(`/board`,config =[] )
-        .then(response => {
-            return response.data.data;
-        })
-        .catch(e => {
-            console.log(e);
-        })
-    },
-
     /**
      *  입력한 키워드로 검색을 합니다.
      * @param {*} keyword  검색 키워드

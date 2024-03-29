@@ -7,7 +7,6 @@ import BehaviorTips from "../components/escape/BehaviorTips";
 import "../components/escape/escape.css";
 import axios from "axios";
 import useGlobalStyles from '../utils/useGlobalStyles';
-import monthtip from "../components/escape/Monthtip";
 import Monthtip from "../components/escape/Monthtip";
 
 

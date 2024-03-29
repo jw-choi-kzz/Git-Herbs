@@ -2,7 +2,6 @@ import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import { manuualService } from '../../apis/manual';
 
-
 const Monthtip = () => {
   const [res, setTip] = useState(null);
 
@@ -10,6 +9,9 @@ const Monthtip = () => {
   useEffect(() => {
     getTip();
   }, []);
+
+
+
 
 
   const getTip = async () => {

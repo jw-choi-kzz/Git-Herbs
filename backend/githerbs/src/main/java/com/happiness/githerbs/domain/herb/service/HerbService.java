@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.happiness.githerbs.domain.herb.dto.response.HerbDetailResponseDto;
+import com.happiness.githerbs.domain.herb.dto.response.HerbMapResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbResponseDto;
 import com.happiness.githerbs.domain.herb.dto.response.HerbSeasonResponseDto;
 import com.happiness.githerbs.domain.herb.repository.HerbRepository;
@@ -32,4 +33,9 @@ public class HerbService {
 	public HerbDetailResponseDto getHerbDetailByHerbId(Integer herbId) {
 		return herbRepository.findHerbDetailByHerbId(herbId);
 	}
+
+	public List<HerbMapResponseDto> getHerbMap(Integer herbId) {
+		return herbRepository.getHerbMap(herbId);
+	}
+
 }

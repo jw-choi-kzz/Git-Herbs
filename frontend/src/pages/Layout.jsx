@@ -34,16 +34,26 @@ const ModalOverlay = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 50px; // 푸터 높이만큼 여백 추가
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: ${props => props.visible ? 'block' : 'none'}; // isVisible 대신 visible 사용
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
   z-index: 999;
+  overflow: hidden;
 `;
+
+const FooterContainer = styled.div`
+  position: relative;
+  z-index: 1;
+`;
+
 
 const Layout = () => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [ setSelectedImage ] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handlePictureButtonClick = () => {
     setIsModalVisible(true);
@@ -53,6 +63,12 @@ const Layout = () => {
     setSelectedImage(imageData);
   };
 
+  const handleModalOutsideClick = (event) => {
+    if (event.target === event.currentTarget || event.target.closest('footer')) {
+      setIsModalVisible(false);
+    }
+  };
+
   return (
     <>
       <LayoutContainer>
@@ -60,15 +76,19 @@ const Layout = () => {
         <MainContent>
           <Outlet />
         </MainContent>
-        <Footer onPictureButtonClick={handlePictureButtonClick} />
+        <FooterContainer>
+          <Footer onPictureButtonClick={handlePictureButtonClick} />
+        </FooterContainer>
       </LayoutContainer>
-      <ModalOverlay visible={isModalVisible ? 'true' : undefined}>
-      <ImagePickerModal
-        isVisible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
-        onImagePicked={handleImagePicked}
-      />
-    </ModalOverlay>
+      {isModalVisible && (
+        <ModalOverlay onClick={handleModalOutsideClick}>
+          <ImagePickerModal
+            isVisible={isModalVisible}
+            onClose={() => setIsModalVisible(false)}
+            onImagePicked={handleImagePicked}
+          />
+        </ModalOverlay>
+      )}
     </>
   );
 };

@@ -51,7 +51,9 @@ public enum ErrorCode {
 	NOT_MATCH_TOKEN_ERROR(401, "G-017", "Not Match Token Exception"),
 	// 이미 토큰을 발행함
 	EXIST_TOKEN_ERROR(401, "G-018", "Exist Token Exception"),
-	// 서버가 처리 할 방법을 모르는 경우 발생
+	// FeignClient에서 400 이상의 에러가 오는 경우
+	FEIGN_ERROR(502, "G-019", "Feign Exception"),
+	// 서버가 처리 할 방법을 모르는 경우 발생,
 	INTERNAL_SERVER_ERROR(500, "G-999", "Internal Server Error Exception"),
 
 
@@ -65,6 +67,7 @@ public enum ErrorCode {
 
 	USER_NOT_FOUND(404, "USER-001", "유저를 찾을 수 없는 경우"),
 	USER_INVALID_STATE(410, "USER-002", "state가 유효하지 않습니다"),
+	USER_KAKAO_FAIL(401, "USER-003", "카카오 로그인 실패"),
 
 	MY_HERB_NOT_FOUND(404, "MYHERB-001", "내 도감 사진을 찾을 수 없는 경우"),
 

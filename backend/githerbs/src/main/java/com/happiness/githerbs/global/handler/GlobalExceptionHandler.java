@@ -7,7 +7,6 @@ import com.google.gson.JsonParseException;
 import com.happiness.githerbs.global.common.code.ErrorCode;
 import com.happiness.githerbs.global.common.exception.BaseException;
 import com.happiness.githerbs.global.common.response.ErrorResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -114,6 +114,14 @@ public class GlobalExceptionHandler {
 		log.error("JsonProcessingException", e);
 		final ErrorResponse res = ErrorResponse.of(ErrorCode.JSON_PARSE_ERROR, e.getMessage());
 		return ResponseEntity.status(ErrorCode.JSON_PARSE_ERROR.getStatus()).body(res);
+	}
+
+	/** feign exception */
+	@ExceptionHandler(FeignException.class)
+	protected ResponseEntity<ErrorResponse> handleFeignException(FeignException e) {
+		log.error("FeignException", e);
+		final ErrorResponse res = ErrorResponse.of(ErrorCode.FEIGN_ERROR, e.getMessage());
+		return ResponseEntity.status(ErrorCode.FEIGN_ERROR.getStatus()).body(res);
 	}
 
 	/** 기타 모든 Excpetion */

@@ -14,6 +14,8 @@ import com.happiness.githerbs.domain.auth.service.JwtService;
 import com.happiness.githerbs.domain.member.dto.request.KakaoAuthorizeParameterDto;
 import com.happiness.githerbs.domain.member.dto.response.UserTokenResponseDto;
 import com.happiness.githerbs.domain.member.service.MemberService;
+import com.happiness.githerbs.global.common.code.ErrorCode;
+import com.happiness.githerbs.global.common.exception.BaseException;
 import com.happiness.githerbs.global.common.response.SuccessResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -65,8 +67,10 @@ public class MemberController {
 
 	@GetMapping("/token")
 	@Operation(summary = "redirect url", description = "카카오 로그인 redirect url, 카카오 요구사항")
-	public ResponseEntity<SuccessResponse<UserTokenResponseDto>> tokenController(@RequestParam KakaoAuthorizeParameterDto dto) {
+	public ResponseEntity<SuccessResponse<UserTokenResponseDto>> tokenController(KakaoAuthorizeParameterDto dto) {
+		if(dto.error_description() != null) throw new BaseException(dto.error_description(), ErrorCode.USER_KAKAO_FAIL);
 		// TODO : 카카오 access token 발급
+		service.tokenService(dto);
 		// TODO : jwt 발급
 		// TODO : response에 access jwt, refresh jwt, member 정보 담고, device-id set-cookie 설정하기
 		return null;

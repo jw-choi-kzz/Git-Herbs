@@ -1,5 +1,7 @@
 package com.happiness.githerbs.domain.auth.service;
 
+import java.util.Map;
+
 import com.happiness.githerbs.domain.auth.dto.common.AuthorizationTokenDto;
 import com.happiness.githerbs.domain.auth.dto.common.MemberInfoDto;
 import com.happiness.githerbs.domain.auth.dto.response.JwtExtrationResponseDto;
@@ -15,6 +17,7 @@ public interface JwtService {
 	boolean revokeToken(String deviceId, AuthorizationTokenDto token);
 
 	Claims getClaims(String accessToken);
+	Claims getClaims(String accessToken, String key);
 	AuthorizationTokenDto create(MemberInfoDto memberInfo);
 	MemberInfoDto convertFromClaims(Claims claims);
 

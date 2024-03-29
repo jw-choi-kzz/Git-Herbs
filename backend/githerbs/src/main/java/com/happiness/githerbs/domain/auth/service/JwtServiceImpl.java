@@ -1,6 +1,7 @@
 package com.happiness.githerbs.domain.auth.service;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.crypto.SecretKey;
@@ -38,7 +39,7 @@ public class JwtServiceImpl implements JwtService {
 	@Value("${spring.jwt.secret}")
 	private String secretKey;
 	@Value("${spring.jwt.access-token-validity-in-seconds}")
-	private long accessTokenValidTime ;
+	private long accessTokenValidTime;
 	@Value("${spring.jwt.refresh-token-validity-in-seconds}")
 	private long refreshTokenValidTime;
 
@@ -63,7 +64,8 @@ public class JwtServiceImpl implements JwtService {
 		var result = JwtResponseDto.of(token, state, deviceId);
 
 		// redis에 저장
-		if (service.setRefreshToken(memberInfo.getMemberId(), token.getRefreshToken(), deviceId)) return result;
+		if (service.setRefreshToken(memberInfo.getMemberId(), token.getRefreshToken(), deviceId))
+			return result;
 		else {
 			service.setRefreshToken(memberInfo.getMemberId(), token.getRefreshToken(), deviceId);
 			return result;
@@ -99,7 +101,7 @@ public class JwtServiceImpl implements JwtService {
 			throw new BaseException("적절하지 않은 토큰입니다", ErrorCode.WRONG_TOKEN_ERROR);
 		}
 
-       	// redis에 저장된 토큰이 있는지 확인, 없으면 BaseException이 발생함
+		// redis에 저장된 토큰이 있는지 확인, 없으면 BaseException이 발생함
 		var redisObject = service.getRefreshToken(deviceId);
 		// redis에 저장된 토큰과 사용자가 보낸 토큰이 일치하는지 확인
 		if (!token.getRefreshToken().equals(redisObject.getRefreshToken()))
@@ -112,7 +114,8 @@ public class JwtServiceImpl implements JwtService {
 		// 응답에 적합한 형태로 변환
 		var result = JwtResponseDto.of(newToken, state, deviceId);
 		// redis에 업데이트
-		if(service.updateRefreshToken(memberInfo.getMemberId(), newToken.getRefreshToken(), deviceId)) return result;
+		if (service.updateRefreshToken(memberInfo.getMemberId(), newToken.getRefreshToken(), deviceId))
+			return result;
 		else {
 			service.updateRefreshToken(memberInfo.getMemberId(), newToken.getRefreshToken(), deviceId);
 			return result;
@@ -178,6 +181,13 @@ public class JwtServiceImpl implements JwtService {
 	}
 
 	@Override
+	public Claims getClaims(String accessToken, String key) {
+		SecretKey secretKey = Keys.hmacShaKeyFor(key.getBytes());
+		var jwt = Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(accessToken);
+		return jwt.getPayload();
+	}
+
+	@Override
 	public AuthorizationTokenDto create(MemberInfoDto memberInfo) {
 		long now = System.currentTimeMillis();
 		var refreshKey = Jwts.SIG.HS512.key().build();
@@ -217,4 +227,5 @@ public class JwtServiceImpl implements JwtService {
 			.scope(scope)
 			.build();
 	}
+
 }

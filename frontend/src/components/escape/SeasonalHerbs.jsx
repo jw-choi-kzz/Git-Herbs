@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Carousel } from 'antd';
 import styled, { css } from 'styled-components';
 import { Link } from "react-router-dom";
-
+import { herbsService } from "../../apis/herbs";
 
 
 export default function SeasonalHerbs() {
-
+  const [herbLists,setHerbLists] = useState([]);
 
   const herbList = [
     {
@@ -25,12 +25,22 @@ export default function SeasonalHerbs() {
       imgId: "https://i.ibb.co/jvF7mGt/image.png"
     }
   ];
+  useEffect(()=>{
+    herbsService.getSeason()
+    .then(response=>{
+      setHerbLists(response);
+    })
+    .catch(error =>{
+      console.log(error);
+    })
+  },[])
+
 
   return (
     <>
       <Container>
         <Carousel autoplay>
-          {herbList.map((herb, index) => (
+          {herbLists.map((herb, index) => (
             <Content key={index}>
               <div>
                 <div>

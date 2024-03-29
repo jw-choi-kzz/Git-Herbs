@@ -1,7 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PiStarBold, PiStarFill } from "react-icons/pi";
+
+
+const StyledLink = styled(Link)`
+  text-decoration: none; // 밑줄 없애기
+`;
 
 const Container = styled.div`
   display: flex; // Container를 flex로 설정하여 자식 컴포넌트를 세로로 쌓습니다.
@@ -45,12 +50,15 @@ const ItemIcon = styled.img`
 const HerbListItem = ({ herb }) => {
   const navigate = useNavigate();
 
+  // console.log(herb);
   const handleClick = () => {
-    navigate('/detail/1');
+    console.log(herb.herbId);
+    navigate(`/detail/${herb.herbId}`);
   };
 
   return (
-    <Container onClick={handleClick}>
+    <StyledLink to={`/detail/${herb.herbId}`}>
+    <Container>
       <ItemContainer>
         <ItemIcon src={herb.acquireCheck > 0 ? "/pediaimg/plant_acquired.svg" : "/pediaimg/plant_isNotAcquired.svg"} />
         {herb.bookmark > 0 ? (
@@ -61,6 +69,7 @@ const HerbListItem = ({ herb }) => {
       </ItemContainer>
       <ItemName>{herb.herbName}</ItemName>
     </Container>
+    </StyledLink>
   );
 };
 

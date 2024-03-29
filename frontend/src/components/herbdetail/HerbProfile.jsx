@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PiStarFill, PiStarBold } from "react-icons/pi";
+import { herbsService } from '../../apis/herbs';
+import { configService } from '../../apis/config';
+
 
 const Container = styled.div`
   display: flex;
@@ -29,6 +32,7 @@ const BookmarkIcon = styled.div`
 const HerbProfile = ({ data }) => {
   const isBookmarked = data.herbBookmark > 0;
 
+  
   return (
     <Container>
       <div>

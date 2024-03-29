@@ -10,6 +10,7 @@ const CardContainer = styled.div`
   margin: 0 auto;
   overflow: hidden;
   margin-bottom: 16px;
+  padding : 0px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 `;
 
@@ -76,6 +77,7 @@ const BoardListItem = ({ data }) => {
     // const formattedMonth = month < 10 ? `0${month}` : month;
     // const formattedDay = day < 10 ? `0${day}` : day;
 
+
     return `${year}.${month}.${day}`;
   };
 
@@ -85,12 +87,12 @@ const BoardListItem = ({ data }) => {
       <UserSection>
         <UserAvatar src={userImgUrl} alt={userNickname} />
         <UserInfo>
-          <Typography>{userNickname}</Typography>
-          <Typography>{formatDate(createdAt)}</Typography>
+          <Typography  sx={{ p: 0, m: 0 }}>{userNickname}</Typography>
+          <Typography  sx={{ p: 0, m: 0 }}>{formatDate(createdAt)}</Typography>
         </UserInfo>
         <LikeCounter>
           <HeartIcon />
-          <Typography>{likeCnt}</Typography>
+          <Typography  sx={{ p: 0, m: 0 }}>{likeCnt}</Typography>
         </LikeCounter>
       </UserSection>
     </CardContainer>

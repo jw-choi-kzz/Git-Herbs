@@ -1,8 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BoardListItem from "./BoardListItem";
+import boardService from "../../apis/board";
+import { configService } from "../../apis/config";
 
 const BoardList = ({ filterOption }) => {
   // 게시물 데이터를 state로 관리합니다.
+
+  const [boardDatas, setBoardDatas] = useState(null);
+
+  useEffect(() => {
+    getboard();
+  }, []);
+
+  const getboard =  async () =>{
+    boardService.getBoard(loginconfig)
+    .then(response =>{
+      setBoardDatas(response);
+    })
+    .catch(error =>{
+      console.log(error);
+    })
+  }
+
+  const loginconfig = configService.loginConfig();
+
+
   const [boardData, setBoardData] = useState([
     // createdAt 추가함, 게시물 생성될 때의 시간 의미(날짜 표시를 위해서 추가함, 정렬은 boardId로 됨)
     {

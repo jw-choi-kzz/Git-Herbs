@@ -37,6 +37,21 @@ export const herbsService ={
             console.log(error);
         })
     },
+
+    /**
+     * 특정한 허브의 지도 정보를 불러옵니다
+     * @param {*} herbId  
+     * @returns [code, count] 지역코드와 개수
+     */
+    getHerbMap : (herbId) => {
+        return axios.get(`/herbs/${herbId}/map`)
+        .then(response =>{
+            return response.data.data;
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    },
     
     /**
      * 제철 약초 불러옵니다.

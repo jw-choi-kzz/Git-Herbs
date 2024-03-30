@@ -84,6 +84,7 @@ const HerbInfoBox = ({ data }) => {
     return <div>로딩 중...</div>; // 또는 적절한 오류 메시지
   }
   const {
+    herbId,
     herbName,
     herbImgId, // 이 이미지 ID를 실제 경로로 매핑하는 로직이 필요
     herbNickname,
@@ -115,9 +116,9 @@ const HerbInfoBox = ({ data }) => {
         <SectionDivisionLine></SectionDivisionLine>
         {/* 약효는 리스트로 주어진다고 가정하여 map을 사용 */}
         <StyledList>
-        {herMedicinalEffects.map((effect, index) => (
-      <ListItem key={index}>{effect.medicinalEffect}</ListItem>
-    ))}
+          {herMedicinalEffects.map((effect, index) => (
+            <ListItem key={index}>{effect.medicinalEffect}</ListItem>
+          ))}
         </StyledList>
       </Section>
       <Section>
@@ -158,7 +159,7 @@ const HerbInfoBox = ({ data }) => {
           <SectionSubHeader>Habitat / Location</SectionSubHeader>
         </HeaderContainer>
         <SectionDivisionLine></SectionDivisionLine>
-        <Content><HerbMap /></Content>
+        <Content><HerbMap data={{ herbId }} /></Content>
       </Section>
     </Container>
   );

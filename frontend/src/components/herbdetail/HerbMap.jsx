@@ -2,10 +2,11 @@ import { useEffect, useRef } from 'react';
 import geojsonData from '../../utils/newFIle.json';
 import { herbsService } from "../../apis/herbs"
 
-const NaverMap = () => {
+const NaverMap = ({ data }) => {
   const mapElement = useRef(null);
 
   useEffect(() => {
+    const herbId = data.herbId;
     const initializeMap = async () => {
       const loadNaverMap = async () => {
         const { naver } = window;
@@ -25,7 +26,7 @@ const NaverMap = () => {
       const map = new naver.maps.Map(mapElement.current, mapOptions);
 
       try {
-        const response = await herbsService.getHerbMap(1);
+        const response = await herbsService.getHerbMap(herbId);
         await renderMap(response, map, naver);
       } catch (error) {
         console.log(error);

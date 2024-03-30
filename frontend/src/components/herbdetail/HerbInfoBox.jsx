@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import HerbMap from "./HerbMap";
 
 const Container = styled.div`
   padding: 20px;
@@ -79,22 +80,22 @@ const ListItem = styled.li`
 `;
 
 const HerbInfoBox = ({ data }) => {
-  if (!data || !Array.isArray(data.medicinalEffects)) {
+  if (!data || !Array.isArray(data.herMedicinalEffects)) {
     return <div>로딩 중...</div>; // 또는 적절한 오류 메시지
   }
   const {
+    herbId,
     herbName,
-    herbImg, // 이 이미지 ID를 실제 경로로 매핑하는 로직이 필요
-    herbScientificName,
+    herbImgId, // 이 이미지 ID를 실제 경로로 매핑하는 로직이 필요
     herbNickname,
     herbMedicalPart,
     herbHarvestingTime,
     herbEnvironment,
     herbQuality,
-    medicinalEffects = [] // 기본값으로 빈 배열 할당
+    herMedicinalEffects = [] // 기본값으로 빈 배열 할당
   } = data;
 
-  const imageUrl = `/herbs/002_plant.png`;
+  const imageUrl = herbImgId ? herbImgId : '/herbs/002_plant.png';
 
   return (
     <Container>
@@ -115,8 +116,8 @@ const HerbInfoBox = ({ data }) => {
         <SectionDivisionLine></SectionDivisionLine>
         {/* 약효는 리스트로 주어진다고 가정하여 map을 사용 */}
         <StyledList>
-          {medicinalEffects.map(effect => (
-            <ListItem key={effect.medicinalEffect}>{effect.medicinalEffect}</ListItem>
+          {herMedicinalEffects.map((effect, index) => (
+            <ListItem key={index}>{effect.medicinalEffect}</ListItem>
           ))}
         </StyledList>
       </Section>
@@ -158,7 +159,7 @@ const HerbInfoBox = ({ data }) => {
           <SectionSubHeader>Habitat / Location</SectionSubHeader>
         </HeaderContainer>
         <SectionDivisionLine></SectionDivisionLine>
-        <Content>지도 들어갈위치</Content>
+        <Content><HerbMap data={{ herbId }} /></Content>
       </Section>
     </Container>
   );

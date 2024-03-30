@@ -47,6 +47,16 @@ public class BookmarkService {
 		bookmarkRepository.delete(bookmark);
 	}
 
+
+	public boolean getBookmark(Integer memberId, Integer herbId) {
+		Member member = memberRepository.findById(memberId).orElseThrow(() -> new BaseException(USER_NOT_FOUND));
+		Herb herb = herbRepository.findById(herbId).orElseThrow(() -> new BaseException(HERB_NOT_FOUND));
+
+		Optional<Bookmark> bookmark = bookmarkRepository.findByHerbIdAndMemberId(herbId, memberId);
+        return bookmark.isPresent();
+	}
+
+
 	public Integer recentBookmark(Integer memberId){
 		List<Bookmark> bookmarkList = bookmarkRepository.findByMemberIdOrderByCreatedAtDesc(memberId);
 

@@ -4,13 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PickPicture from "../components/picture/PickPicture";
 import CroppedImage from "../components/picture/CroppedImage";
 
-const PicturePage = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [imageUrl, setImageUrl] = useState(null);
-    const [croppedImage, setCroppedImage] = useState(null);
-
-    const Container = styled.div`
+const Container = styled.div`
     width: 95%;
     margin: auto;
     border-radius: 10px;
@@ -24,16 +18,19 @@ const PicturePage = () => {
     margin-top: 40px;
   `;
 
+const PicturePage = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [imageUrl, setImageUrl] = useState(null);
+    const [croppedImage, setCroppedImage] = useState(null);
+
     useEffect(() => {
         const selectedImageUrl = location.state?.imageUrl;
         if (selectedImageUrl) {
             setImageUrl(selectedImageUrl);
         }
+        croppeGoBack();
     }, [location.state]);
-
-    const handleImageSelect = (selectedImageUrl) => {
-        setImageUrl(selectedImageUrl);
-    };
 
     const handleImageCrop = (croppedImageUrl) => {
         setCroppedImage(croppedImageUrl);
@@ -52,7 +49,7 @@ const PicturePage = () => {
     return (
         <Container>
             {!imageUrl && (
-                <PickPicture onImageSelect={handleImageSelect} />
+                <PickPicture onGoBack={imageGoBack} />
             )}
             {imageUrl && !croppedImage && (
                 <PickPicture

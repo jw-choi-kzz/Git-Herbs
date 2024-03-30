@@ -39,6 +39,8 @@ const PickPicture = ({ imageUrl, onImageCrop, onGoBack }) => {
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
+
+
   const onCropComplete = async (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
@@ -48,7 +50,8 @@ const PickPicture = ({ imageUrl, onImageCrop, onGoBack }) => {
       const croppedImage = await getCroppedImg(imageUrl, croppedAreaPixels);
       onImageCrop(croppedImage);
     } catch (e) {
-      console.error(e);
+      alert('사진을 선택 해 주세요.');
+      handleGoBack();
     }
   };
 

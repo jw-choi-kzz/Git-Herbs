@@ -1,6 +1,9 @@
+import React, { useState } from 'react';
+import ReactLoading from 'react-loading';
+import Button from "@mui/joy/Button";
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Button from "@mui/joy/Button";
 const StyledButton1 = styled(Button)`
   && {
     flex-grow: 1; // 버튼이 공간 채우도록
@@ -30,8 +33,45 @@ const StyledButton2 = styled(Button)`
   }
 `;
 
+
+
 const CroppedImage = ({ croppedImage, onGoBack }) => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  function dataURLtoFile(dataURL, filename) {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  const send = async () => {
+    setIsLoading(true);
+    const file = dataURLtoFile(croppedImage, "croppedImgae.png");
+
+    const form = new FormData();
+    form.append("image", file);
+
+    axios.post('https://j10a205.p.ssafy.io/api/v1/search/image', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then(({ data }) => {
+      const responseData = data.data;
+      navigate('/picture/result', { state: { responseData } })
+    }
+    ).catch((error) => {
+      console.log(error);
+      setIsLoading(false);
+    }
+    );
+  }
 
   const handleGoBack = () => {
     onGoBack();
@@ -46,13 +86,21 @@ const CroppedImage = ({ croppedImage, onGoBack }) => {
 
   return (
     <div>
-      {croppedImage && (
-        <div>
-          <img src={croppedImage} alt="Cropped" style={{ width: '100%', height: 'auto' }} />
+      {isLoading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <ReactLoading type="spin" color="#000" height={50} width={50} />
         </div>
+      ) : (
+        <>
+          {croppedImage && (
+            <div>
+              <img src={croppedImage} alt="Cropped" style={{ width: '100%', height: 'auto' }} />
+            </div>
+          )}
+          <StyledButton1 onClick={confirmGoBack}>뒤로가기</StyledButton1>
+          <StyledButton2 onClick={send}>분석하기</StyledButton2>
+        </>
       )}
-      <StyledButton1 onClick={confirmGoBack}>뒤로가기</StyledButton1>
-      <StyledButton2>분석하기</StyledButton2>
     </div>
   );
 };

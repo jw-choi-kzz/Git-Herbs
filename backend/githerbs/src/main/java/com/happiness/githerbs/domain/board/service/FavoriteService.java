@@ -30,7 +30,7 @@ public class FavoriteService {
 
 	//해당 글에 좋아요 누른 게 있는지 확인
 	public boolean favoriteCheck( Integer boardId, Integer memberId) {
-		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardBoardId(memberId, boardId);
+		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardBoardIdAndDeletedTrue(memberId, boardId);
 		return optionalFavorite.isPresent();
 	}
 

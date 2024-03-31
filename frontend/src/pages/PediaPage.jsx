@@ -57,9 +57,9 @@ const PediaPage = () => {
   const sortHerbs = (herbs, option) => {
     switch (option) {
       case '즐겨찾기 순':
-        return [...herbs].sort((a, b) => a.bookmark - b.bookmark || a.herbId - b.herbId);
+        return [...herbs].sort((b, a) => a.bookmark - b.bookmark || a.herbId - b.herbId);
       case '도감 저장 순':
-        return [...herbs].sort((a, b) => a.acquireCheck - b.acquireCheck || a.herbId - b.herbId);
+        return [...herbs].sort((b, a) => a.acquireCheck - b.acquireCheck || a.herbId - b.herbId);
       case '가나다 순':
       default:
         return [...herbs].sort((a, b) => a.herbName.localeCompare(b.herbName));

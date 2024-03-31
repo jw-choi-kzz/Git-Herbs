@@ -1,5 +1,11 @@
 package com.happiness.githerbs.domain.member.service;
 
+import java.io.IOException;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -7,17 +13,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
+import com.happiness.githerbs.domain.auth.dto.common.AuthorizationTokenDto;
+import com.happiness.githerbs.domain.auth.dto.common.JwtScopeDto;
+import com.happiness.githerbs.domain.auth.dto.common.MemberInfoDto;
+import com.happiness.githerbs.domain.auth.service.JwtService;
 import com.happiness.githerbs.domain.member.dto.common.IdTokenPayload;
 import com.happiness.githerbs.domain.member.dto.request.KakaoAuthorizeParameterDto;
 import com.happiness.githerbs.domain.member.dto.request.KakaoTokenRequestDto;
 import com.happiness.githerbs.domain.member.dto.request.KakaoUserInfoRequestDto;
 import com.happiness.githerbs.domain.member.dto.response.UserTokenResponseDto;
+import com.happiness.githerbs.domain.member.entity.KakaoLoginRedisEntity;
 import com.happiness.githerbs.domain.member.entity.Member;
 import com.happiness.githerbs.domain.member.entity.StateRedisEntity;
+import com.happiness.githerbs.domain.member.repository.KakaoLoginRedisRepository;
 import com.happiness.githerbs.domain.member.repository.MemberRepository;
 import com.happiness.githerbs.domain.member.repository.StateRedisRepository;
 import com.happiness.githerbs.global.common.code.ErrorCode;
 import com.happiness.githerbs.global.common.exception.BaseException;
+import com.happiness.githerbs.global.config.S3Uploader;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,12 +48,17 @@ public class MemberServiceImpl  implements MemberService {
 	private String authorizeUrl;
 	@Value("${feign.kakao.token}")
 	private String tokenUrl;
+	@Value("${kakao.login.tmp-path}")
+	private String tmpPath;
 
-	private final StateRedisRepository redis;
+	private final StateRedisRepository stateRedis;
 	private final KakaoOAuthClient oAuthClient;
 	private final KakaoUserClient userClient;
 	private final MemberRepository repo;
-
+	private final KakaoProfileClient profileClient;
+	private final S3Uploader s3;
+	private final JwtService jwt;
+	private final KakaoLoginRedisRepository loginRedis;
 
 	/**
 	 * 카카오 로그인을 위한 주소 반환
@@ -53,10 +71,11 @@ public class MemberServiceImpl  implements MemberService {
 
 		// state 저장
 		var entity = StateRedisEntity.builder().state(state).build();
-		var result = redis.save(entity);
+		var result = stateRedis.save(entity);
 		if(!result.getState().equals(state)) {
 			throw new BaseException("redis save error", ErrorCode.INTERNAL_SERVER_ERROR);
 		}
+		// TODO : member 완성하면 머지 전에 삭제
 		redirectUri = "http://localhost:8080/v1/user/token";
 		var sb = new StringBuilder(authorizeUrl);
 		sb.append("?client_id=")
@@ -74,50 +93,87 @@ public class MemberServiceImpl  implements MemberService {
 	 * 카카오 인가 코드로 access token 발급
 	 * */
 	@Override
+	@Transactional
 	public UserTokenResponseDto tokenService(KakaoAuthorizeParameterDto dto) {
 		// state 확인
-		var entity = redis.findById(dto.state()).orElseThrow(() -> new BaseException(ErrorCode.USER_INVALID_STATE));
-		redis.delete(entity);
+		var entity = stateRedis.findById(dto.state()).orElseThrow(() -> new BaseException(ErrorCode.USER_INVALID_STATE));
+		stateRedis.delete(entity);
 		// 카카오 access token 발급
 		var tokenRequest = KakaoTokenRequestDto.builder().clientId(clientId).code(dto.code()).redirectUri(redirectUri).build();
 		var token = oAuthClient.tokenClient(tokenRequest);
-		//log.info("token : {}", token);
 		// id token으로 카카오 회원번호 조회
 		var idToken = token.idToken();
 		var payload = decodeIdToken(idToken);
 		if(payload == null || !payload.iss().equalsIgnoreCase(tokenUrl) || !payload.aud().equals(clientId)) throw new BaseException(ErrorCode.USER_KAKAO_FAIL);
 		var kakaoId = Long.parseLong(payload.sub());
-		// TODO : 카카오 회원번호로 회원 조회(없으면 회원가입)
+		// 카카오 회원번호로 회원 조회(없으면 회원가입)
 		var member = repo.findByKakaoIdAndDeleted(kakaoId, false).orElse(null);
 		if(member == null) member = registService(token.accessToken());
-
-		// TODO : 회원 조회 후 회원 정보로 jwt 발급
-
-		// TODO : 회원번호, device-id를 이용해 카카오 access token, refresh token, ID token을 redis 저장
-
-		// TODO : jwt와 회원정보 반환
-		return null;
+		// 회원 조회 후 회원 정보로 jwt 발급
+		var memberInfo = MemberInfoDto.builder().memberId(member.getId()).memberNickname(member.getNickname()).scope(
+			JwtScopeDto.MEMBER).build();
+		var state = UUID.randomUUID().toString().replaceAll("-", "");
+		var jwtToken = jwt.createToken(null, memberInfo, state);
+		if(!state.equals(jwtToken.getState())) throw new BaseException("토큰 에러 문의",ErrorCode.INTERNAL_SERVER_ERROR);
+		// 회원번호, device-id를 이용해 카카오 access token, refresh token, ID token을 redis 저장
+		var loginEntity = KakaoLoginRedisEntity.builder().id(member.getId()+":"+jwtToken.getDeviceId()).kakaoAccessToken(token.accessToken()).kakaoIdToken(idToken).kakaoRefreshToken(token.refreshToken()).build();
+		loginRedis.save(loginEntity);
+		// jwt와 회원정보 반환
+		return UserTokenResponseDto.builder().accessToken(jwtToken.getAccessToken()).refreshToken(
+			jwtToken.getRefreshToken()).deviceId(jwtToken.getDeviceId()).userId(member.getId()).nickname(
+			member.getNickname()).imgId(member.getImgId()).build();
 	}
 
 	/**
 	 * 회원가입 수행
 	 * */
 	@Override
+	@Transactional
 	public Member registService(String accessToken) {
-		// TODO : get kakao user id, nickname, profile image using feign client
+		// get kakao user id, nickname, profile image using feign client
 		var param = KakaoUserInfoRequestDto.builder().secureResource(true).build();
 		var profile = userClient.userInfoClient("Bearer " + accessToken, param);
-		//log.info("profile : {}", profile);
-		// TODO : save profile image to S3
-		// TODO : if profile image is default_profile, don't save to S3
+		// save profile image to S3
 		var s3Url = "";
+		// if profile image is default_profile, don't save to S3
+		if(profile.properties() != null && !profile.properties().profileImage().contains("default_profile")) {
+			s3Url = uploadProfile(profile.properties().profileImage(), profile.id());
+		}
+		// save member info to mysql
+		var nickname = (profile.properties() == null || profile.properties().nickname() == null || profile.properties().nickname().isBlank()) ? randomNickname() : profile.properties().nickname();
+		var member = Member.builder().kakaoId(profile.id()).nickname(nickname).imgId(s3Url).deleted(false).build();
+		repo.save(member);
+		// get member info from mysql
+		var result = repo.findByKakaoIdAndDeleted(profile.id(), false).orElse(null);
+		if(result == null) throw new BaseException("로그인 실패", ErrorCode.USER_NOT_FOUND);
+		// return member info
+		return result;
+	}
 
-		// TODO : save member info to mysql
+	@Override
+	@Transactional
+	public boolean withdrawService(String accessToken, String deviceId) {
+		// TODO : access token validation
+		var memberInfo = jwt.validateToken(accessToken);
+		// TODO : access token and refresh token revoke(including validation)
+		var revokeToken = AuthorizationTokenDto.builder().accessToken(accessToken).build();
+		var result = jwt.revokeToken(deviceId, revokeToken);
+		// TODO : logout kakao account using feign client
 
-		// TODO : get member info from mysql
+		// TODO : kakao access token, refresh token revoke
+		loginRedis.deleteById(memberInfo.getMemberId() + ":" + deviceId);
+		// TODO : delete column of member set true
+		var member = repo.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+		repo.deleteMember(member.getId());
+		return false;
+	}
 
-		// TODO : return member info
-		return null;
+	private String randomNickname() {
+		List<String> prefix = Arrays.asList("성실한", "열정적인", "행복한", "평화로운", "자유로운", "창의적인", "활발한", "유쾌한", "친절한", "용감한", "신중한", "정직한", "근면한", "겸손한", "헌신적인", "희망찬", "진취적인", "지혜로운", "신비로운");
+		String name = "약초꾼";
+		String number = String.valueOf((int)(Math.random() * 99));
+		Collections.shuffle(prefix);
+		return prefix.get(0) + " " + name + number;
 	}
 
 	/**
@@ -130,4 +186,22 @@ public class MemberServiceImpl  implements MemberService {
 		var gson = new Gson();
 		return gson.fromJson(payload, IdTokenPayload.class);
 	}
+
+	@Override
+	public String uploadProfile(String profileUrl, Long kakaoId) {
+		URI uri = URI.create(profileUrl);
+		try(var res = profileClient.userProfileClient(uri)) {
+			if (res.status() >= 400) return "";
+			var in = res.body().asInputStream();
+			String fileName = profileUrl.split("/")[profileUrl.split("/").length - 2];
+			String extension = profileUrl.split("\\.")[profileUrl.split("\\.").length - 1];
+			String path = tmpPath + fileName + "." + extension;
+			return s3.upload(in, "profile", path);
+		} catch (Exception e) {
+			log.error("profile error: {}", kakaoId);
+			log.error(Arrays.toString(e.getStackTrace()));
+			return "";    // s3 업로드에 에러가 발생해도 회원가입은 진행되어야 함
+		}
+	}
+
 }

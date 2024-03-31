@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.happiness.githerbs.domain.member.entity.Member;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Integer> {
+public interface MemberRepository extends JpaRepository<Member, Integer>, MemberRepositoryCustom {
 	Optional<Member> findByKakaoIdAndDeleted(Long kakaoId, boolean deleted);
 }

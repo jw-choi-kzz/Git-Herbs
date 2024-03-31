@@ -33,5 +33,5 @@ public class Member {
 
 	private Long kakaoId;
 
-	private boolean deleted;
+	private Boolean deleted;
 }

@@ -29,4 +29,16 @@ class MemberServiceImplTest {
 
 		assertEquals("https://kauth.kakao.com", token.iss());
 	}
+
+	@Test
+	void uploadProfile() {
+		var profileUrl = "http://k.kakaocdn.net/dn/LnQ7M/btrtXw4RZxC/oPkCXfFp9vi9NRTchs29qK/img_640x640.jpg";
+		var kakaoId = 123456789L;
+		var path = service.uploadProfile(profileUrl, kakaoId);
+		System.out.println("path: " + path);
+		assertNotNull(path);
+		assertNotEquals("", path);
+		assertTrue(path.contains("oPkCXfFp9vi9NRTchs29qK"));
+
+	}
 }

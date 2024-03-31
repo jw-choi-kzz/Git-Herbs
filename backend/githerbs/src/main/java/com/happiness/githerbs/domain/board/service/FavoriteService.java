@@ -30,7 +30,7 @@ public class FavoriteService {
 
 	//해당 글에 좋아요 누른 게 있는지 확인
 	public boolean favoriteCheck( Integer boardId, Integer memberId) {
-		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardBoardIdAndDeletedTrue(memberId, boardId);
+		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardBoardId(memberId, boardId);
 		return optionalFavorite.isPresent();
 	}
 
@@ -44,7 +44,7 @@ public class FavoriteService {
 	// 좋아요 기능
 	@Transactional
 	public FavoriteResponseDto saveFavorite(Integer memberId, Integer boardId) {
-		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardBoardIdAndDeletedTrue(memberId, boardId);
+		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardBoardId(memberId, boardId);
 		//좋아요 누른적이 있다면
 		if (optionalFavorite.isPresent()) {
 			if(optionalFavorite.get().getBoard().isDeleted()) throw new BaseException(ErrorCode.NOT_VALID_FAVORITE);

@@ -16,6 +16,6 @@ public interface FavoriteRepository extends JpaRepository<Favorite,Integer> {
 
 
 	//좋아요 했는지 확인
-	Optional<Favorite> findByMemberIdAndBoardBoardIdAndDeletedTrue(int memberId,int boardId);
+	Optional<Favorite> findByMemberIdAndBoardBoardId(int memberId, int boardId);
 
 }

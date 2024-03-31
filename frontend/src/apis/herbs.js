@@ -125,8 +125,19 @@ export const herbsService ={
      * @param {*} loginConfig  로그인 헤더 
      * @returns 
      */
-    postBookmark : (herbId,loginConfig) =>{
+    writeBookmark : (herbId,loginConfig) =>{
+        
         return axios.post(`/herbs/${herbId}/bookmark`,loginConfig)
+        .then(response => {
+            return response;
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    },
+
+    getBookmark : (herbId,loginConfig) =>{
+        return axios.get(`/herbs/${herbId}/bookmark`,loginConfig)
         .then(response => {
             return response.data;
         })
@@ -135,21 +146,22 @@ export const herbsService ={
         })
     },
 
+
     /**
      * 즐겨찾기를 삭제합니다. "bookmark" : 1일 때 실행되는 함수 
      * @param {*} herbId  허브 Id
      * @param {*} loginConfig  로그인 헤더 
      * @returns 
      */
-    deleteBookmark : (herbId,loginConfig) =>{
-        return axios.delete(`/herbs/${herbId}/bookmark`,loginConfig)
-        .then(response => {
+    deleteBookmark: (herbId, loginConfig) => {
+        return axios.delete(`/herbs/${herbId}/bookmark`, loginConfig)
+          .then(response => {
             return response.data;
-        })
-        .catch(error =>{
+          })
+          .catch(error => {
             console.log(error);
-        })
-    },
+          });
+      },
 
 
 }

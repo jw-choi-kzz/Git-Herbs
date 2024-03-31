@@ -1,6 +1,8 @@
-import { useState } from 'react';
-import { Row, Col } from 'antd';
+import { Col, Row } from 'antd';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { eventService } from '../../apis/event';
+import { configService } from "../../apis/config"
 import AfterHerbQuiz from './AfterHerbQuiz';
 
 const Container = styled.div`
@@ -40,44 +42,59 @@ const QuizImage = styled.img`
 `;
 
 const HerbQuiz = () => {
-    const [quizState, setQuizState] = useState('quiz');
-    //"question": string, "imgOne" : string, "imgTwo" : string, "imgThree" : string, "imgFour" : string    
-    const question = "다음 중 칡 사진을 고르세요."; ///response.data.question
-    
-    const QuizOptionsList = [ 
-        {
-          idx: 1,
-          herbUrl: "./herbs/001_00000010_leaf.jpg" //약초 이미지 url(imgOne~imgFour)
-        },
-        {
-          idx: 2,
-          herbUrl: "./herbs/001_00000106_flower.jpg"
-        },
-        {
-          idx: 3,
-          herbUrl: "./herbs/001_00000176_root.jpg"
-        },
-        {
-          idx: 4,
-          herbUrl: "./herbs/001_00000311_leaf.jpg"
-        },
-    ] //response.data.imageList
-    const answer = 1;//퀴즈 풀고 "answer" : int
+  const [quizState, setQuizState] = useState(null);
+  //"question": string, "imgOne" : string, "imgTwo" : string, "imgThree" : string, "imgFour" : string   
+  const [question, setquestion] = useState();
+  const [imgOne, setImgOne] = useState();
+  const [imgTwo, setImgTwo] = useState();
+  const [imgThree, setImgThree] = useState();
+  const [imgFour, setImgFour] = useState();
 
-    const handleImageClick = (id) => {
-      if (id === answer) {  //임의의 답(api 요청해서 정답 번호를 받아옴)
-          setQuizState('answered');
-      } else {
-          // Handle wrong answer if needed
-      }
+  useEffect(() => {
+    response();
+  }, []);
+
+  const response = async () => {
+    const data = await eventService.getQuiz();
+    setquestion(data.question);
+    setImgOne(data.imgOne);
+    setImgTwo(data.imgTwo);
+    setImgThree(data.imgThree);
+    setImgFour(data.imgFour);
+  }
+
+  // const question = "다음 중 칡 사진을 고르세요."; ///response.data.question
+
+  const QuizOptionsList = [
+    {
+      idx: 1,
+      herbUrl: imgOne //약초 이미지 url(imgOne~imgFour)
+    },
+    {
+      idx: 2,
+      herbUrl: imgTwo
+    },
+    {
+      idx: 3,
+      herbUrl: imgThree
+    },
+    {
+      idx: 4,
+      herbUrl: imgFour
+    },
+  ] //response.data.imageList
+
+  const handleImageClick = async (id) => {
+    const response = await eventService.postQuiz({ answer: id - 1 }, configService.loginConfig());
+    setQuizState(response)
   };
 
-  if (quizState === 'answered') {
-    return <AfterHerbQuiz />;
-}
+  if (quizState != null) {
+    return <AfterHerbQuiz data={{ quizState }} />;
+  }
 
-    return (
-      <Container>
+  return (
+    <Container>
       <Title className='bold'>오늘의 약초 퀴즈</Title>
       <SubTitle className='medium'>{question}</SubTitle>
       <br />
@@ -93,7 +110,7 @@ const HerbQuiz = () => {
         ))}
       </Row>
     </Container>
-    );
+  );
 }
 
 export default HerbQuiz;

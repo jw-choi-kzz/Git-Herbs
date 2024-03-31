@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
-import { BiMessageCheck } from "react-icons/bi";
+import { BiMessageCheck, BiMessageAltX } from "react-icons/bi";
 
 const Container = styled.div`
   width: 320px;
@@ -36,14 +34,28 @@ const Icon = styled(BiMessageCheck)`
     font-size: 120px;
 `;
 
-const AfterHerbQuiz = () => {
-    return (
-        <Container>
-            <Title className="bold">오늘의 약초 퀴즈</Title>
-            <Icon/>
-            <SubTitle>퀴즈 정답을 맞췄습니다!</SubTitle>
-        </Container>
-    )
+const FalseIcon = styled(BiMessageAltX)`
+    color: #DF1D1D; 
+    font-size: 120px;
+`;
+
+const AfterHerbQuiz = ({ data }) => {
+  return (
+    <Container>
+      <Title className="bold">오늘의 약초 퀴즈</Title>
+      {data.quizState ? (
+        <>
+          <Icon />
+          <SubTitle>퀴즈 정답을 맞췄습니다!</SubTitle>
+        </>
+      ) : (
+        <>
+          <FalseIcon />
+          <SubTitle>퀴즈 정답을 틀렸습니다!</SubTitle>
+        </>
+      )}
+    </Container>
+  )
 }
 
 export default AfterHerbQuiz;

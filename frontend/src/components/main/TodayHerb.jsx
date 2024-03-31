@@ -1,5 +1,7 @@
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { eventService } from '../../apis/event';
 
 // Styled Components는 컴포넌트 바깥에서 정의해야함.
 //컴포넌트 렌더링될 때마다 새로운 Styled Component가 만들어지지 않도록
@@ -59,33 +61,51 @@ const HerbImage = styled.img`
 `;
 
 const TodayHerb = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const todayHerb = {
-        herbId: 1,
-        herbUrl: "/herbs/001_00000176_root.jpg",
-        herbName: "칡",
-        latinName: "Paeoniae Radix",
-    } //api연결 전 임의 약초 정보
+  const [herbId, setHerbId] = useState();
+  const [herbName, setHerbName] = useState();
+  const [herbImg, setHerbImg] = useState();
+  const [herbMedicalPart, setHerbMedicalPart] = useState();
 
-    const handleClick = () => {
-        navigate(`/detail/${todayHerb.herbId}`); // 클릭 시 상세 페이지로 이동
-    };
 
-    return (
-      <>
-        <Container onClick={handleClick}>
-          <Title className='bold'>오늘의 약초</Title>
-          <DetailsContainer>
-            <HerbImage src={todayHerb.herbUrl} alt={todayHerb.herbName} />
-            <TextContainer>
-              <HerbName className='medium'>{todayHerb.herbName}</HerbName>
-              <SubTitle className='regular'>{todayHerb.latinName}</SubTitle>
-            </TextContainer>
-          </DetailsContainer>
-        </Container>
-      </>
-    );
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await eventService.getDaily();
+      setHerbId(data.herbId);
+      setHerbName(data.herbName)
+      setHerbImg(data.herbImg)
+      setHerbMedicalPart(data.herbMedicalPart)
+    }
+    getData();
+  }, []);
+
+  // const todayHerb = {
+  //   herbId: 1,
+  //   herbUrl: "/herbs/001_00000176_root.jpg",
+  //   herbName: "칡",
+  //   latinName: "Paeoniae Radix",
+  // } //api연결 전 임의 약초 정보
+
+  const handleClick = () => {
+    navigate(`/detail/${herbId}`); // 클릭 시 상세 페이지로 이동
+  };
+
+  return (
+    <>
+      <Container onClick={handleClick}>
+        <Title className='bold'>오늘의 약초</Title>
+        <DetailsContainer>
+          <HerbImage src={herbImg} alt={herbName} />
+          <TextContainer>
+            <HerbName className='medium'>{herbName}</HerbName>
+            <SubTitle className='regular'>{herbMedicalPart}</SubTitle>
+          </TextContainer>
+        </DetailsContainer>
+      </Container>
+    </>
+  );
 }
 
 export default TodayHerb;

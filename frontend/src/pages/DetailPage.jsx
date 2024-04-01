@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import store from '../store/store';
-import HerbDetailIndex from '../components/herbdetail/HerbDetailIndex';
-import HerbProfile from '../components/herbdetail/HerbProfile';
-import HerbInfoBox from '../components/herbdetail/HerbInfoBox';
-import MyHerbPicture from '../components/herbdetail/MyHerbPicture';
-import { useNavigate, useParams } from 'react-router-dom';
-import Snackbar from '@mui/joy/Snackbar';
-import Typography from '@mui/joy/Typography';
-import { herbsService } from '../apis/herbs';
-import { configService } from '../apis/config';
-
+import React, { useState, useEffect } from "react";
+import store from "../store/store";
+import HerbDetailIndex from "../components/herbdetail/HerbDetailIndex";
+import HerbProfile from "../components/herbdetail/HerbProfile";
+import HerbInfoBox from "../components/herbdetail/HerbInfoBox";
+import MyHerbPicture from "../components/herbdetail/MyHerbPicture";
+import { useNavigate, useParams } from "react-router-dom";
+import Snackbar from "@mui/joy/Snackbar";
+import Typography from "@mui/joy/Typography";
+import { herbsService } from "../apis/herbs";
+import { configService } from "../apis/config";
 
 const DetailPage = () => {
   const navigate = useNavigate();
@@ -23,21 +22,22 @@ const DetailPage = () => {
   };
 
   const fetchHerbDetail = async (herbId) => {
-    herbsService.getHerbInfo(herbId)
-    .then(response =>{
-      setHerbs(response);
-    }).catch(error => {
-      console.log(error);
-    })
+    herbsService
+      .getHerbInfo(herbId)
+      .then((response) => {
+        setHerbs(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
     fetchHerbDetail(herbId);
-
   }, [herbId, setHerbs]);
 
   return (
-    // 스크롤을 허용하는 컨테이너 overflowY: 'auto', height: 'calc(100vh - 105px)', 
+    // 스크롤을 허용하는 컨테이너 overflowY: 'auto', height: 'calc(100vh - 105px)',
     // <div style={{ justifyContent: 'center' }}>
     <React.Fragment>
       <HerbProfile data={herbs} />
@@ -50,11 +50,9 @@ const DetailPage = () => {
       <Snackbar
         open={openSnackbar}
         onClose={() => setOpenSnackbar(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Typography>
-          로그인이 필요한 서비스입니다.
-        </Typography>
+        <Typography>로그인이 필요한 서비스입니다.</Typography>
       </Snackbar>
     </React.Fragment>
     // </div>

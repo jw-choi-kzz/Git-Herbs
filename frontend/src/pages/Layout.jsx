@@ -1,9 +1,12 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
-import ImagePickerModal from "../components/picture/ImagePickerModal";
+import Modal from '../components/Modal';
+import PictureResultModalContent from '../components/picture/PictureResultModalContent';
+import ImagePickerModalContent from '../components/picture/ImagePickerModalContent';
+import useModalStore from '../store/modalStore';
+import { useState } from 'react';
 
 const LayoutContainer = styled.div`
   // display: flex;
@@ -52,11 +55,12 @@ const FooterContainer = styled.div`
 
 const Layout = () => {
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const { isModalVisible, modalContent, selectedItem, openModal, closeModal } = useModalStore();
+
+  const [selectedImage, setSelectedImage] = useState();
 
   const handlePictureButtonClick = () => {
-    setIsModalVisible(true);
+    openModal('imagePicker');
   };
 
   const handleImagePicked = (imageData) => {
@@ -65,7 +69,7 @@ const Layout = () => {
 
   const handleModalOutsideClick = (event) => {
     if (event.target === event.currentTarget || event.target.closest('footer')) {
-      setIsModalVisible(false);
+      closeModal();
     }
   };
 
@@ -82,11 +86,14 @@ const Layout = () => {
       </LayoutContainer>
       {isModalVisible && (
         <ModalOverlay onClick={handleModalOutsideClick}>
-          <ImagePickerModal
-            isVisible={isModalVisible}
-            onClose={() => setIsModalVisible(false)}
-            onImagePicked={handleImagePicked}
-          />
+          <Modal isOpen={isModalVisible} onClose={closeModal}>
+            {modalContent === 'imagePicker' && (
+              <ImagePickerModalContent onImagePicked={handleImagePicked} onClose={closeModal} />
+            )}
+            {modalContent === 'pictureResult' && (
+              <PictureResultModalContent item={selectedItem} onClose={closeModal} />
+            )}
+          </Modal>
         </ModalOverlay>
       )}
     </>

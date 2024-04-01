@@ -4,6 +4,8 @@ import { PiStarFill, PiStarBold } from "react-icons/pi";
 import { herbsService } from "../../apis/herbs";
 import { configService } from "../../apis/config";
 import axios from "axios";
+import LoginModal from "../LoginModal";
+import useLoginStore from "../../store/useLoginStore";
 
 const Container = styled.div`
   display: flex;
@@ -30,6 +32,8 @@ const BookmarkIcon = styled.div`
 `;
 
 const HerbProfile = ({ data }) => {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const { isLogin } = useLoginStore();
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
@@ -79,6 +83,10 @@ const HerbProfile = ({ data }) => {
   }; // postBookmark 함수의 중괄호를 닫음
 
   const handleClick = async () => {
+    if (!isLogin) {
+      setShowLoginModal(true);
+      return;
+    }
     if (isBookmarked) {
       await removeBookmark();
     } else {
@@ -95,6 +103,12 @@ const HerbProfile = ({ data }) => {
       <BookmarkIcon onClick={handleClick}>
         {isBookmarked ? <PiStarFill /> : <PiStarBold />}
       </BookmarkIcon>
+      {showLoginModal && (
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+        />
+      )}
     </Container>
   );
 };

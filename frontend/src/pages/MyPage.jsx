@@ -1,12 +1,11 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MonthGrass from "../components/mypage/MonthGrass";
-import BedgeList from "../components/mypage/BedgeList";
 import styled from "styled-components";
 import MyProfile from "../components/mypage/MyProfile";
 import { BiCalendar, BiTrophy, BiChevronRight } from "react-icons/bi";
-import useGlobalStyles from '../utils/useGlobalStyles';
-import { configService } from '../apis/config';
+import useGlobalStyles from "../utils/useGlobalStyles";
+import { configService } from "../apis/config";
 import { userServcie } from "../apis/user";
 
 const Container = styled.div`
@@ -38,51 +37,61 @@ const IconAndTitle = styled.div`
 //response.data: [{"userId" : int, "userNickname" : string, "userImgurl" : string, "rank" : int, "grass" : [{"date" : date, "count" : int},]}]}
 
 const MyPage = () => {
-    useGlobalStyles(); 
-    // const [userData, setUserData] = useState([]);
-    const [userInfo, setUserInfo] = useState({});
-    const [userGrass, setUserGrass] = useState([]);
+  useGlobalStyles();
+  // const [userData, setUserData] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
+  const [userGrass, setUserGrass] = useState([]);
 
-    useEffect(()=>{
-        userServcie.getUserInfo(configService.loginConfig)
-        .then(response => {
-            const userData = response;
-            setUserInfo({
-                userId: userData.userId,
-                userNickname: userData.userNickname,
-                userImgurl: userData.userImgurl,
-                rank: userData.rank
-            });
-            setUserGrass(userData.grass);
-        })
-        .catch(error => {
-            console.error(error);
-        })
-    }, []);
+  useEffect(() => {
+    userServcie
+      .getUserInfo(configService.loginConfig)
+      .then((response) => {
+        const userData = response;
+        setUserInfo({
+          userId: userData.userId,
+          userNickname: userData.userNickname,
+          userImgurl: userData.userImgurl,
+          rank: userData.rank,
+        });
+        setUserGrass(userData.grass);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
-    const navigate = useNavigate()
-    const navigateToBadgeList = () => {
-        navigate('/mypage/bedge');
-    };
+  const navigate = useNavigate();
+  const navigateToBadgeList = () => {
+    navigate("/mypage/bedge");
+  };
 
-    return (
-        <div style={{ justifyContent: 'center' }}>
-            <Container>
-            <MyProfile nickname={userInfo.userNickname}  profileImg={userInfo.userImgurl} rank={userInfo.rank}/>
-            <br />
-            <MenuTitle className="bold"><BiCalendar style={{ color: '#21351F', fontSize: '24px' }}/> 나의 잔디 기록</MenuTitle>
-            <Explain>열심히 Git Herbs를 사용할수록 꽃이 피어나요!</Explain>
-            <MonthGlass glassList={userGrass} />
-            <br/>
-            <NaviContainer onClick={navigateToBadgeList}>
-                <IconAndTitle>
-                    <BiTrophy style={{ color: '#21351F', fontSize: '24px' }}/> <MenuTitle className="bold">획득한 뱃지 목록</MenuTitle><BiChevronRight style={{ color: '#979797', fontSize: '24px' }}/>
-                </IconAndTitle>
-                <Explain>활동을 통해 얻은 뱃지를 확인해보세요!</Explain>
-            </NaviContainer>
-            </Container>
-        </div>
-    )
-}
+  return (
+    <div style={{ justifyContent: "center" }}>
+      <Container>
+        <MyProfile
+          nickname={userInfo.userNickname}
+          profileImg={userInfo.userImgurl}
+          rank={userInfo.rank}
+        />
+        <br />
+        <MenuTitle className="bold">
+          <BiCalendar style={{ color: "#21351F", fontSize: "24px" }} /> 나의
+          잔디 기록
+        </MenuTitle>
+        <Explain>열심히 Git Herbs를 사용할수록 꽃이 피어나요!</Explain>
+        <MonthGrass grassList={userGrass} />
+        <br />
+        <NaviContainer onClick={navigateToBadgeList}>
+          <IconAndTitle>
+            <BiTrophy style={{ color: "#21351F", fontSize: "24px" }} />{" "}
+            <MenuTitle className="bold">획득한 뱃지 목록</MenuTitle>
+            <BiChevronRight style={{ color: "#979797", fontSize: "24px" }} />
+          </IconAndTitle>
+          <Explain>활동을 통해 얻은 뱃지를 확인해보세요!</Explain>
+        </NaviContainer>
+      </Container>
+    </div>
+  );
+};
 
 export default MyPage;

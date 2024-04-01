@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import useLoadingStore from './store/loadingStore';
+import { useEffect } from "react";
+import useLoadingStore from "./store/loadingStore";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import './App.css';
-import useGlobalStyles from './utils/useGlobalStyles';
+import "./App.css";
+import useGlobalStyles from "./utils/useGlobalStyles";
 import Layout from "./pages/Layout";
 import MainPage from "./pages/MainPage";
 import ErrorPage from "./pages/ErrorPage";
@@ -18,9 +18,10 @@ import SearchPage from "./pages/SearchPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import MyPage from "./pages/MyPage";
 import BedgePage from "./pages/BedgePage";
-import HerbMap from "./components/herbdetail/HerbMap"
+import HerbMap from "./components/herbdetail/HerbMap";
+import PrivateRoute from "./components/PrivateRoute";
 
-const NAVER_CLIENT_KEY = 'miynss7cb8';
+const NAVER_CLIENT_KEY = "miynss7cb8";
 
 function App() {
   useGlobalStyles();
@@ -30,7 +31,7 @@ function App() {
   script.async = true;
   document.head.appendChild(script);
   const setIsLoading = useLoadingStore((state) => state.setIsLoading);
-  useEffect(()=>{
+  useEffect(() => {
     setIsLoading(false);
   }, [setIsLoading]);
 
@@ -62,6 +63,7 @@ function App() {
         },
         {
           path: "/picture",
+          element: <PrivateRoute />,
           errorElement: <ErrorPage />,
           children: [
             {
@@ -97,8 +99,8 @@ function App() {
               path: "result",
               element: <SearchResultPage />,
               errorElement: <ErrorPage />,
-            }
-          ]
+            },
+          ],
         },
         {
           path: "/detail/:herbId",
@@ -106,26 +108,26 @@ function App() {
           errorElement: <ErrorPage />,
         },
         {
-          // path: "",
-          // element: <PrivateRoute />,
-          // children: [
-          //   {
           path: "/mypage",
-          element: <MyPage />,
+          element: <PrivateRoute />,
           errorElement: <ErrorPage />,
+          children: [
+            {
+              path: "",
+              element: <MyPage />,
+            },
+            {
+              path: "bedge",
+              element: <BedgePage />,
+              errorElement: <ErrorPage />,
+            },
+          ],
         },
         {
-          path: "/mypage/bedge",
-          element: <BedgePage />,
+          path: "/map",
+          element: <HerbMap />,
           errorElement: <ErrorPage />,
         },
-        {
-          path:"/map",
-          element:<HerbMap/>,
-          errorElement: <ErrorPage />,
-        }
-        //   ]
-        // }
       ],
     },
   ]);
@@ -133,7 +135,7 @@ function App() {
     <>
       <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
     </>
-  )
+  );
 }
 
 export default App;

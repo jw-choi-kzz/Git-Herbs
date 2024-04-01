@@ -92,6 +92,7 @@ public class BoardService {
 			boardResponseDto.setLikeCheck(favoriteService.favoriteCheck(board.getBoardId(),memberId));
 			boardResponseDtoList.add(boardResponseDto);
 		}
+		Collections.reverse(boardResponseDtoList);
 		return boardResponseDtoList;
 	}
 

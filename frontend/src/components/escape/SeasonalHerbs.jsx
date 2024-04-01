@@ -48,7 +48,7 @@ export default function SeasonalHerbs() {
                 </div>
 
                 <Nickname className="medium">{herb.herbName}</Nickname>
-                <Link  to={`/detail/${herb.herbId}`}>
+                <Link  to={`/detail/${herb.id}`}>
                 <Nickname2 > 상세 보기</Nickname2>
                 </Link>
               </div>

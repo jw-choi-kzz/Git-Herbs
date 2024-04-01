@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { PiStarFill, PiStarBold } from "react-icons/pi";
 import { herbsService } from '../../apis/herbs';
 import { configService } from '../../apis/config';
+import axios from 'axios';
 
 
 const Container = styled.div`
@@ -30,16 +31,72 @@ const BookmarkIcon = styled.div`
 `;
 
 const HerbProfile = ({ data }) => {
-  const isBookmarked = data.herbBookmark > 0;
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
+  useEffect(() => {
+   getBookmark();
+  }, [data]);
+
+  const getBookmark = async () =>{
+    const config = configService.loginConfig();
+    herbsService.getBookmark(data.herbId,config)
+    .then(response =>{
+      
+      setIsBookmarked(response.data ? 1 : 0);
+    })
+    .catch(error =>{
+      console.log(error);
+    })
+
+  }
+
+  const removeBookmark = async () =>{
+    const config = configService.loginConfig();
+    herbsService.deleteBookmark(data.herbId,config)
+    .then(response =>{
+      console.log(response);
+      setIsBookmarked(0);
+    })
+    .catch(error=>{
+      console.log(error);
+    })
+  }
+
+  const postBookmark = async () =>{
+    const config = configService.loginConfig(); // configService에서 request header를 가져옴
+    axios.post(
+      `https://j10a205.p.ssafy.io/api/v1/herbs/${data.herbId}/bookmark`,
+      null, 
+      config // configService에서 가져온 request header 설정
+    )
+    .then(response =>{
+      console.log(response);
+      setIsBookmarked(1);
+    })
+    .catch(error=>{
+      console.log(error);
+    })
+  }
   
+
+  const handleClick = async () => {
+    if (isBookmarked) {
+      await removeBookmark();
+    } else {
+      await postBookmark();
+    }
+  }
+
+
+
+
   return (
     <Container>
       <div>
         <HerbName>{data.herbName}</HerbName>
         <HerbScientificName>{data.herbScientificName}</HerbScientificName>
       </div>
-      <BookmarkIcon>
+      <BookmarkIcon onClick={handleClick}>
         {isBookmarked ? <PiStarFill /> : <PiStarBold />}
       </BookmarkIcon>
     </Container>

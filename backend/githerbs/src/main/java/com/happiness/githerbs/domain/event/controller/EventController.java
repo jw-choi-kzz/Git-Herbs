@@ -2,7 +2,6 @@ package com.happiness.githerbs.domain.event.controller;
 
 import java.util.List;
 
-import com.happiness.githerbs.domain.event.dto.response.BadgeDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -59,13 +58,6 @@ public class EventController {
 		}
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, eventService.solveQuiz(memberId,
 			quizRequest.answer())));
-	}
-
-
-	@GetMapping("/badge")
-	public ResponseEntity<SuccessResponse<List<BadgeDto>>> getBadge (@RequestHeader String authorization) {
-		int memberId = jwtService.validateToken(authorization).getMemberId();
-		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, eventService.getBadge(memberId)));
 	}
 
 }

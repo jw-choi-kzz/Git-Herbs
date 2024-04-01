@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,7 +89,7 @@ public class MemberController {
 
 	@PostMapping("/token")
 	@Operation(summary = "redirect url", description = "카카오 로그인 redirect url, 카카오 요구사항")
-	public ResponseEntity<Object> tokenController(@RequestBody KakaoAuthorizeParameterDto dto) {
+	public ResponseEntity<SuccessResponse<UserTokenResponseDto>> tokenController(@RequestBody KakaoAuthorizeParameterDto dto) {
 		if(dto.errorDescription() != null) throw new BaseException(dto.errorDescription(), ErrorCode.USER_KAKAO_FAIL);
 		// jwt 발급
 		log.info("MemberController tokenController");
@@ -98,7 +99,11 @@ public class MemberController {
 		ResponseCookie cookie = ResponseCookie.from("device-id", result.deviceId()).httpOnly(true).maxAge(60 * 60 * 24 * 30).build();
 		return ResponseEntity.ok()
 			.header(HttpHeaders.SET_COOKIE, cookie.toString())
-			.body(result);
+			.body(new SuccessResponse<>(HttpStatus.OK, result));
 	}
-	
+
+	@PutMapping("/")
+	@Operation(summary = "회원정보수정", description = "회원정보수정")
+	public ResponseEntity<?> updateController(){return null;}
+
 }

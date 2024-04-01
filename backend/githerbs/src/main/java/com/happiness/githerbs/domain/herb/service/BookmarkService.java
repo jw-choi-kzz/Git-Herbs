@@ -51,10 +51,8 @@ public class BookmarkService {
 			} else {
 				memberDaily = MemberDaily
 					.builder()
-					.member(
-						memberRepository.findById(memberId).orElseThrow(() -> new BaseException(
-							ErrorCode.USER_NOT_FOUND))
-					).date(LocalDate.now())
+					.member(member)
+					.date(LocalDate.now())
 					.build();
 				memberDailyRepository.saveAndFlush(memberDaily);
 			}

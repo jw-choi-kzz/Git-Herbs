@@ -18,12 +18,12 @@ class KakaoUserClientTest {
 
 	@Test
 	void userInfoClient() {
-		var accessToken = "Bearer 9VoWLrmxB19OuqhJ3crf6vWZIkt2GFJ5NGQKKcleAAABjokJd8FHueF-5ScOZw";
+		var accessToken = "Bearer ";
 		var param = KakaoUserInfoRequestDto.builder().secureResource(true).build();
 		var result = client.userInfoClient(accessToken, param);
 
 		assertNotNull(result);
 		System.out.println(result);
-		assertEquals("이병창",  result.properties().nickname());
+		assertEquals("",  result.properties().nickname());
 	}
 }

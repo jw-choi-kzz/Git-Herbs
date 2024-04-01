@@ -21,7 +21,7 @@ class KakaoProfileClientTest {
 
 	@Test
 	void userProfileClient() throws IOException {
-		String url = "http://k.kakaocdn.net/dn/LnQ7M/btrtXw4RZxC/oPkCXfFp9vi9NRTchs29qK/img_640x640.jpg";
+		String url = "";
 		String fileName = url.split("/")[url.split("/").length - 2];
 		String extension = url.split("\\.")[url.split("\\.").length - 1];
 		URI uri = URI.create(url);

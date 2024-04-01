@@ -24,21 +24,21 @@ class MemberServiceImplTest {
 
 	@Test
 	void decodeIdToken() {
-		var idToken = "eyJraWQiOiI5ZjI1MmRhZGQ1ZjIzM2Y5M2QyZmE1MjhkMTJmZWEiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJkYzVhOWU3NTFmZGE5YWM5MDgyYTc1ODMyOTIwZGY5NiIsInN1YiI6IjMzODgxMTQyODgiLCJhdXRoX3RpbWUiOjE3MTE2ODgzNTcsImlzcyI6Imh0dHBzOi8va2F1dGgua2FrYW8uY29tIiwiZXhwIjoxNzExNzA5OTU3LCJpYXQiOjE3MTE2ODgzNTd9.XmHyLGHV36pWeUkbJHm1flLwZozM3PSNeXZb8G6MgR35IscVS2wnLLCB8duiAA69Wb6IVkqC8qukecjN6QajK5mKXqPrYnJR0TvsjxJffnXSKLFcglmEDqJr7fP-EVVeMAF-0hdTckdLoTLpWo4i9LspzqkGbi468iJWNf6ZLvGuDpaZ_eaz838MJdsuWX0fqEZolsTppezj_JpUJG7E2oOlWapQbNQzaWnlNBmCkIBlQsLaVhZwkIqGGzAsnuz0p7_7ENr0uCPTtYbYTd9pYL8gGfSDb7G5g361EhdVQB5OKOWG78KxjeYzGAAi_jpi5qdxoHrxSE4Xo8PPb4PeQw";
+		var idToken = "";
 		var token = service.decodeIdToken(idToken);
 
-		assertEquals("https://kauth.kakao.com", token.iss());
+		assertEquals("", token.iss());
 	}
 
 	@Test
 	void uploadProfile() {
-		var profileUrl = "http://k.kakaocdn.net/dn/LnQ7M/btrtXw4RZxC/oPkCXfFp9vi9NRTchs29qK/img_640x640.jpg";
+		var profileUrl = "";
 		var kakaoId = 123456789L;
 		var path = service.uploadProfile(profileUrl, kakaoId);
 		System.out.println("path: " + path);
 		assertNotNull(path);
 		assertNotEquals("", path);
-		assertTrue(path.contains("oPkCXfFp9vi9NRTchs29qK"));
+		assertTrue(path.contains(""));
 
 	}
 }

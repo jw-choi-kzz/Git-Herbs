@@ -40,7 +40,7 @@ const HerbScientificName = styled.h2`
 const HerbMedicalPart = styled.div`
   font-size: 14px; 
   padding: 4px 8px; 
-  border-radius: 4px; 
+  border-radius: 4px;  
   display: inline-block; 
   margin-top: 8px; 
 `;
@@ -52,13 +52,19 @@ const HerbDescription = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 340px;
+  b { 
+    // background-color: #407700; 
+    font-size: 16px;
+    color: #407700;
+    font-weight: bold;
+    padding: 0.1em;
+  }
 `;
 
-const SearchResultListItem = ({ searchResult }) => { //구조 분해 할당
-  // console.log(searchResult);
+const SearchResultListItem = ({ searchResult }) => {
   const navigate = useNavigate();
   const handleClick = (herbId) => {
-    navigate(`/detail/${herbId}`); //${searchResult.herbId}
+    navigate(`/detail/${herbId}`);
   };
 
   return (
@@ -72,7 +78,10 @@ const SearchResultListItem = ({ searchResult }) => { //구조 분해 할당
         </HerbTextDetails>
       </HerbDetails>
       <br />
-      <HerbDescription className='medium'>{searchResult.description}</HerbDescription>
+      <HerbDescription
+        className='medium'
+        dangerouslySetInnerHTML={{ __html: searchResult.description }}
+      />
     </ResultContainer>
   );
 };

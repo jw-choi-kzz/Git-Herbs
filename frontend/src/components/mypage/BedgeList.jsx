@@ -1,6 +1,8 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import BedgeListItem from './BedgeListItem';
 import styled from 'styled-components';
+import { configService } from '../../apis/config';
+import { userServcie } from "../../apis/user";
 
 const Title = styled.div`
   font-size: 20px;
@@ -37,14 +39,28 @@ const GridContainer = styled.div`
 `;
 
 const BedgeList = () => {
+  const [bedges, setBedges] = useState([]);
+  useEffect(()=>{
+    userServcie.getUserBedge(configService.loginConfig)
+    .then(response => {
+      setBedges(response);
+    })
+    .catch(error=>{
+      console.error(error);
+    })
+    
+  },[]);
+
   return (
     <>
       <Title className='bold'>획득한 뱃지 목록</Title>
-      <Explain>전체 뱃지 50개 중 4개를 획득했어요.</Explain>
+      <Explain>전체 뱃지 8개 중 {bedges.filter(bedge => bedge.check).length}개를 획득했어요.</Explain>
       <Container>
         <GridContainer>
-      <BedgeListItem />
-      </GridContainer>
+          {bedges.map((bedge) => (
+            <BedgeListItem key={bedge.badgeId} {...bedge} />
+          ))}
+        </GridContainer>
       </Container>
       
     </>

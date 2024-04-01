@@ -58,4 +58,12 @@ public class MemberDailyRepositoryImpl implements MemberDailyRepositoryCustom {
 			.execute();
 	}
 
+	@Override
+	public void updateDailyBookmark(Integer userId) {
+		queryFactory
+			.update(memberDaily)
+			.set(memberDaily.bookmark, true)
+			.where(memberDaily.member.id.eq(userId).and(memberDaily.date.eq(LocalDate.now())))
+			.execute();
+	}
 }

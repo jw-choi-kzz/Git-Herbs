@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.happiness.githerbs.domain.member.entity.Member;
 
@@ -22,6 +23,17 @@ class MemberRepositoryTest {
 	}
 
 	@Test
-	void findByKakaoIdAndDeleted() {
+	void find() {
+		var result  = repo.findById(1);
+		assertTrue(result.isPresent());
+		assertEquals("1", result.get().getNickname());
+	}
+
+	@Test
+	@Transactional
+	void deleteMember() {
+		repo.deleteMember(3);
+		var result = repo.findById(3);
+		assertEquals(true, result.get().getDeleted());
 	}
 }

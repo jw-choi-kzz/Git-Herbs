@@ -1,5 +1,6 @@
 package com.happiness.githerbs.domain.member.service;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,17 +10,20 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.happiness.githerbs.domain.auth.dto.common.AuthorizationTokenDto;
 import com.happiness.githerbs.domain.auth.dto.common.JwtScopeDto;
 import com.happiness.githerbs.domain.auth.dto.common.MemberInfoDto;
 import com.happiness.githerbs.domain.auth.service.JwtService;
+import com.happiness.githerbs.domain.member.dto.common.BadgeDto;
 import com.happiness.githerbs.domain.member.dto.common.IdTokenPayload;
 import com.happiness.githerbs.domain.member.dto.request.KakaoAuthorizeParameterDto;
 import com.happiness.githerbs.domain.member.dto.request.KakaoTokenRequestDto;
 import com.happiness.githerbs.domain.member.dto.request.KakaoUserInfoRequestDto;
 import com.happiness.githerbs.domain.member.dto.response.ReissueTokenResponseDto;
+import com.happiness.githerbs.domain.member.dto.response.UserGrassResponseDto;
 import com.happiness.githerbs.domain.member.dto.response.UserInfoResponseDto;
 import com.happiness.githerbs.domain.member.dto.response.UserTokenResponseDto;
 import com.happiness.githerbs.domain.member.entity.KakaoLoginRedisEntity;
@@ -197,6 +201,54 @@ public class MemberServiceImpl  implements MemberService {
 		// return new access token and refresh token
 		if(!result.getState().equals(state))  throw new BaseException("state 에러 문의",ErrorCode.USER_INVALID_STATE);
 		return ReissueTokenResponseDto.builder().accessToken(result.getAccessToken()).refreshToken(result.getRefreshToken()).deviceId(deviceId).build();
+	}
+
+	@Override
+	@Transactional
+	public UserInfoResponseDto nicknameService(String accessToken, String nickname) {
+		// validate access token
+		var memberInfo = jwt.validateToken(accessToken);
+		// update nickname
+		var result = repo.updateNickname(memberInfo.getMemberId(), nickname);
+		// return member into
+		return UserInfoResponseDto.builder().id(result.id()).nickname(result.nickname()).img(result.img()).build();
+	}
+
+	@Override
+	@Transactional
+	public UserInfoResponseDto profileImgService(String accessToken, MultipartFile img) throws IOException {
+		// validate access token
+		var memberInfo = jwt.validateToken(accessToken);
+		// update profile image
+		var member  = repo.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+		var prevImg = member.getImgId();
+		if(prevImg != null && !prevImg.isBlank()) {
+			var imgName = prevImg.split("/")[prevImg.split("/").length - 2]+"/"+prevImg.split("/")[prevImg.split("/").length - 1];
+			s3.delete(imgName);
+		}
+		var path = tmpPath + img.getOriginalFilename();
+		var s3Url = s3.upload(img, "profile");
+		var result = repo.updateProfileImg(memberInfo.getMemberId(), s3Url);
+		// return member into
+		return UserInfoResponseDto.builder().id(result.id()).nickname(result.nickname()).img(result.img()).build();
+	}
+
+	@Override
+	public UserGrassResponseDto userGrassService(String accessToken) {
+		// TODO : validate access token
+		var memberInfo = jwt.validateToken(accessToken);
+		// TODO : get member info
+		var member = repo.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+		// TODO : calculate rank
+
+
+		// TODO : return member info
+		return null;
+	}
+
+	@Override
+	public List<BadgeDto> badgeService(String accessToken) {
+		return null;
 	}
 
 	private String randomNickname() {

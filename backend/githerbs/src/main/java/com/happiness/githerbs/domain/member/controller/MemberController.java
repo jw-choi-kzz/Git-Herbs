@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.happiness.githerbs.domain.auth.dto.common.AuthorizationTokenDto;
@@ -102,8 +103,49 @@ public class MemberController {
 			.body(new SuccessResponse<>(HttpStatus.OK, result));
 	}
 
-	@PutMapping("/")
-	@Operation(summary = "회원정보수정", description = "회원정보수정")
-	public ResponseEntity<?> updateController(){return null;}
+	@PutMapping("/nickname")
+	@Operation(summary = "닉네임 수정", description = "닉네임 수정")
+	public ResponseEntity<SuccessResponse<?>> updateNicknameController(@RequestHeader("Authorization") String accessToken, @RequestBody String nickname){
+		// TODO : validate access token
+
+		// TODO : update nickname
+
+		// TODO : return member into
+		return null;
+	}
+
+	@PutMapping("/img")
+	@Operation(summary = "프로필 이미지 수정", description = "프로필 이미지 수정")
+	public ResponseEntity<SuccessResponse<?>> updateProfileController(@RequestHeader("Authorization") String accessToken, @RequestBody
+		MultipartFile img){
+		// TODO : validate access token
+
+		// TODO : update profile image
+
+		// TODO : return member into
+		return null;
+	}
+
+	@GetMapping("/")
+	@Operation(summary = "내 정보 + 랭킹 + 잔디 조회", description = "내 정보 + 랭킹 + 잔디 조회")
+	public ResponseEntity<SuccessResponse<?>> myInfoController(@RequestHeader("Authorization") String accessToken){
+		// TODO : validate access token
+
+		// TODO : get member into
+
+		// TODO : calculate rank
+
+		// TODO : return member info
+		return null;
+	}
+
+	@GetMapping("/badge")
+	@Operation(summary = "뱃지 조회", description = "뱃지 조회")
+	public ResponseEntity<SuccessResponse<?>> badgeController(@RequestHeader("Authorization") String accessToken){
+		// TODO : validate access token
+
+		// TODO : return badge info
+		return null;
+	}
 
 }

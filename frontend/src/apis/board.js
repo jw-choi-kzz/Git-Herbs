@@ -12,8 +12,8 @@ const boardService = {
      * @param {*} config  헤더에 엑세스토큰 담아야함 
      * @returns  반환 변수 : {boardId, flag }  ture는 좋아요 누른 것 , false는 안 누른 것
      */
-    putFavorite: (boardId, config) => {
-        return axios.put(`/board/${boardId}`, config)
+    putFavorite: (boardId,config) => {
+        return axios.put(`/board/${boardId}`, null ,config)
             .then(response => {
                 return response.data.data;
             })
@@ -45,7 +45,7 @@ const boardService = {
      * @returns [boardId , "memberId", "userNickname", "userImgUrl", "imgUrl", "likeCnt", "likeCheck", "createAt" ] true는 좋아요 누른 것 false 는 안 누른 것
      */
     getBoard: (config) => {
-        return axios.get(`/board`, config = [])
+        return axios.get(`/board`, config)
             .then(response => {
                 return response.data.data;
             })

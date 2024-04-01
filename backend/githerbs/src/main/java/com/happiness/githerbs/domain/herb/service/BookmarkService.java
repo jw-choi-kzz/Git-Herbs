@@ -41,9 +41,21 @@ public class BookmarkService {
 		if (bookmark.isEmpty()) {
 			bookmarkRepository.save(Bookmark.builder().member(member).herb(herb).build());
 
-			MemberDaily memberDaily = memberDailyRepository.findFirstByMemberOrderByDateDesc(
-				memberRepository.findById(memberId)
-					.orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND)));
+			Optional<MemberDaily> byMemberIdAndDate = memberDailyRepository.findByMemberIdAndDate(memberId,
+				LocalDate.now());
+
+			MemberDaily memberDaily;
+
+			if (byMemberIdAndDate.isPresent()) {
+				memberDaily = byMemberIdAndDate.get();
+			} else {
+				memberDaily = MemberDaily
+					.builder()
+					.member(member)
+					.date(LocalDate.now())
+					.build();
+				memberDailyRepository.saveAndFlush(memberDaily);
+			}
 
 			if (!memberDaily.getDate().equals(LocalDate.now())) {
 				throw new BaseException(ErrorCode.INTERNAL_SERVER_ERROR);
@@ -64,20 +76,18 @@ public class BookmarkService {
 		bookmarkRepository.delete(bookmark);
 	}
 
-
 	public boolean getBookmark(Integer memberId, Integer herbId) {
 		Member member = memberRepository.findById(memberId).orElseThrow(() -> new BaseException(USER_NOT_FOUND));
 		Herb herb = herbRepository.findById(herbId).orElseThrow(() -> new BaseException(HERB_NOT_FOUND));
 
 		Optional<Bookmark> bookmark = bookmarkRepository.findByHerbIdAndMemberId(herb.getId(), member.getId());
-        return bookmark.isPresent();
+		return bookmark.isPresent();
 	}
 
-
-	public Integer recentBookmark(Integer memberId){
+	public Integer recentBookmark(Integer memberId) {
 		List<Bookmark> bookmarkList = bookmarkRepository.findByMemberIdOrderByCreatedAtDesc(memberId);
 
-		if(!bookmarkList.isEmpty()){
+		if (!bookmarkList.isEmpty()) {
 			return bookmarkList.get(0).getHerb().getId();
 		}
 		return 0;

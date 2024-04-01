@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.happiness.githerbs.domain.event.entity.Badge;
+import com.happiness.githerbs.domain.event.repository.BadgeRepository;
+import com.happiness.githerbs.domain.member.entity.MemberBadge;
+import com.happiness.githerbs.domain.member.repository.MemberBadgeRepository;
 import org.springframework.stereotype.Service;
 
 import com.happiness.githerbs.domain.board.dto.response.FavoriteResponseDto;
@@ -26,6 +30,9 @@ public class FavoriteService {
 	private final FavoriteRepository favoriteRepository;
 	private final BoardRepository boardRepository;
 	private  final MemberRepository memberRepository;
+	private  final BadgeRepository badgeRepository;
+	private final MemberBadgeRepository memberBadgeRepository;
+//	private final
 
 
 	//해당 글에 좋아요 누른 게 있는지 확인
@@ -44,6 +51,8 @@ public class FavoriteService {
 	// 좋아요 기능
 	@Transactional
 	public FavoriteResponseDto saveFavorite(Integer memberId, Integer boardId) {
+
+
 		Optional<Favorite> optionalFavorite = favoriteRepository.findByMemberIdAndBoardBoardId(memberId, boardId);
 		//좋아요 누른적이 있다면
 		if (optionalFavorite.isPresent()) {
@@ -60,6 +69,15 @@ public class FavoriteService {
 		//없다면 조회해서 객체 생성 후 저장
 		Board board = boardRepository.findById(boardId).orElseThrow(() -> new BaseException(ErrorCode.BOARD_NOT_FOUND));
 		Member member = memberRepository.findById(memberId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+		Badge badge = badgeRepository.findById(29).orElseThrow(()-> new BaseException(ErrorCode.BAD_REQUEST_ERROR));
+
+		if(memberBadgeRepository.findByMemberIdAndBadgeId(memberId,badge.getId()).isEmpty()){
+			memberBadgeRepository.save(MemberBadge.builder()
+					.badge(badge)
+					.member(member)
+					.build());
+		}
+
 
 		Favorite favorite = Favorite.builder()
 			.member(member)

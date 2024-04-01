@@ -6,6 +6,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import com.happiness.githerbs.domain.event.entity.Badge;
+import com.happiness.githerbs.domain.event.repository.BadgeRepository;
+import com.happiness.githerbs.domain.member.entity.MemberBadge;
+import com.happiness.githerbs.domain.member.repository.MemberBadgeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,11 +35,21 @@ public class BookmarkService {
 	private final HerbRepository herbRepository;
 	private final MemberRepository memberRepository;
 	private final MemberDailyRepository memberDailyRepository;
+	private final BadgeRepository badgeRepository;
+	private final MemberBadgeRepository memberBadgeRepository;
 
 	@Transactional
 	public void addBookmark(Integer memberId, Integer herbId) {
 		Member member = memberRepository.findById(memberId).orElseThrow(() -> new BaseException(USER_NOT_FOUND));
 		Herb herb = herbRepository.findById(herbId).orElseThrow(() -> new BaseException(HERB_NOT_FOUND));
+		Badge badge = badgeRepository.findById(24).orElseThrow(() -> new BaseException(HERB_NOT_FOUND));
+
+		if(memberBadgeRepository.findByMemberIdAndBadgeId(memberId,badge.getId()).isEmpty()){
+			memberBadgeRepository.save(MemberBadge.builder()
+					.badge(badge)
+					.member(member)
+					.build());
+		}
 
 		Optional<Bookmark> bookmark = bookmarkRepository.findByHerbIdAndMemberId(herbId, memberId);
 		if (bookmark.isEmpty()) {

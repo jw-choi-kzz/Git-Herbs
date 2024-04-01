@@ -37,7 +37,6 @@ public class BoardController {
 		Integer memberId = token.validateToken(authorization).getMemberId();
 		return ResponseEntity.ok(
 			new SuccessResponse<>(HttpStatus.OK.value() , boardService.writeBoard(memberId,request)));
-
 	}
 
 	// 자랑하기 글 전체 조회

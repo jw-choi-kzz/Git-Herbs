@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import com.happiness.githerbs.domain.event.entity.Badge;
+import com.happiness.githerbs.domain.event.repository.BadgeRepository;
+import com.happiness.githerbs.domain.member.entity.MemberBadge;
+import com.happiness.githerbs.domain.member.repository.MemberBadgeRepository;
 import org.springframework.stereotype.Service;
 
 import com.happiness.githerbs.domain.board.dto.request.BoardRequestDto;
@@ -30,6 +34,10 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 	private final FavoriteService favoriteService;
 	private final MemberRepository memberRepository;
+	private final BadgeRepository badgeRepository;
+	private final MemberBadgeRepository memberBadgeRepository;
+
+
 	//해당 하는 멤버 찾기
 	public Member findMember(Integer memberId){
 		return memberRepository.findById(memberId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
@@ -81,10 +89,13 @@ public class BoardService {
 	//내가 쓴 글 조회
 	public List<BoardResponseDto> getMyBoard(Integer memberId) {
 		List<Board> boards = boardRepository.findByMemberIdAndDeletedFalse(memberId).orElseGet(Collections::emptyList);
-		return makeResponseDtoList(boards,memberId);
+		List<BoardResponseDto>  boardResponseDtos = makeResponseDtoList(boards,memberId);
+		if(!boardResponseDtos.isEmpty()) badgeCheck(boardResponseDtos,memberId);
+		return boardResponseDtos;
 	}
 
 	//Board 엔티티를 ResponseDtoList 형태로 반환
+
 	public List<BoardResponseDto> makeResponseDtoList ( List<Board> boards,Integer memberId){
 		ArrayList<BoardResponseDto> boardResponseDtoList = new ArrayList<>();
 		for (Board board : boards) {
@@ -95,12 +106,67 @@ public class BoardService {
 		Collections.reverse(boardResponseDtoList);
 		return boardResponseDtoList;
 	}
-
 	//Dto - > Entity로 변경
+
 	public Board toEntity(BoardRequestDto boardRequestDto) {
 		return Board.builder()
 			.imgUrl(boardRequestDto.getImgUrl())
 			.member(findMember(boardRequestDto.getMemberId()))
 			.build();
 	}
+
+	private void badgeCheck(List<BoardResponseDto> boardResponseDtos, Integer memberId) {
+		Member member = memberRepository.findById(memberId).orElseThrow(() -> new BaseException(ErrorCode.NOT_MATCH_MEMBER));
+		int size = boardResponseDtos.size();
+		boolean case1 = memberBadgeRepository.findByMemberIdAndBadgeId(memberId,28).isPresent();
+		boolean case2 = memberBadgeRepository.findByMemberIdAndBadgeId(memberId,30).isPresent();
+		boolean case3 = memberBadgeRepository.findByMemberIdAndBadgeId(memberId,31).isPresent();
+		boolean case4 = memberBadgeRepository.findByMemberIdAndBadgeId(memberId,32).isPresent();
+		boolean case5 = memberBadgeRepository.findByMemberIdAndBadgeId(memberId,33).isPresent();
+		if( case5 && case3) return;
+		if( !case1){
+			Badge badge = badgeRepository.findById(28).orElseThrow(() -> new BaseException(ErrorCode.NOT_MATCH_MEMBER));
+			memberBadgeRepository.save(MemberBadge.builder()
+					.badge(badge)
+					.member(member)
+					.build());
+		}
+		if( size>=5 && !case2) {
+			Badge badge = badgeRepository.findById(30).orElseThrow(() -> new BaseException(ErrorCode.NOT_MATCH_MEMBER));
+			memberBadgeRepository.save(MemberBadge.builder()
+					.badge(badge)
+					.member(member)
+					.build());
+		}
+		if( size>=10 && !case3) {
+			Badge badge = badgeRepository.findById(31).orElseThrow(() -> new BaseException(ErrorCode.NOT_MATCH_MEMBER));
+			memberBadgeRepository.save(MemberBadge.builder()
+					.badge(badge)
+					.member(member)
+					.build());
+		}
+		int sum =0;
+		for(BoardResponseDto boardRequestDto : boardResponseDtos){
+			sum += boardRequestDto.getLikeCnt();
+		}
+		if( !case4 && sum >=10) {
+			Badge badge = badgeRepository.findById(32).orElseThrow(() -> new BaseException(ErrorCode.NOT_MATCH_MEMBER));
+			memberBadgeRepository.save(MemberBadge.builder()
+					.badge(badge)
+					.member(member)
+					.build());
+		}
+		if( !case5 && sum >=50) {
+			Badge badge = badgeRepository.findById(33).orElseThrow(() -> new BaseException(ErrorCode.NOT_MATCH_MEMBER));
+			memberBadgeRepository.save(MemberBadge.builder()
+					.badge(badge)
+					.member(member)
+					.build());
+		}
+
+	}
+
+
+
+
 }

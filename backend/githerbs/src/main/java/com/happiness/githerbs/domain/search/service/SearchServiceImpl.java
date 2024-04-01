@@ -64,8 +64,8 @@ public class SearchServiceImpl implements SearchService {
 					.or(new Criteria(herbMedicinalEffect).matches(keyword).boost(1.0f)));
 
 		HighlightFieldParameters highlightFieldParameters = HighlightFieldParameters.builder()
-			.withPreTags("<br>")
-			.withPostTags("</br>")
+			.withPreTags("<b>")
+			.withPostTags("</b>")
 			.withFragmentSize(50)
 			.build();
 

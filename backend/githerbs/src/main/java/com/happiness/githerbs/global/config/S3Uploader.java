@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 
 @Slf4j
@@ -30,6 +31,12 @@ public class S3Uploader {
     public String upload(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
+        return upload(uploadFile, dirName);
+    }
+
+    public String upload(InputStream in, String dirName, String fileName) throws IOException {
+        File uploadFile = convert(in, fileName)
+                .orElseThrow(() -> new IllegalArgumentException("InputStream -> File 전환 실패"));
         return upload(uploadFile, dirName);
     }
 
@@ -63,6 +70,21 @@ public class S3Uploader {
         if(convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(file.getBytes());
+            }
+            return Optional.of(convertFile);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<File> convert(InputStream in, String fileName) throws IOException {
+        File convertFile = new File(fileName);
+        if(convertFile.createNewFile()) {
+            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
+                byte[] buffer = new byte[1024];
+                int readCount;
+                while((readCount = in.read(buffer)) != -1) {
+                    fos.write(buffer, 0, readCount);
+                }
             }
             return Optional.of(convertFile);
         }

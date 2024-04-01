@@ -29,6 +29,6 @@ public class Badge {
 	private String name;
 
 	@Column(length = 150)
-	private String img;
+	private String details;
 
 }

@@ -1,6 +1,4 @@
-import { useState } from "react";
 import styled from "styled-components";
-// import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -92,12 +90,29 @@ const MonthGrass = ({ grassList }) => {
   // tileContent 함수 내에서 모든 날짜에 대해 icons[0] 아이콘을 보여주도록 설정
   const tileContent = ({ date, view }) => {
     if (view === "month") {
-      // 여기에서 다른 로직을 추가하여 특정 조건에 따라 다른 아이콘을 반환할 수 있습니다.
-      return (
-        <DayTile>
-          <IconImage src={icons[2]} alt="Icon" />
-        </DayTile>
+      const currentDateStr = date.toISOString().split("T")[0]; // YYYY-MM-DD 형식
+      const currentGrass = grassList.find(
+        (grass) => grass.date === currentDateStr
       );
+
+      if (currentGrass) {
+        let iconIndex;
+        if (currentGrass.count === 0) {
+          iconIndex = 0;
+        } else if (currentGrass.count >= 1 && currentGrass.count <= 2) {
+          iconIndex = 1;
+        } else if (currentGrass.count >= 3 && currentGrass.count <= 4) {
+          iconIndex = 2;
+        } else if (currentGrass.count >= 5) {
+          iconIndex = 3;
+        }
+
+        return (
+          <DayTile>
+            <IconImage src={icons[iconIndex]} alt="Icon" />
+          </DayTile>
+        );
+      }
     }
     return null;
   };
@@ -111,7 +126,8 @@ const MonthGrass = ({ grassList }) => {
       nextLabel={null}
       prevLabel={null}
       showNeighboringMonth={false}
-      navigationLabel={null} // 네비게이션 라벨을 숨깁니다.
+      navigationLabel={null}
+      calendarType="US"
     />
   );
 };

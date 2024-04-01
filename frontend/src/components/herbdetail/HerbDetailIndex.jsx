@@ -1,9 +1,11 @@
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Tabs from "@mui/joy/Tabs";
 import TabList from "@mui/joy/TabList";
 import Tab from "@mui/joy/Tab";
 import TabPanel from "@mui/joy/TabPanel";
+import LoginModal from "../LoginModal";
+import useLoginStore from "../../store/useLoginStore";
 
 const StyledTabList = styled(TabList)`
   display: flex; // 탭 리스트를 flex 컨테이너로 만들어줌
@@ -39,19 +41,39 @@ const StyledTabPanel = styled(TabPanel)`
   background-color: #f5f5f5;
 `;
 const HerbDetailIndex = ({ selectedTab, onTabChange }) => {
+  const { isLogin } = useLoginStore();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const handleTabChange = (event, newValue) => {
+    if (newValue === 1 && !isLogin) {
+      // '내가 찍은 이미지' 탭이고 로그인 상태가 아니라면
+      setShowLoginModal(true); // 로그인 모달 표시
+    } else {
+      onTabChange(event, newValue); // 부모 컴포넌트의 탭 변경 처리
+    }
+  };
+
   return (
-    <StyledTabs
-      aria-label="Herb details"
-      value={selectedTab}
-      onChange={onTabChange}
-    >
-      <StyledTabList>
-        <StyledTab className="bold">상세 설명</StyledTab>
-        <StyledTab className="bold">내가 찍은 이미지</StyledTab>
-      </StyledTabList>
-      <StyledTabPanel value={0}></StyledTabPanel>
-      <StyledTabPanel value={1}></StyledTabPanel>
-    </StyledTabs>
+    <>
+      <StyledTabs
+        aria-label="Herb details"
+        value={selectedTab}
+        onChange={handleTabChange}
+      >
+        <StyledTabList>
+          <StyledTab className="bold">상세 설명</StyledTab>
+          <StyledTab className="bold">내가 찍은 이미지</StyledTab>
+        </StyledTabList>
+        <StyledTabPanel value={0}></StyledTabPanel>
+        <StyledTabPanel value={1}></StyledTabPanel>
+      </StyledTabs>
+      {showLoginModal && (
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+        />
+      )}
+    </>
   );
 };
 

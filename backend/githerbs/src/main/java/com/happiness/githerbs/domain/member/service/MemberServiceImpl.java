@@ -1,11 +1,9 @@
 package com.happiness.githerbs.domain.member.service;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +19,8 @@ import com.happiness.githerbs.domain.member.dto.common.IdTokenPayload;
 import com.happiness.githerbs.domain.member.dto.request.KakaoAuthorizeParameterDto;
 import com.happiness.githerbs.domain.member.dto.request.KakaoTokenRequestDto;
 import com.happiness.githerbs.domain.member.dto.request.KakaoUserInfoRequestDto;
+import com.happiness.githerbs.domain.member.dto.response.ReissueTokenResponseDto;
+import com.happiness.githerbs.domain.member.dto.response.UserInfoResponseDto;
 import com.happiness.githerbs.domain.member.dto.response.UserTokenResponseDto;
 import com.happiness.githerbs.domain.member.entity.KakaoLoginRedisEntity;
 import com.happiness.githerbs.domain.member.entity.Member;
@@ -32,6 +32,7 @@ import com.happiness.githerbs.global.common.code.ErrorCode;
 import com.happiness.githerbs.global.common.exception.BaseException;
 import com.happiness.githerbs.global.config.S3Uploader;
 
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +49,7 @@ public class MemberServiceImpl  implements MemberService {
 	private String authorizeUrl;
 	@Value("${feign.kakao.token}")
 	private String tokenUrl;
+	// TODO : member 완성하면 /tmp로 바꾸기
 	@Value("${kakao.login.tmp-path}")
 	private String tmpPath;
 
@@ -65,18 +67,17 @@ public class MemberServiceImpl  implements MemberService {
 	 * */
 	@Override
 	@Transactional
-	public String loginService() {
+	public String loginService(String redirect) {
 		// state 고유 값 생성
 		var state = UUID.randomUUID().toString().replaceAll("-", "");
 
 		// state 저장
-		var entity = StateRedisEntity.builder().state(state).build();
+		if(redirect ==null) redirect = "";
+		var entity = StateRedisEntity.builder().state(state).redirectUrl(redirect).build();
 		var result = stateRedis.save(entity);
 		if(!result.getState().equals(state)) {
 			throw new BaseException("redis save error", ErrorCode.INTERNAL_SERVER_ERROR);
 		}
-		// TODO : member 완성하면 머지 전에 삭제
-		redirectUri = "http://localhost:8080/v1/user/token";
 		var sb = new StringBuilder(authorizeUrl);
 		sb.append("?client_id=")
 			.append(clientId)
@@ -97,6 +98,7 @@ public class MemberServiceImpl  implements MemberService {
 	public UserTokenResponseDto tokenService(KakaoAuthorizeParameterDto dto) {
 		// state 확인
 		var entity = stateRedis.findById(dto.state()).orElseThrow(() -> new BaseException(ErrorCode.USER_INVALID_STATE));
+		var redirect = entity.getRedirectUrl();
 		stateRedis.delete(entity);
 		// 카카오 access token 발급
 		var tokenRequest = KakaoTokenRequestDto.builder().clientId(clientId).code(dto.code()).redirectUri(redirectUri).build();
@@ -121,7 +123,7 @@ public class MemberServiceImpl  implements MemberService {
 		// jwt와 회원정보 반환
 		return UserTokenResponseDto.builder().accessToken(jwtToken.getAccessToken()).refreshToken(
 			jwtToken.getRefreshToken()).deviceId(jwtToken.getDeviceId()).userId(member.getId()).nickname(
-			member.getNickname()).imgId(member.getImgId()).build();
+			member.getNickname()).imgId(member.getImgId()).redirectUri(redirect).build();
 	}
 
 	/**
@@ -152,20 +154,50 @@ public class MemberServiceImpl  implements MemberService {
 
 	@Override
 	@Transactional
-	public boolean withdrawService(String accessToken, String deviceId) {
-		// TODO : access token validation
+	public Integer withdrawService(String accessToken, String deviceId) {
+		// logout
+		var memberId = logoutService(accessToken, deviceId);
+		// delete column of member set true
+		var member = repo.findById(memberId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+		repo.deleteMember(member.getId());
+		return member.getId();
+	}
+
+	@Override
+	public UserInfoResponseDto getUserService(int userId) {
+		var member = repo.findById(userId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+		var imgUrl = member.getImgId();
+		return UserInfoResponseDto.builder().id(member.getId()).nickname(member.getNickname()).img(imgUrl).build();
+	}
+
+	@Override
+	@Transactional
+	public Integer logoutService(String accessToken, String deviceId) {
+		// validate access token
 		var memberInfo = jwt.validateToken(accessToken);
-		// TODO : access token and refresh token revoke(including validation)
+		// revoke access token and refresh token using device id
 		var revokeToken = AuthorizationTokenDto.builder().accessToken(accessToken).build();
 		var result = jwt.revokeToken(deviceId, revokeToken);
-		// TODO : logout kakao account using feign client
-
-		// TODO : kakao access token, refresh token revoke
+		// logout kakao account using kakao access token
+		var kakao = loginRedis.findById(memberInfo.getMemberId() + ":" + deviceId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+		try {
+			var kakaoID = userClient.logoutClient("Bearer " + kakao.getKakaoAccessToken());
+		} catch (FeignException e) {
+			log.error("logout error: {}", e.getMessage());  // 에러가 나도 로그아웃은 진행되어야 함
+		}
+		// delete kakao tokens in redis
 		loginRedis.deleteById(memberInfo.getMemberId() + ":" + deviceId);
-		// TODO : delete column of member set true
-		var member = repo.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
-		repo.deleteMember(member.getId());
-		return false;
+		return memberInfo.getMemberId();
+	}
+
+	@Override
+	public ReissueTokenResponseDto reissueService(String deviceId, AuthorizationTokenDto dto) {
+		// reissue access token and refresh token with device id
+		var state = UUID.randomUUID().toString().replaceAll("-", "");
+		var result = jwt.reissueToken(deviceId, dto, state);
+		// return new access token and refresh token
+		if(!result.getState().equals(state))  throw new BaseException("state 에러 문의",ErrorCode.USER_INVALID_STATE);
+		return ReissueTokenResponseDto.builder().accessToken(result.getAccessToken()).refreshToken(result.getRefreshToken()).deviceId(deviceId).build();
 	}
 
 	private String randomNickname() {

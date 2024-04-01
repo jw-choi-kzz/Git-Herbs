@@ -28,7 +28,9 @@ public record UserTokenResponseDto(
 	String nickname,
 	@Schema(description = "프로필 이미지")
 	@NotBlank(message = "프로필 이미지는 필수값입니다")
-	String imgId
+	String imgId,
+	@Schema(description = "리다이렉트 URI")
+	String redirectUri
 ) {
 	public UserTokenResponseDto {
 		if (Objects.isNull(tokenType) || tokenType.isBlank())

@@ -16,4 +16,5 @@ import lombok.NoArgsConstructor;
 public class StateRedisEntity {
 	@Id
 	private String state;
+	private String redirectUrl;
 }

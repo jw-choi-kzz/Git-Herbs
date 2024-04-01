@@ -43,15 +43,21 @@ const AfterHerbQuiz = ({ data }) => {
   return (
     <Container>
       <Title className="bold">오늘의 약초 퀴즈</Title>
-      {data.quizState ? (
+
+      {data.quizState === true ? (
         <>
           <Icon />
           <SubTitle>퀴즈 정답을 맞췄습니다!</SubTitle>
         </>
-      ) : (
+      ) : data.quizState === false ? (
         <>
           <FalseIcon />
           <SubTitle>퀴즈 정답을 틀렸습니다!</SubTitle>
+        </>
+      ) : (
+        <>
+          <FalseIcon />
+          <SubTitle>이미 퀴즈에 참여 했습니다!</SubTitle>
         </>
       )}
     </Container>

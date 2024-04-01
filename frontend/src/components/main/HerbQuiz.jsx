@@ -85,8 +85,15 @@ const HerbQuiz = () => {
   ] //response.data.imageList
 
   const handleImageClick = async (id) => {
+
     const response = await eventService.postQuiz({ answer: id - 1 }, configService.loginConfig());
-    setQuizState(response)
+    if (response != undefined) {
+      setQuizState(response)
+    } else {
+      setQuizState(3)
+    }
+
+
   };
 
   if (quizState != null) {

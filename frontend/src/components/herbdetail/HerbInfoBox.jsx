@@ -1,15 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 import HerbMap from "./HerbMap";
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 0 20px 20px;
   max-width: 320px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex; /* 새로 추가된 스타일 */
-  flex-direction: column; /* 새로 추가된 스타일 */
-  align-items: center; /* 새로 추가된 스타일 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Section = styled.div`
@@ -17,28 +17,35 @@ const Section = styled.div`
   width: 95%;
   padding: 5px;
   border-radius: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
-// 헤더들을 감쌀 컨테이너에 대한 스타일
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%; // 컨테이너의 너비를 섹션 너비와 같게 설정합니다.
-  align-items: center; // 세로축 중앙 정렬
+  width: 100%;
+  align-items: center;
 `;
 
-const SectionHeader = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-  color: #305F72;
+const SectionHeader = styled.div.attrs({
+  className: "bold",
+})`
+  font-size: 18px;
+  //font-family: "SpoqaHanSansNeo", sans-serif;
+  color: #305f72; // 글자색은 .medium 클래스의 색으로 변경
+  //font-weight: 500;
   margin-bottom: 4px;
+  margin-left: 5px;
+  margin-top: 5px;
 `;
 
-const SectionSubHeader = styled.div`
+const SectionSubHeader = styled.div.attrs({
+  className: "medium",
+})`
   font-size: 10px;
   color: #888;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
+  margin-right: 5px;
 `;
 
 const SectionDivisionLine = styled.div`
@@ -49,6 +56,8 @@ const SectionDivisionLine = styled.div`
 const Content = styled.div`
   font-size: 14px;
   color: #333;
+  margin-top: 8px;
+  margin-left: 6px;
 `;
 
 const ImageStyle = styled.img`
@@ -58,43 +67,45 @@ const ImageStyle = styled.img`
   border-radius: 8px;
 `;
 
-// 리스트에 적용할 스타일 컴포넌트
 const StyledList = styled.ul`
   list-style: none;
   padding-left: 0;
   margin: 0;
 `;
 
-// 리스트 항목에 적용할 스타일 컴포넌트
 const ListItem = styled.li`
   font-size: 14px;
   color: #333;
   padding-left: 15px;
   text-indent: -15px;
+  padding-bottom: 3px;
+  padding-top: 3px;
 
   &:before {
-    content: "•";  // 항목 앞에 점을 추가합니다.
-    padding-right: 10px;
-    color: #305F72; // 점의 색상을 설정합니다.
+    content: "•";
+    padding-right: 7px;
+    padding-left: 3px;
+    color: #305f72;
   }
 `;
 
 const HerbInfoBox = ({ data }) => {
   if (!data || !Array.isArray(data.herMedicinalEffects)) {
-    return <div>로딩 중...</div>; // 또는 적절한 오류 메시지
+    return <div>로딩 중...</div>;
   }
   const {
+    herbId,
     herbName,
-    herbImgId, // 이 이미지 ID를 실제 경로로 매핑하는 로직이 필요
+    herbImgId,
     herbNickname,
     herbMedicalPart,
     herbHarvestingTime,
     herbEnvironment,
     herbQuality,
-    herMedicinalEffects = [] // 기본값으로 빈 배열 할당
+    herMedicinalEffects = [],
   } = data;
 
-  const imageUrl = herbImgId ? herbImgId : '/herbs/002_plant.png';
+  const imageUrl = herbImgId ? herbImgId : "/herbs/002_plant.png";
 
   return (
     <Container>
@@ -115,9 +126,9 @@ const HerbInfoBox = ({ data }) => {
         <SectionDivisionLine></SectionDivisionLine>
         {/* 약효는 리스트로 주어진다고 가정하여 map을 사용 */}
         <StyledList>
-        {herMedicinalEffects.map((effect, index) => (
-      <ListItem key={index}>{effect.medicinalEffect}</ListItem>
-    ))}
+          {herMedicinalEffects.map((effect, index) => (
+            <ListItem key={index}>{effect.medicinalEffect}</ListItem>
+          ))}
         </StyledList>
       </Section>
       <Section>
@@ -158,7 +169,9 @@ const HerbInfoBox = ({ data }) => {
           <SectionSubHeader>Habitat / Location</SectionSubHeader>
         </HeaderContainer>
         <SectionDivisionLine></SectionDivisionLine>
-        <Content><HerbMap /></Content>
+        <Content>
+          <HerbMap data={{ herbId }} />
+        </Content>
       </Section>
     </Container>
   );

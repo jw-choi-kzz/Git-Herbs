@@ -1,8 +1,8 @@
 import { useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import MonthGlass from "../components/mypage/MonthGlass";
+import MonthGrass from "../components/mypage/MonthGrass";
 import BedgeList from "../components/mypage/BedgeList";
-import styled from 'styled-components';
+import styled from "styled-components";
 import MyProfile from "../components/mypage/MyProfile";
 import { BiCalendar, BiTrophy, BiChevronRight } from "react-icons/bi";
 import useGlobalStyles from '../utils/useGlobalStyles';
@@ -10,29 +10,29 @@ import { configService } from '../apis/config';
 import { userServcie } from "../apis/user";
 
 const Container = styled.div`
-    padding: 24px;
+  padding: 24px;
 `;
 
 const MenuTitle = styled.div`
-    color: #21351F;
-    font-size: 20px;
+  color: #21351f;
+  font-size: 20px;
 `;
 
 const Explain = styled.div`
-    color: #979797;
-    font-size: 12px;
-    padding: 10px 0;
+  color: #979797;
+  font-size: 12px;
+  padding: 10px 0;
 `;
 
 const NaviContainer = styled.div`
-    background-color: #fff;
-    border-radius: 14px;
-    padding: 10px 20px;
-    cursor: pointer;
+  background-color: #fff;
+  border-radius: 14px;
+  padding: 10px 20px;
+  cursor: pointer;
 `;
 
 const IconAndTitle = styled.div`
-    display: flex;
+  display: flex;
 `;
 
 //response.data: [{"userId" : int, "userNickname" : string, "userImgurl" : string, "rank" : int, "grass" : [{"date" : date, "count" : int},]}]}

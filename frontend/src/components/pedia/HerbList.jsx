@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import HerbListItem from '../pedia/HerbListItem';
+import React from "react";
+import styled from "styled-components";
+import HerbListItem from "../pedia/HerbListItem";
 
 const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; // 아이템들을 가운데 정렬로 시작하게 설정
+  justify-content: center;
   gap: 2px; // 아이템 간 간격 설정
   margin: auto; // 상하좌우 마진 자동으로 설정하여 가운데 정렬
   width: fit-content; // 컨텐츠 크기에 맞게 가로 폭을 설정
@@ -25,4 +25,3 @@ const HerbList = ({ herbsData }) => {
 };
 
 export default HerbList;
-

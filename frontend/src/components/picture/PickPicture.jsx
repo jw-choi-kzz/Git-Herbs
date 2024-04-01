@@ -3,6 +3,7 @@ import Cropper from 'react-easy-crop';
 import getCroppedImg from './CropImage';
 import styled from 'styled-components';
 import Button from "@mui/joy/Button";
+import useModalStore from '../../store/modalStore';
 
 const StyledButton1 = styled(Button)`
   && {
@@ -34,10 +35,16 @@ const StyledButton2 = styled(Button)`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const PickPicture = ({ imageUrl, onImageCrop, onGoBack }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const openModal = useModalStore((state) => state.openModal);
 
   const onCropComplete = async (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -48,7 +55,8 @@ const PickPicture = ({ imageUrl, onImageCrop, onGoBack }) => {
       const croppedImage = await getCroppedImg(imageUrl, croppedAreaPixels);
       onImageCrop(croppedImage);
     } catch (e) {
-      console.error(e);
+      alert('사진을 선택 해 주세요.');
+      handleGoBack();
     }
   };
 
@@ -57,9 +65,13 @@ const PickPicture = ({ imageUrl, onImageCrop, onGoBack }) => {
   };
 
   const confirmGoBack = () => {
-    if (window.confirm('이전 단계로 이동하시겠습니까? 현재 이미지가 삭제됩니다.')) {
-      handleGoBack();
+    const modalItem = {
+      progress: "확인",
+      done: "취소",
+      title: "이전 단계로 이동하시겠습니까? 현재 이미지가 삭제됩니다.",
+      function: onGoBack
     }
+    openModal("pictureResult", modalItem);
   };
 
   return (
@@ -79,8 +91,10 @@ const PickPicture = ({ imageUrl, onImageCrop, onGoBack }) => {
           </>
         )}
       </div>
-      <StyledButton1 onClick={confirmGoBack}>뒤로가기</StyledButton1>
-      <StyledButton2 onClick={showCroppedImage}>선택하기</StyledButton2>
+      <ButtonContainer>
+        <StyledButton1 onClick={confirmGoBack}>뒤로가기</StyledButton1>
+        <StyledButton2 onClick={showCroppedImage}>선택하기</StyledButton2>
+      </ButtonContainer>
     </div>
   );
 };

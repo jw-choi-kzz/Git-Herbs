@@ -13,7 +13,7 @@ export const herbsService ={
      * @returns ["herbId" , "herbName", "bookmark", "acquireCheck"] bookmark,acquireCheck 가 1이면 획득 , 0이면 미획득
      */
     getHerbs : (loginConfig) => {
-        return axios.get(`herbs`,loginConfig)
+        return axios.get(`herbs?size=150`,loginConfig)
         .then(response => {
             return response.data.data.content;
         })
@@ -109,8 +109,9 @@ export const herbsService ={
      * @returns 
      */
     getMyHerbImg : (herbId,loginConfig) =>{
-        return axios.get(`/herbs/${herbId}/my-herbs`,loginConfig)
+        return axios.get(`/herbs/${herbId}/my-herbs?page=0&size=100&sort=string`,loginConfig)
         .then(response =>{
+            // console.log(response);
             return response.data.data.content;
         })
         .catch(error =>{
@@ -125,8 +126,19 @@ export const herbsService ={
      * @param {*} loginConfig  로그인 헤더 
      * @returns 
      */
-    postBookmark : (herbId,loginConfig) =>{
+    writeBookmark : (herbId,loginConfig) =>{
+        
         return axios.post(`/herbs/${herbId}/bookmark`,loginConfig)
+        .then(response => {
+            return response;
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    },
+
+    getBookmark : (herbId,loginConfig) =>{
+        return axios.get(`/herbs/${herbId}/bookmark`,loginConfig)
         .then(response => {
             return response.data;
         })
@@ -135,21 +147,22 @@ export const herbsService ={
         })
     },
 
+
     /**
      * 즐겨찾기를 삭제합니다. "bookmark" : 1일 때 실행되는 함수 
      * @param {*} herbId  허브 Id
      * @param {*} loginConfig  로그인 헤더 
      * @returns 
      */
-    deleteBookmark : (herbId,loginConfig) =>{
-        return axios.delete(`/herbs/${herbId}/bookmark`,loginConfig)
-        .then(response => {
+    deleteBookmark: (herbId, loginConfig) => {
+        return axios.delete(`/herbs/${herbId}/bookmark`, loginConfig)
+          .then(response => {
             return response.data;
-        })
-        .catch(error =>{
+          })
+          .catch(error => {
             console.log(error);
-        })
-    },
+          });
+      },
 
 
 }

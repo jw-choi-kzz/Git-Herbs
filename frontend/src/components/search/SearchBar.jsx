@@ -43,10 +43,10 @@ const SearchContainer = styled.div`
 
 const SearchBar = () => {
   const navigate = useNavigate();
-  const [keyword, setKeyword] = useState(""); // 수정됨
+  const [keyword, setKeyword] = useState("");
 
   const handleSearch = async (searchQuery) => {
-    navigate(`/search/result?keyword=${searchQuery}`); // 예시
+    navigate(`/search/result?keyword=${searchQuery}`);
   };
 
   const handleKeyDown = (event) => {

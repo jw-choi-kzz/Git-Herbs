@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
+import useLoadingStore from '../store/loadingStore';
+import LoadingContent from '../components/LoadingContent';
 import Modal from '../components/Modal';
 import PictureResultModalContent from '../components/picture/PictureResultModalContent';
 import ImagePickerModalContent from '../components/picture/ImagePickerModalContent';
@@ -52,8 +54,8 @@ const FooterContainer = styled.div`
   z-index: 1;
 `;
 
-
 const Layout = () => {
+  const isLoading = useLoadingStore((state) => state.isLoading);
 
   const { isModalVisible, modalContent, selectedItem, openModal, closeModal } = useModalStore();
 
@@ -72,6 +74,10 @@ const Layout = () => {
       closeModal();
     }
   };
+
+  if (isLoading){
+    return <LoadingContent />;
+  }
 
   return (
     <>

@@ -3,8 +3,6 @@ import { BiEdit, BiCaretUp } from "react-icons/bi";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
-
-
 import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
 
 const ProfileContainer = styled.div`
@@ -42,8 +40,8 @@ const ModifyImgButton = styled.button`
 
 
 const NicknameText = styled.span`
-  margin-right: 8px;
-  font-size: 18px;
+  // margin-right: 8px;
+  font-size: 16px;
 `;
 
 const RankingText = styled.div`
@@ -58,6 +56,7 @@ const RankingText = styled.div`
 
 const NicknameAndEditContainer = styled.div`
   display: flex;
+  flex-direction: column;  
   align-items: flex-start; 
   margin-left: 20px; 
   flex-wrap: wrap;
@@ -87,26 +86,29 @@ const MyProfile = ({ nickname, profileImg, rank }) => {
     imgRef.current.click();
   };
 
+  const validateNickname = (value) => {
+    if (!value) return '별명을 입력해야 합니다!';
+    if (value.length > 10) return '별명은 최대 10자까지 입력 가능합니다.';
+    if (!value.match(/^[a-zA-Z0-9ㄱ-힣]+$/)) return '한글, 영어, 숫자만 입력해주세요.';
+    return null;
+  };
+
   const editNickname = () => {
     Swal.fire({
       title: '별명 변경',
       input: 'text',
-      inputValue: nickname,
+      inputValue: `${newNickname}`,
       showCancelButton: true,
       confirmButtonText: '변경',
       cancelButtonText: '취소',
-      inputValidator: (value) => {
-        if (!value) {
-          return '별명을 입력해야 합니다!';
-        }
-      }
+      inputValidator: validateNickname
     }).then((result) => {
-      if (result.isConfirmed) {
-        // 여기서 별명 상태를 업데이트하는 로직을 추가합니다.
+      if (result.isConfirmed && !validateNickname(result.value)) {
         setNewNickname(result.value);
       }
     });
   };
+
   return (
     <>
       <input

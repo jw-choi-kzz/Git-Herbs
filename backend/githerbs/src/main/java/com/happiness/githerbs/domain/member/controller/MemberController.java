@@ -1,5 +1,7 @@
 package com.happiness.githerbs.domain.member.controller;
 
+import java.io.IOException;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -105,37 +107,23 @@ public class MemberController {
 
 	@PutMapping("/nickname")
 	@Operation(summary = "닉네임 수정", description = "닉네임 수정")
-	public ResponseEntity<SuccessResponse<?>> updateNicknameController(@RequestHeader("Authorization") String accessToken, @RequestBody String nickname){
-		// TODO : validate access token
-
-		// TODO : update nickname
-
-		// TODO : return member into
-		return null;
+	public ResponseEntity<SuccessResponse<UserInfoResponseDto>> updateNicknameController(@RequestHeader("Authorization") String accessToken, @RequestBody String nickname){
+		var result = service.nicknameService(accessToken, nickname);
+		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, result));
 	}
 
 	@PutMapping("/img")
 	@Operation(summary = "프로필 이미지 수정", description = "프로필 이미지 수정")
-	public ResponseEntity<SuccessResponse<?>> updateProfileController(@RequestHeader("Authorization") String accessToken, @RequestBody
-		MultipartFile img){
-		// TODO : validate access token
-
-		// TODO : update profile image
-
-		// TODO : return member into
-		return null;
+	public ResponseEntity<SuccessResponse<?>> updateProfileController(@RequestHeader("Authorization") String accessToken, @RequestParam("img")
+		MultipartFile img) throws IOException {
+		var result = service.profileImgService(accessToken, img);
+		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, result));
 	}
 
 	@GetMapping("/")
 	@Operation(summary = "내 정보 + 랭킹 + 잔디 조회", description = "내 정보 + 랭킹 + 잔디 조회")
 	public ResponseEntity<SuccessResponse<?>> myInfoController(@RequestHeader("Authorization") String accessToken){
-		// TODO : validate access token
 
-		// TODO : get member into
-
-		// TODO : calculate rank
-
-		// TODO : return member info
 		return null;
 	}
 

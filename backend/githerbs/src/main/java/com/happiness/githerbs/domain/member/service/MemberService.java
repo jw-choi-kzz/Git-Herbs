@@ -1,5 +1,6 @@
 package com.happiness.githerbs.domain.member.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +24,7 @@ public interface MemberService {
 	public Integer logoutService(String accessToken, String deviceId);
 	public ReissueTokenResponseDto reissueService(String deviceId, AuthorizationTokenDto dto);
 	public UserInfoResponseDto nicknameService(String accessToken, String nickname);
-	public UserInfoResponseDto profileImgService(String accessToken, MultipartFile img);
+	public UserInfoResponseDto profileImgService(String accessToken, MultipartFile img) throws IOException;
 	public UserGrassResponseDto userGrassService(String accessToken);
 	public List<BadgeDto> badgeService(String accessToken);
 	public IdTokenPayload decodeIdToken(String idToken);

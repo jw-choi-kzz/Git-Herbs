@@ -1,5 +1,6 @@
 package com.happiness.githerbs.domain.member.service;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
@@ -203,17 +204,45 @@ public class MemberServiceImpl  implements MemberService {
 	}
 
 	@Override
+	@Transactional
 	public UserInfoResponseDto nicknameService(String accessToken, String nickname) {
-		return null;
+		// validate access token
+		var memberInfo = jwt.validateToken(accessToken);
+		// update nickname
+		var result = repo.updateNickname(memberInfo.getMemberId(), nickname);
+		// return member into
+		return UserInfoResponseDto.builder().id(result.id()).nickname(result.nickname()).img(result.img()).build();
 	}
 
 	@Override
-	public UserInfoResponseDto profileImgService(String accessToken, MultipartFile img) {
-		return null;
+	@Transactional
+	public UserInfoResponseDto profileImgService(String accessToken, MultipartFile img) throws IOException {
+		// validate access token
+		var memberInfo = jwt.validateToken(accessToken);
+		// update profile image
+		var member  = repo.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+		var prevImg = member.getImgId();
+		if(prevImg != null && !prevImg.isBlank()) {
+			var imgName = prevImg.split("/")[prevImg.split("/").length - 2]+"/"+prevImg.split("/")[prevImg.split("/").length - 1];
+			s3.delete(imgName);
+		}
+		var path = tmpPath + img.getOriginalFilename();
+		var s3Url = s3.upload(img, "profile");
+		var result = repo.updateProfileImg(memberInfo.getMemberId(), s3Url);
+		// return member into
+		return UserInfoResponseDto.builder().id(result.id()).nickname(result.nickname()).img(result.img()).build();
 	}
 
 	@Override
 	public UserGrassResponseDto userGrassService(String accessToken) {
+		// TODO : validate access token
+		var memberInfo = jwt.validateToken(accessToken);
+		// TODO : get member info
+		var member = repo.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
+		// TODO : calculate rank
+
+
+		// TODO : return member info
 		return null;
 	}
 

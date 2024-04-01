@@ -150,7 +150,7 @@ const MyHerbPicture = ({ herbId }) => {
 
   const handleConfirmClick = () => {
     console.log("확인하러 가기 버튼을 누릅니다.");
-    window.location.href = 'http://localhost:5173/board';
+    window.location.href = 'https://j10a205.p.ssafy.io/board';
     handleCloseSnackbar();
   };
   

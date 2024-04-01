@@ -41,7 +41,7 @@ const HerbProfile = ({ data }) => {
     const config = configService.loginConfig();
     herbsService.getBookmark(data.herbId,config)
     .then(response =>{
-      console.log(response);
+      
       setIsBookmarked(response.data ? 1 : 0);
     })
     .catch(error =>{

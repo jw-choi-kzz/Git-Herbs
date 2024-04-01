@@ -38,14 +38,15 @@ const HerbProfile = ({ data }) => {
 
   const getBookmark = async () => {
     const config = configService.loginConfig();
-    herbsService.getBookmark(data.herbId,config)
-    .then(response =>{
-      
-      setIsBookmarked(response.data ? 1 : 0);
-    })
-    .catch(error =>{
-      console.log(error);
-    })
+    herbsService
+      .getBookmark(data.herbId, config)
+      .then((response) => {
+        setIsBookmarked(response.data ? 1 : 0);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }; // getBookmark 함수의 중괄호를 닫음
 
   const removeBookmark = async () => {
     const config = configService.loginConfig();
@@ -58,15 +59,15 @@ const HerbProfile = ({ data }) => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }; // removeBookmark 함수의 중괄호를 닫음
 
   const postBookmark = async () => {
-    const config = configService.loginConfig(); // configService에서 request header를 가져옴
+    const config = configService.loginConfig();
     axios
       .post(
         `https://j10a205.p.ssafy.io/api/v1/herbs/${data.herbId}/bookmark`,
         null,
-        config // configService에서 가져온 request header 설정
+        config
       )
       .then((response) => {
         console.log(response);
@@ -75,7 +76,7 @@ const HerbProfile = ({ data }) => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }; // postBookmark 함수의 중괄호를 닫음
 
   const handleClick = async () => {
     if (isBookmarked) {

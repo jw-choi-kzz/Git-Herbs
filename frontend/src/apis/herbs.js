@@ -13,7 +13,7 @@ export const herbsService ={
      * @returns ["herbId" , "herbName", "bookmark", "acquireCheck"] bookmark,acquireCheck 가 1이면 획득 , 0이면 미획득
      */
     getHerbs : (loginConfig) => {
-        return axios.get(`herbs`,loginConfig)
+        return axios.get(`herbs?size=150`,loginConfig)
         .then(response => {
             return response.data.data.content;
         })
@@ -109,8 +109,9 @@ export const herbsService ={
      * @returns 
      */
     getMyHerbImg : (herbId,loginConfig) =>{
-        return axios.get(`/herbs/${herbId}/my-herbs`,loginConfig)
+        return axios.get(`/herbs/${herbId}/my-herbs?page=0&size=100&sort=string`,loginConfig)
         .then(response =>{
+            // console.log(response);
             return response.data.data.content;
         })
         .catch(error =>{

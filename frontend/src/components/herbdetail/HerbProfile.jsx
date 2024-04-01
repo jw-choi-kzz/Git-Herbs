@@ -38,16 +38,14 @@ const HerbProfile = ({ data }) => {
 
   const getBookmark = async () => {
     const config = configService.loginConfig();
-    herbsService
-      .getBookmark(data.herbId, config)
-      .then((response) => {
-        console.log(response);
-        setIsBookmarked(response.data ? 1 : 0);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+    herbsService.getBookmark(data.herbId,config)
+    .then(response =>{
+      
+      setIsBookmarked(response.data ? 1 : 0);
+    })
+    .catch(error =>{
+      console.log(error);
+    })
 
   const removeBookmark = async () => {
     const config = configService.loginConfig();

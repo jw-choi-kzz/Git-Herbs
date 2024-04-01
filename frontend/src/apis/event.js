@@ -29,7 +29,7 @@ export const eventService = {
      * @returns  true = 정답 , false = 오답
      */
     postQuiz : (quizRequest,loginconfig) =>{
-        return axios.postQuiz(`/event/quiz`,quizRequest,loginconfig)
+        return axios.post(`/event/quiz`,quizRequest,loginconfig)
         .then(response =>{
             return response.data.data;
         })

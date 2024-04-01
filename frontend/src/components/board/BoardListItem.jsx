@@ -65,7 +65,7 @@ const BoardListItem = ({ data }) => {
     herbName,
     userNickname,
     userImgUrl,
-    createdAt,
+    createAt,
   } = data;
 
    const favoriteHandler = () => {
@@ -91,14 +91,7 @@ const BoardListItem = ({ data }) => {
   // 사용자가 좋아요를 눌렀는지 여부에 따라 아이콘을 조정합니다.
   const HeartIcon = likeCheck ? StyledHeartIcon : StyledEmptyHeartIcon;
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear().toString().slice(-2); // 연도의 마지막 두 자리
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // getMonth()는 0부터 시작하므로 1을 더하고, 2자리 형태로
-    const day = date.getDate().toString().padStart(2, '0'); // 2자리 형태로
 
-    return `${year}.${month}.${day}`;
-  };
 
   return (
     <CardContainer>
@@ -107,7 +100,7 @@ const BoardListItem = ({ data }) => {
         <UserAvatar src={userImgUrl} alt={userNickname} />
         <UserInfo>
           <Typography  sx={{ p: 0, m: 0 }}>{userNickname}</Typography>
-          <Typography  sx={{ p: 0, m: 0 }}>{formatDate(createdAt)}</Typography>
+          <Typography  sx={{ p: 0, m: 0 }}>{createAt}</Typography>
         </UserInfo>
         <LikeCounter>
         <HeartIcon liked={likeCheck} onClick={favoriteHandler} />

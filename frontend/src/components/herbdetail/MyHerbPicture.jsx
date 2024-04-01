@@ -77,7 +77,6 @@ const MyHerbPicture = ({ herbId }) => {
   }, [herbId]);
 
   useEffect(() => {
-    console.log(herbData);
   }, [herbData]);
 
 
@@ -87,7 +86,7 @@ const MyHerbPicture = ({ herbId }) => {
       const loginconfig = await configService.loginConfig();
       response = await herbsService.getMyHerbImg(herbId,loginconfig);
       
-      // console.log(response);
+
       setherbData(response);
       // console.log(herbData);
     } catch (error) {

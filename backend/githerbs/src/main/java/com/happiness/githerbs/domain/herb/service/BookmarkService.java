@@ -69,7 +69,7 @@ public class BookmarkService {
 		Member member = memberRepository.findById(memberId).orElseThrow(() -> new BaseException(USER_NOT_FOUND));
 		Herb herb = herbRepository.findById(herbId).orElseThrow(() -> new BaseException(HERB_NOT_FOUND));
 
-		Optional<Bookmark> bookmark = bookmarkRepository.findByHerbIdAndMemberId(herbId, memberId);
+		Optional<Bookmark> bookmark = bookmarkRepository.findByHerbIdAndMemberId(herb.getId(), member.getId());
         return bookmark.isPresent();
 	}
 

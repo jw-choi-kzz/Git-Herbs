@@ -42,5 +42,7 @@ public class MemberBadge {
 	@JoinColumn(name = "badge_id")
 	private Badge badge;
 
-
+	@CreatedDate
+	@Column(updatable = false, nullable = false)
+	private LocalDateTime createdAt;
 }

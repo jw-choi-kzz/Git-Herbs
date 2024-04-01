@@ -1,12 +1,10 @@
 package com.happiness.githerbs.domain.event.service;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
-import com.happiness.githerbs.domain.event.dto.response.BadgeDto;
-import com.happiness.githerbs.domain.event.entity.Badge;
-import com.happiness.githerbs.domain.member.entity.MemberBadge;
-import com.happiness.githerbs.domain.member.repository.MemberBadgeRepository;
 import org.springframework.stereotype.Service;
 
 import com.happiness.githerbs.domain.event.dto.response.DailyHerbResponse;
@@ -35,7 +33,6 @@ public class EventServiceImpl implements EventService {
 	private final QuizRepository quizRepository;
 	private final MemberRepository memberRepository;
 	private final HerbDailyRepository herbDailyRepository;
-	private final MemberBadgeRepository memberBadgeRepository;
 
 	@Override
 	public List<RankingResponse> findRanker() {
@@ -98,22 +95,5 @@ public class EventServiceImpl implements EventService {
 
 		return correct;
 	}
-
-	@Override
-	public List<BadgeDto> getBadge(Integer memberId) {
-		Optional<List<MemberBadge>> memberBadges = memberBadgeRepository.findByMemberId(memberId);
-		if( memberBadges.isPresent()){
-			List<BadgeDto> badgeDtos = new ArrayList<>();
-			for( MemberBadge memberBadge : memberBadges.get()){
-				Badge  badge = memberBadge.getBadge();
-				badgeDtos.add(BadgeDto.builder()
-						.name(badge.getName())
-						.details(badge.getDetails())
-						.badgeId(badge.getId())
-						.build());
-			}
-			return badgeDtos;
-		} else  return Collections.emptyList();
-	};
 
 }

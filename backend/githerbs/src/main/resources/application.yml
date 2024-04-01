@@ -1,12 +1,12 @@
 spring:
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://J10a205.p.ssafy.io:3306/test
+    username: root
+    password: godqhraksEkd123@@
     hikari:
       maximum-pool-size: 10
   jpa:
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
     hibernate:
       ddl-auto: update
     defer-datasource-initialization: true
@@ -17,9 +17,6 @@ spring:
     multipart:
       max-file-size: 5MB
       max-request-size: 5MB
-  profiles:
-    include:
-      - secret
 
 
   jwt:
@@ -27,11 +24,66 @@ spring:
     secret: JDJhJDEyJE5YVjB2MGlZMC5pL2E4MGNUTE9oMk83YldhOHlCTDRpcHducDltd0R2ZkhLNnoyZ2FleXFp
     access-token-validity-in-seconds: 86400  # 1 day
     refresh-token-validity-in-seconds: 604800  # 7 days
+  elasticsearch:
+    uris: https://j10a205.p.ssafy.io:9200/
+    password: godqhraksEkd123@@
+    username: elastic
 
-
-
+redis:
+  master:
+    host: J10a205.p.ssafy.io
+    port: 6379
+  #  nodes:
+  #    - host: something
+  #      port: 6379
+  #    - host: something2
+  #      port: 6379
+  password: godqhraksEkd123@@
 
 
 
 server:
   port: 8080
+  servlet:
+    context-path: /api
+
+management:
+  endpoints:
+    enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true
+
+kakao:
+  api:
+    secret: KakaoAK 8a18ae99d48d2eee9185b60c07d99e85
+  login:
+    secret: dc5a9e751fda9ac9082a75832920df96
+    redirect: https://j10a205.p.ssafy.io/login/oauth2/code/kakao
+    tmp-path: /tmp
+swagger:
+  local: http://localhost/
+  production: https://j10a205.p.ssafy.io/api
+
+
+feign :
+  fast-api:
+    url: http://j10a205.p.ssafy.io:10000/v1/m1
+  kakao:
+    token: https://kauth.kakao.com
+    authorize: ${feign.kakao.token}/oauth/authorize
+    user: https://kapi.kakao.com
+
+cloud:
+  aws:
+    s3:
+      bucket: herbs205
+    credentials:
+      access-key: AKIAXYKJUY4LGGWYZEPU
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+    prefix: https://herbs205.s3.ap-northeast-2.amazonaws.com

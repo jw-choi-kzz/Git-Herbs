@@ -20,4 +20,5 @@ public class SuccessResponse<T> {
 		this.code = status.value();
 		this.data = data;
 	}
+
 }

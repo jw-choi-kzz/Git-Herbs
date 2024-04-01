@@ -68,7 +68,6 @@ export default function RankCarousel() {
   useEffect(() => {
     const getData = async () => {
       const response = await eventService.getRank();
-      console.log(response);
       setRankList(response);
     }
     getData();

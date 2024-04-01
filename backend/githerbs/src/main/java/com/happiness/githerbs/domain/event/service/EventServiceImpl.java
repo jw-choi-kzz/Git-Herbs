@@ -3,6 +3,7 @@ package com.happiness.githerbs.domain.event.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -65,12 +66,22 @@ public class EventServiceImpl implements EventService {
 	@Override
 	@Transactional
 	public boolean solveQuiz(Integer memberId, Integer answer) {
-		MemberDaily memberDaily = memberDailyRepository.findFirstByMemberOrderByDateDesc(
-			memberRepository.findById(memberId)
-				.orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND)));
+		Optional<MemberDaily> byMemberIdAndDate = memberDailyRepository.findByMemberIdAndDate(memberId,
+			LocalDate.now());
 
-		if (!memberDaily.getDate().equals(LocalDate.now())) {
-			throw new BaseException(ErrorCode.INTERNAL_SERVER_ERROR);
+		MemberDaily memberDaily;
+
+		if (byMemberIdAndDate.isPresent()) {
+			memberDaily = byMemberIdAndDate.get();
+		} else {
+			memberDaily = MemberDaily
+				.builder()
+				.member(
+					memberRepository.findById(memberId).orElseThrow(() -> new BaseException(
+						ErrorCode.USER_NOT_FOUND))
+				).date(LocalDate.now())
+				.build();
+			memberDailyRepository.saveAndFlush(memberDaily);
 		}
 
 		if (memberDaily.getDate().equals(LocalDate.now()) && memberDaily.isQuiz()) {

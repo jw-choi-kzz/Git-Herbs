@@ -26,6 +26,8 @@ public class S3Uploader {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+    @Value("${kakao.login.tmp-path}")
+    private String tmpPath;
 
     // MultipartFile을 전달받아 File로 전환한 후 S3에 업로드
     public String upload(MultipartFile multipartFile, String dirName) throws IOException {
@@ -38,6 +40,11 @@ public class S3Uploader {
         File uploadFile = convert(in, fileName)
                 .orElseThrow(() -> new IllegalArgumentException("InputStream -> File 전환 실패"));
         return upload(uploadFile, dirName);
+    }
+
+    public boolean delete(String fileName) {
+        amazonS3Client.deleteObject(bucket, fileName);
+        return true;
     }
 
     private String upload(File uploadFile, String dirName) {
@@ -66,7 +73,7 @@ public class S3Uploader {
     }
 
     private Optional<File> convert(MultipartFile file) throws  IOException {
-        File convertFile = new File(file.getOriginalFilename());
+        File convertFile = new File(tmpPath+"/"+file.getOriginalFilename());
         if(convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(file.getBytes());

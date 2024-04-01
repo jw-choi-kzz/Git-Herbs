@@ -34,4 +34,10 @@ public class Member {
 	private Long kakaoId;
 
 	private Boolean deleted;
+
+	public void delete() {
+		this.deleted = true;
+	}
+
+
 }

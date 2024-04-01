@@ -1,5 +1,9 @@
 package com.happiness.githerbs.domain.member.entity;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+
 import com.happiness.githerbs.domain.event.entity.Badge;
 
 import jakarta.persistence.Column;
@@ -37,4 +41,8 @@ public class MemberBadge {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "badge_id")
 	private Badge badge;
+
+	@CreatedDate
+	@Column(updatable = false, nullable = false)
+	private LocalDateTime createdAt;
 }

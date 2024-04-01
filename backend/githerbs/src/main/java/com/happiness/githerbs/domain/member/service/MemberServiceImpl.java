@@ -49,7 +49,6 @@ public class MemberServiceImpl  implements MemberService {
 	private String authorizeUrl;
 	@Value("${feign.kakao.token}")
 	private String tokenUrl;
-	// TODO : member 완성하면 /tmp로 바꾸기
 	@Value("${kakao.login.tmp-path}")
 	private String tmpPath;
 

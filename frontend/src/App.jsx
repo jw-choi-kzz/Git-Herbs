@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import useLoadingStore from './store/loadingStore';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './App.css';
 import useGlobalStyles from './utils/useGlobalStyles';
@@ -27,6 +29,10 @@ function App() {
   script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${NAVER_CLIENT_KEY}&callback=map_callback`;
   script.async = true;
   document.head.appendChild(script);
+  const setIsLoading = useLoadingStore((state) => state.setIsLoading);
+  useEffect(()=>{
+    setIsLoading(false);
+  }, [setIsLoading]);
 
   const router = createBrowserRouter([
     {
@@ -125,9 +131,7 @@ function App() {
   ]);
   return (
     <>
-      {/* <div className="relative mx-auto max-w-[375px] h-[100svh] overscroll-y-none touch-none"> */}
       <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
-      {/* </div> */}
     </>
   )
 }

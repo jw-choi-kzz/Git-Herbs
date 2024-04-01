@@ -91,12 +91,27 @@ const MonthGlass = ({ glassList }) => {
   // tileContent 함수 내에서 모든 날짜에 대해 icons[0] 아이콘을 보여주도록 설정
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
-      // 여기에서 다른 로직을 추가하여 특정 조건에 따라 다른 아이콘을 반환할 수 있습니다.
+      const currentDateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD 형식
+      const currentGlass = glassList.find(glass => glass.date === currentDateStr);
+
+      if (currentGlass) {
+        let iconIndex;
+        if (currentGlass.count === 0) {
+          iconIndex = 0;
+        } else if (currentGlass.count >= 1 && currentGlass.count <= 2) {
+          iconIndex = 1;
+        } else if (currentGlass.count >= 3 && currentGlass.count <= 4) {
+          iconIndex = 2;
+        } else if (currentGlass.count >= 5) {
+          iconIndex = 3;
+        }
+
       return (
         <DayTile>
-          <IconImage src={icons[2]} alt="Icon" />
+          <IconImage src={icons[iconIndex]} alt="Icon" />
         </DayTile>
       );
+      }
     }
     return null;
   };
@@ -110,7 +125,8 @@ const MonthGlass = ({ glassList }) => {
       nextLabel={null}
       prevLabel={null}
       showNeighboringMonth={false}
-      navigationLabel={null} // 네비게이션 라벨을 숨깁니다.
+      navigationLabel={null}
+      calendarType="US"
     />
   );
 };

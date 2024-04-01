@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import MonthGlass from "../components/mypage/MonthGlass";
 import BedgeList from "../components/mypage/BedgeList";
@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import MyProfile from "../components/mypage/MyProfile";
 import { BiCalendar, BiTrophy, BiChevronRight } from "react-icons/bi";
 import useGlobalStyles from '../utils/useGlobalStyles';
-
+import { configService } from '../apis/config';
+import { userServcie } from "../apis/user";
 
 const Container = styled.div`
     padding: 24px;
@@ -39,43 +40,39 @@ const IconAndTitle = styled.div`
 const MyPage = () => {
     useGlobalStyles(); 
     // const [userData, setUserData] = useState([]);
+    const [userInfo, setUserInfo] = useState({});
+    const [userGrass, setUserGrass] = useState([]);
+
+    useEffect(()=>{
+        userServcie.getUserInfo(configService.loginConfig)
+        .then(response => {
+            const userData = response;
+            setUserInfo({
+                userId: userData.userId,
+                userNickname: userData.userNickname,
+                userImgurl: userData.userImgurl,
+                rank: userData.rank
+            });
+            setUserGrass(userData.grass);
+        })
+        .catch(error => {
+            console.error(error);
+        })
+    }, []);
+
     const navigate = useNavigate()
     const navigateToBadgeList = () => {
         navigate('/mypage/bedge');
     };
-    const userData = {
-        "userId": 1,
-        "userNickname": "부아아앙",
-        "userImgurl": "/profileimg/부아아앙.jpg",
-        "rank": 14,
-        "glass": [
-            {
-                "date": '2024-03-21',
-                "count": 2,
-            }, 
-            {
-                "date": '2024-03-22',
-                "count": 0,
-            }, 
-            {
-                "date": '2024-03-23',
-                "count": 1,
-            }, 
-            {
-                "date": '2024-03-24',
-                "count": 3,
-            }, 
-        ]
-    }
-// overflowY: 'auto', height: 'calc(100vh - 105px)', 
+
     return (
         <div style={{ justifyContent: 'center' }}>
             <Container>
-            <MyProfile nickname={userData.userNickname}  profileImg={userData.userImgurl} rank={userData.rank}/>
+            <MyProfile nickname={userInfo.userNickname}  profileImg={userInfo.userImgurl} rank={userInfo.rank}/>
             <br />
             <MenuTitle className="bold"><BiCalendar style={{ color: '#21351F', fontSize: '24px' }}/> 나의 잔디 기록</MenuTitle>
             <Explain>열심히 Git Herbs를 사용할수록 꽃이 피어나요!</Explain>
-            <MonthGlass glassList={userData.glass} />
+            <MonthGlass glassList={userGrass} />
             <br/>
             <NaviContainer onClick={navigateToBadgeList}>
                 <IconAndTitle>

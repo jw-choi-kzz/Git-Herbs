@@ -4,6 +4,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
 import ImagePickerModal from "../components/picture/ImagePickerModal";
+import useLoadingStore from '../store/loadingStore';
+import LoadingContent from '../components/LoadingContent';
 
 const LayoutContainer = styled.div`
   // display: flex;
@@ -49,8 +51,8 @@ const FooterContainer = styled.div`
   z-index: 1;
 `;
 
-
 const Layout = () => {
+  const isLoading = useLoadingStore((state) => state.isLoading);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -68,6 +70,10 @@ const Layout = () => {
       setIsModalVisible(false);
     }
   };
+
+  if (isLoading){
+    return <LoadingContent />;
+  }
 
   return (
     <>

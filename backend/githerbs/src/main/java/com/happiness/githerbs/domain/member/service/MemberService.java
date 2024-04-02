@@ -16,17 +16,17 @@ import com.happiness.githerbs.domain.member.dto.response.UserTokenResponseDto;
 import com.happiness.githerbs.domain.member.entity.Member;
 
 public interface MemberService {
-	public String loginService(String redirect);
-	public UserTokenResponseDto tokenService(KakaoAuthorizeParameterDto dto);
-	public Member registService(String accessToken);
-	public Integer withdrawService(String accessToken, String deviceId);
-	public UserInfoResponseDto getUserService(int userId);
-	public Integer logoutService(String accessToken, String deviceId);
-	public ReissueTokenResponseDto reissueService(String deviceId, AuthorizationTokenDto dto);
-	public UserInfoResponseDto nicknameService(String accessToken, String nickname);
-	public UserInfoResponseDto profileImgService(String accessToken, MultipartFile img) throws IOException;
-	public UserMyInfoResponseDto userMyInfoService(String accessToken);
-	public List<BadgeDto> badgeService(String accessToken);
-	public IdTokenPayload decodeIdToken(String idToken);
-	public String uploadProfile(String profileUrl, Long kakaoId);
+	String loginService(String redirect);
+	UserTokenResponseDto tokenService(KakaoAuthorizeParameterDto dto);
+	Member registService(String accessToken);
+	Integer withdrawService(String accessToken, String deviceId);
+	UserInfoResponseDto getUserService(int userId);
+	Integer logoutService(String accessToken, String deviceId);
+	ReissueTokenResponseDto reissueService(String deviceId, AuthorizationTokenDto dto);
+	UserInfoResponseDto nicknameService(String accessToken, String nickname);
+	UserInfoResponseDto profileImgService(String accessToken, MultipartFile img) throws IOException;
+	UserMyInfoResponseDto userMyInfoService(String accessToken);
+	List<BadgeDto> badgeService(String accessToken);
+	IdTokenPayload decodeIdToken(String idToken);
+	String uploadProfile(String profileUrl, Long kakaoId);
 }

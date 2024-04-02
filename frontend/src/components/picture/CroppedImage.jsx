@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Button from "@mui/joy/Button";
 import useModalStore from '../../store/modalStore';
 import { configService } from '../../apis/config';
+import imageCompression from 'browser-image-compression';
 
 const StyledButton1 = styled(Button)`
   && {
@@ -21,6 +22,7 @@ const StyledButton1 = styled(Button)`
     background: #004d26;
   }
 `;
+
 const StyledButton2 = styled(Button)`
   && {
     flex-grow: 1;
@@ -41,8 +43,6 @@ const ButtonContainer = styled.div`
   justify-content: space-between;
 `;
 
-
-
 const CroppedImage = ({ croppedImage, onGoBack }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -62,12 +62,33 @@ const CroppedImage = ({ croppedImage, onGoBack }) => {
     return new File([u8arr], filename, { type: mime });
   }
 
+  const resizeImageForMobile = async (file) => {
+    const originalImage = await createImageBitmap(file);
+    const originalWidth = originalImage.width;
+    if (originalWidth <= 750) {
+      return file;
+    }
+    const maxWidth = 750;
+    const options = {
+      maxWIdthOrHeight: maxWidth,
+      useWebWorker: true
+    }
+    try {
+      const resizedImage = await imageCompression(file, options);
+      return resizedImage;
+    } catch (error) {
+      console.log('리사이즈 오류 : ', error)
+    }
+  }
+
   const send = async () => {
     setIsLoading(true);
     const file = dataURLtoFile(croppedImage, "croppedImgae.png");
 
+    const resizedFile = await resizeImageForMobile(file);
+
     const form = new FormData();
-    form.append("image", file);
+    form.append("image", resizedFile);
 
     axios.post('https://j10a205.p.ssafy.io/api/v1/search/image', form, configService.loginConfig())
       .then(({ data }) => {

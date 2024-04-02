@@ -2,25 +2,18 @@ package com.happiness.githerbs.domain.member.repository;
 
 import static com.happiness.githerbs.domain.member.entity.QMemberDaily.*;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import org.hibernate.metamodel.mapping.SqlExpressible;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.happiness.githerbs.domain.event.dto.response.RankingResponse;
 import com.happiness.githerbs.domain.member.dto.common.GrassDto;
 import com.happiness.githerbs.domain.member.dto.response.UserRankResponseDto;
-import com.happiness.githerbs.domain.member.entity.MemberDaily;
-import com.happiness.githerbs.domain.member.entity.QMemberDaily;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
-import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.JPQLOps;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository

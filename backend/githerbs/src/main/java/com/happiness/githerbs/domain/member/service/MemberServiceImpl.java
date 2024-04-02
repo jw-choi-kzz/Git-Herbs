@@ -237,15 +237,13 @@ public class MemberServiceImpl  implements MemberService {
 
 	@Override
 	public UserMyInfoResponseDto userMyInfoService(String accessToken) {
-		// TODO : validate access token
 		var memberInfo = jwt.validateToken(accessToken);
-		// TODO : get member info
+		// get member info
 		var member = repo.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
-		// TODO : calculate rank
+		// calculate rank
 		var rank = memberDailyRepository.findRank(member.getId());
-		// TODO : get grass
+		// get grass
 		var grassList = memberDailyRepository.findGrass(member.getId());
-		// TODO : return member info
 		return UserMyInfoResponseDto.builder().rank(rank).userId(member.getId()).nickname(member.getNickname()).imgId(member.getImgId()).grass(grassList).build();
 	}
 

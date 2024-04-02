@@ -54,8 +54,12 @@ const RecommendedHerbs = () => {
 
   useEffect(()=>{
     const loginConfig = configService.loginConfig();
+    console.log("loginConfig");
+    console.log(loginConfig);
     searchService.searchRecommend(loginConfig)
     .then(response => {
+      console.log("response");
+      console.log(response);
       setRecommendList(response);
     })
     .catch(error=>{

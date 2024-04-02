@@ -7,6 +7,7 @@ import { BiCalendar, BiTrophy, BiChevronRight } from "react-icons/bi";
 import useGlobalStyles from "../utils/useGlobalStyles";
 import { configService } from "../apis/config";
 import { userServcie } from "../apis/user";
+import useLoginStore from "../store/useLoginStore";
 
 const Container = styled.div`
   padding: 24px;
@@ -43,21 +44,17 @@ const MyPage = () => {
   const [userGrass, setUserGrass] = useState([]);
 
   useEffect(() => {
-    userServcie
-      .getUserInfo(configService.loginConfig)
+    userServcie.getUserInfo(configService.loginConfig)
       .then((response) => {
-        const userData = response;
         setUserInfo({
-          userId: userData.userId,
-          userNickname: userData.userNickname,
-          userImgurl: userData.userImgurl,
-          rank: userData.rank,
+          ...response,
+          userGrass: response.grass,
         });
-        setUserGrass(userData.grass);
       })
       .catch((error) => {
+        setError("사용자 정보를 불러오는 데 실패했습니다.");
         console.error(error);
-      });
+      })
   }, []);
 
   const navigate = useNavigate();
@@ -71,7 +68,6 @@ const MyPage = () => {
         <MyProfile
           nickname={userInfo.userNickname}
           profileImg={userInfo.userImgurl}
-          rank={userInfo.rank}
         />
         <br />
         <MenuTitle className="bold">
@@ -79,11 +75,11 @@ const MyPage = () => {
           잔디 기록
         </MenuTitle>
         <Explain>열심히 Git Herbs를 사용할수록 꽃이 피어나요!</Explain>
-        <MonthGrass grassList={userGrass} />
+        <MonthGrass grassList={userInfo.userGrass} />
         <br />
         <NaviContainer onClick={navigateToBadgeList}>
           <IconAndTitle>
-            <BiTrophy style={{ color: "#21351F", fontSize: "24px" }} />{" "}
+            <BiTrophy style={{ color: "#21351F", fontSize: "24px" }} />
             <MenuTitle className="bold">획득한 뱃지 목록</MenuTitle>
             <BiChevronRight style={{ color: "#979797", fontSize: "24px" }} />
           </IconAndTitle>

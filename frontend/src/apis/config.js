@@ -8,7 +8,7 @@ export const configService = {
      */
     loginConfig: () => ({
         headers: {
-          Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJleHAiOjE3MTE5ODUzODEsImlkIjoxLCJuaWNrbmFtZSI6InRlc3QiLCJzY29wZSI6Ik1FTUJFUiJ9.rbdEfp8SBdYC9hH3wzwfpMPh8L_kcpuRIxYMUAstVbseySndkEqpUdXTD-11Jygbbar-pa4kjAi2BZoo7VSbVQ'
+          Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJleHAiOjE3MTIxMDI5NTEsImlkIjoxLCJuaWNrbmFtZSI6InRlc3QiLCJzY29wZSI6Ik1FTUJFUiJ9.467WpujJlNoIC_oEeJBH9FZ6gITDoHKRuCZLkOyY6sAsrQseYIV4xI5frKHb3mLDFEMjpd2rDBzTzVBG1Ryifg'
         }
       }),
     

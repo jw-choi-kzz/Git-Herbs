@@ -6,7 +6,7 @@ export const configService = {
      */
     loginConfig: () => ({
         headers: {
-          Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJleHAiOjE3MTIwMTg0MTQsImlkIjoxLCJuaWNrbmFtZSI6InRlc3QiLCJzY29wZSI6Ik1FTUJFUiJ9.ShQ4ckIJBqzSXRbBPk6E2TDIfuXTlblNUnpBNQ-gcAnkrBcFMkVxNs-1gFpudUHF6hzbN0een5Z5H9cO7zdOGQ'
+          Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJleHAiOjE3MTIxMDI5NTEsImlkIjoxLCJuaWNrbmFtZSI6InRlc3QiLCJzY29wZSI6Ik1FTUJFUiJ9.467WpujJlNoIC_oEeJBH9FZ6gITDoHKRuCZLkOyY6sAsrQseYIV4xI5frKHb3mLDFEMjpd2rDBzTzVBG1Ryifg'
         }
       }),
     

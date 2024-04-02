@@ -13,12 +13,17 @@ const CardContainer = styled.div`
   flex-direction: column; // 세로 방향 정렬
   justify-content: space-between; // 유저 섹션을 하단에 배치
   border-radius: 12px;
-  max-width: 80%;
+  width: 80%;
+  max-width: 336px;
   margin: 0 auto;
   overflow: hidden;
   margin-bottom: 25px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   min-height: 300px; // 이미지와 유저 섹션을 포함한 최소 높이 설정
+  
+  @media (max-width: 336px) {
+    max-width: 100%; // 화면 폭이 500px 이하일 때는 최대 폭을 100%로 설정
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -46,6 +51,9 @@ const UserSection = styled.div`
 
 const UserInfo = styled.div`
   margin-left: 8px;
+  white-space: normal; /* 텍스트가 경계를 넘어갈 때 줄바꿈 */
+  overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
+  word-wrap: break-word; /* IE11 및 이전 버전과의 호환성을 위해 */
 `;
 
 const UserAvatar = styled.img`

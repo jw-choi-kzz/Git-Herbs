@@ -107,6 +107,7 @@ const HerbProfile = ({ data }) => {
         <LoginModal
           isOpen={showLoginModal}
           onClose={() => setShowLoginModal(false)}
+          redirectUrl={`/detail/${data.herbId}`}
         />
       )}
     </Container>

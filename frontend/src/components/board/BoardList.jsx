@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import BoardListItem from "./BoardListItem";
 import boardService from "../../apis/board";
 import { configService } from "../../apis/config";
+import styled from "styled-components";
+
+const StyledDiv = styled.div`
+  margin-top: 20px;
+  margin-bottom: 10px;
+`;
 
 const BoardList = ({ filterOption }) => {
 
@@ -33,11 +39,11 @@ const BoardList = ({ filterOption }) => {
   };
 
   return (
-    <div>
+    <StyledDiv>
       {boardDatas.map((data, index) => (
         <BoardListItem key={index} data={data} />
       ))}
-    </div>
+    </StyledDiv>
   );
 };
 

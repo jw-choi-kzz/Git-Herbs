@@ -56,6 +56,8 @@ public class MemberServiceImpl  implements MemberService {
 	private String tokenUrl;
 	@Value("${kakao.login.tmp-path}")
 	private String tmpPath;
+	@Value("${default.profile.image.url}")
+	private String defaultProfileImageUrl;
 
 	private final StateRedisRepository stateRedis;
 	private final KakaoOAuthClient oAuthClient;
@@ -141,7 +143,7 @@ public class MemberServiceImpl  implements MemberService {
 		var param = KakaoUserInfoRequestDto.builder().secureResource(true).build();
 		var profile = userClient.userInfoClient("Bearer " + accessToken, param);
 		// save profile image to S3
-		var s3Url = "";
+		var s3Url = defaultProfileImageUrl;
 		// if profile image is default_profile, don't save to S3
 		if(profile.properties() != null && !profile.properties().profileImage().contains("default_profile")) {
 			s3Url = uploadProfile(profile.properties().profileImage(), profile.id());

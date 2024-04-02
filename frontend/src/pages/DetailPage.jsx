@@ -44,6 +44,7 @@ const DetailPage = () => {
       <HerbDetailIndex
         selectedTab={selectedTab}
         onTabChange={handleTabChange}
+        herbId={herbId}
       />
       {selectedTab === 0 && <HerbInfoBox data={herbs} />}
       {selectedTab === 1 && <MyHerbPicture herbId={herbId} />}

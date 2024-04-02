@@ -20,6 +20,7 @@ import MyPage from "./pages/MyPage";
 import BedgePage from "./pages/BedgePage";
 import HerbMap from "./components/herbdetail/HerbMap";
 import PrivateRoute from "./components/PrivateRoute";
+import ScrollToTop from "./components/ScrollToTop";
 
 const NAVER_CLIENT_KEY = "miynss7cb8";
 
@@ -38,7 +39,11 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,
+      element: (
+        <Layout>
+          <ScrollToTop />
+        </Layout>
+      ),
       errorElement: <ErrorPage />,
       children: [
         {

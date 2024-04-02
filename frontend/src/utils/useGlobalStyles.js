@@ -9,7 +9,7 @@ const useGlobalStyles = () => {
     document.body.style.height = "100dvh";
 
     return () => {
-      document.body.style.overflowY = originalStyle; // 컴포넌트 언마운트 시 원래 스타일로 복원
+      document.body.style.overflowY = originalStyle;
     };
   }, []);
 };

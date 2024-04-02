@@ -27,6 +27,7 @@ const Button = styled.button`
 `;
 
 const ImagePickerModalContent = ({ onImagePicked, onClose }) => {
+  const cameraInputRef = useRef(null);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -51,11 +52,11 @@ const ImagePickerModalContent = ({ onImagePicked, onClose }) => {
         type="file"
         accept="image/*"
         capture="camera"
-        ref={fileInputRef}
+        ref={cameraInputRef}
         onChange={handleImageUpload}
         style={{ display: "none" }}
       />
-      <Button onClick={() => fileInputRef.current.click()}>
+      <Button onClick={() => cameraInputRef.current.click()}>
         <BiCamera />
         사진찍기
       </Button>

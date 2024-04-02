@@ -66,6 +66,7 @@ const BoardListItem = ({ data }) => {
 
   const { imgUrl, herbName, userNickname, userImgUrl, createAt } = data;
 
+  console.log(data);
   const favoriteHandler = () => {
     if (!isLogin) {
       setShowLoginModal(true);

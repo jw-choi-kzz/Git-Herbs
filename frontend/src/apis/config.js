@@ -4,11 +4,24 @@ export const configService = {
     /**
      * 로그인이 필요할 경우 넣는 cofnig
      */
-    loginConfig: () => ({
-        headers: {
-          Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJleHAiOjE3MTIxMDI5NTEsImlkIjoxLCJuaWNrbmFtZSI6InRlc3QiLCJzY29wZSI6Ik1FTUJFUiJ9.467WpujJlNoIC_oEeJBH9FZ6gITDoHKRuCZLkOyY6sAsrQseYIV4xI5frKHb3mLDFEMjpd2rDBzTzVBG1Ryifg'
-        }
-      }),
+    loginConfig: () => {
+      // 로컬스토리지에서 token 값을 가져옴
+      const token = localStorage.getItem('accessToken');
+  
+      // token 값이 존재하는지 확인
+      if (token) {
+        // token이 존재하면 Bearer 토큰을 생성하여 Authorization 헤더에 추가
+        return {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        };
+      } else {
+        // token 값이 없으면 빈 객체 반환
+        return {};
+      }
+    },
+  
     
 
 

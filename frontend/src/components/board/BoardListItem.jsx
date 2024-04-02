@@ -9,20 +9,30 @@ import LoginModal from "../LoginModal";
 import useLoginStore from "../../store/useLoginStore";
 
 const CardContainer = styled.div`
+  display: flex; // 이미지와 유저 섹션을 위한 flex 컨테이너
+  flex-direction: column; // 세로 방향 정렬
+  justify-content: space-between; // 유저 섹션을 하단에 배치
   border-radius: 12px;
-  max-width: 300px;
+  max-width: 80%;
   margin: 0 auto;
   overflow: hidden;
-  margin-bottom: 16px;
-  padding: 0px;
+  margin-bottom: 25px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  min-height: 300px; // 이미지와 유저 섹션을 포함한 최소 높이 설정
+`;
+
+const ImageContainer = styled.div`
+  display: flex; // 이미지를 위한 flex 컨테이너
+  justify-content: center; // 이미지를 중앙에 위치
+  align-items: center; // 이미지를 중앙에 위치
+  flex-grow: 1; // 이미지가 유연하게 늘어나도록 설정
+  background: #f4f4f4; // 배경 색상 설정
 `;
 
 const HerbImage = styled.img`
   width: 100%;
-  height: auto;
-  max-height: 300px;
-  object-fit: cover;
+  max-height: 100%;
+  object-fit: contain; // 이미지가 컨테이너를 벗어나지 않고 비율 유지
 `;
 
 const UserSection = styled.div`
@@ -30,7 +40,9 @@ const UserSection = styled.div`
   align-items: center;
   padding: 8px;
   background: #f4f4f4;
+  border-top: 1px solid #dcdcdc; // 유저 섹션 상단에 선 추가
 `;
+
 
 const UserInfo = styled.div`
   margin-left: 8px;
@@ -95,7 +107,9 @@ const BoardListItem = ({ data }) => {
 
   return (
     <CardContainer>
+      <ImageContainer>
       <HerbImage src={imgUrl} alt={herbName} />
+      </ImageContainer>
       <UserSection>
         <UserAvatar src={userImgUrl} alt={userNickname} />
         <UserInfo>

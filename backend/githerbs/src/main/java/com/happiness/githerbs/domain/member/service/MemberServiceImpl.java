@@ -23,13 +23,14 @@ import com.happiness.githerbs.domain.member.dto.request.KakaoAuthorizeParameterD
 import com.happiness.githerbs.domain.member.dto.request.KakaoTokenRequestDto;
 import com.happiness.githerbs.domain.member.dto.request.KakaoUserInfoRequestDto;
 import com.happiness.githerbs.domain.member.dto.response.ReissueTokenResponseDto;
-import com.happiness.githerbs.domain.member.dto.response.UserGrassResponseDto;
+import com.happiness.githerbs.domain.member.dto.response.UserMyInfoResponseDto;
 import com.happiness.githerbs.domain.member.dto.response.UserInfoResponseDto;
 import com.happiness.githerbs.domain.member.dto.response.UserTokenResponseDto;
 import com.happiness.githerbs.domain.member.entity.KakaoLoginRedisEntity;
 import com.happiness.githerbs.domain.member.entity.Member;
 import com.happiness.githerbs.domain.member.entity.StateRedisEntity;
 import com.happiness.githerbs.domain.member.repository.KakaoLoginRedisRepository;
+import com.happiness.githerbs.domain.member.repository.MemberDailyRepository;
 import com.happiness.githerbs.domain.member.repository.MemberRepository;
 import com.happiness.githerbs.domain.member.repository.StateRedisRepository;
 import com.happiness.githerbs.global.common.code.ErrorCode;
@@ -60,6 +61,7 @@ public class MemberServiceImpl  implements MemberService {
 	private final KakaoOAuthClient oAuthClient;
 	private final KakaoUserClient userClient;
 	private final MemberRepository repo;
+	private final MemberDailyRepository memberDailyRepository;
 	private final KakaoProfileClient profileClient;
 	private final S3Uploader s3;
 	private final JwtService jwt;
@@ -234,16 +236,17 @@ public class MemberServiceImpl  implements MemberService {
 	}
 
 	@Override
-	public UserGrassResponseDto userGrassService(String accessToken) {
+	public UserMyInfoResponseDto userMyInfoService(String accessToken) {
 		// TODO : validate access token
 		var memberInfo = jwt.validateToken(accessToken);
 		// TODO : get member info
 		var member = repo.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
 		// TODO : calculate rank
 
-
+		// TODO : get grass
+		var grassList = memberDailyRepository.findGrass(memberInfo.getMemberId());
 		// TODO : return member info
-		return null;
+		return UserMyInfoResponseDto.builder().userId(member.getId()).nickname(member.getNickname()).imgId(member.getImgId()).grass(grassList).build();
 	}
 
 	@Override

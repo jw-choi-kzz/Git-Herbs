@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.happiness.githerbs.domain.event.dto.response.RankingResponse;
+import com.happiness.githerbs.domain.member.dto.common.GrassDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -20,6 +21,21 @@ public class MemberDailyRepositoryImpl implements MemberDailyRepositoryCustom {
 
 	public MemberDailyRepositoryImpl(@Qualifier("queryFactory") JPAQueryFactory queryFactory) {
 		this.queryFactory = queryFactory;
+	}
+
+	@Override
+	public List<GrassDto> findGrass(Integer id) {
+
+		LocalDate now = LocalDate.now();
+
+		return queryFactory
+			.select(Projections.constructor(GrassDto.class,
+				memberDaily.date,
+				getTotalTrueCount()))
+			.from(memberDaily)
+			.where(memberDaily.member.id.eq(id).and(memberDaily.date.between(now.withDayOfMonth(1), now)))
+			.groupBy(memberDaily.date)
+			.fetch();
 	}
 
 	@Override
@@ -66,4 +82,5 @@ public class MemberDailyRepositoryImpl implements MemberDailyRepositoryCustom {
 			.where(memberDaily.member.id.eq(userId).and(memberDaily.date.eq(LocalDate.now())))
 			.execute();
 	}
+
 }

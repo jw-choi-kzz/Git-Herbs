@@ -120,11 +120,11 @@ public class MemberController {
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, result));
 	}
 
-	@GetMapping("/")
+	@GetMapping
 	@Operation(summary = "내 정보 + 랭킹 + 잔디 조회", description = "내 정보 + 랭킹 + 잔디 조회")
 	public ResponseEntity<SuccessResponse<?>> myInfoController(@RequestHeader("Authorization") String accessToken){
-
-		return null;
+		var result = service.userMyInfoService(accessToken);
+		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, result));
 	}
 
 	@GetMapping("/badge")

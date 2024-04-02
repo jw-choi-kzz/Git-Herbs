@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { BiImage } from 'react-icons/bi';
+import { BiCamera, BiImage } from 'react-icons/bi';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -51,6 +51,18 @@ const ImagePickerModalContent = ({ onImagePicked, onClose }) => {
         type="file"
         accept="image/*"
         capture="camera"
+        ref={fileInputRef}
+        onChange={handleImageUpload}
+        style={{ display: "none" }}
+      />
+      <Button onClick={() => fileInputRef.current.click()}>
+        <BiCamera />
+        사진찍기
+      </Button>
+
+      <input
+        type="file"
+        accept="image/*"
         ref={fileInputRef}
         onChange={handleImageUpload}
         style={{ display: "none" }}

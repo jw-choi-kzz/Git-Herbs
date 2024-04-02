@@ -2,7 +2,6 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import HerbList from "../components/pedia/HerbList";
 import PediaFilter from "../components/pedia/PediaFilter";
-import useStore from "../store/useStore";
 import { herbsService } from "../apis/herbs";
 import { configService } from "../apis/config";
 
@@ -33,21 +32,26 @@ const FilterWrapper = styled.div`
 `;
 
 const PediaPage = () => {
-  const { herbs, setHerbs, filterOption, setFilterOption } = useStore();
+  const [herbs, setHerbs] = useState([]);
+  const [filterOption, setFilterOption] = useState("가나다 순");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const getHerb = async () => {
+      setIsLoading(true);
+      try {
+        const loginConfig = await configService.loginConfig();
+        const response = await herbsService.getHerbs(loginConfig);
+        setHerbs(response);
+      } catch (error) {
+        console.log("Herbs 데이터 로딩 에러:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     getHerb();
   }, []);
-
-  const getHerb = async () => {
-    try {
-      const loginConfig = await configService.loginConfig();
-      const response = await herbsService.getHerbs(loginConfig);
-      setHerbs(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const sortHerbs = (herbs, option) => {
     switch (option) {
@@ -56,7 +60,6 @@ const PediaPage = () => {
           if (a.bookmark !== b.bookmark) {
             return b.bookmark - a.bookmark;
           } else {
-            // bookmark이 같을 경우 herbName으로 정렬
             return a.herbName.localeCompare(b.herbName);
           }
         });
@@ -65,7 +68,6 @@ const PediaPage = () => {
           if (a.acquireCheck !== b.acquireCheck) {
             return b.acquireCheck - a.acquireCheck;
           } else {
-            // acquireCheck 같을 경우 herbName으로 정렬
             return a.herbName.localeCompare(b.herbName);
           }
         });

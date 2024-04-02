@@ -112,7 +112,7 @@ const BoardListItem = ({ data }) => {
         <LoginModal
           isOpen={showLoginModal}
           onClose={() => setShowLoginModal(false)}
-          redirectUrl={"/board"}
+          redirectUri={"/board"}
         />
       )}
     </CardContainer>

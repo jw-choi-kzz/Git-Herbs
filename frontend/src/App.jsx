@@ -6,7 +6,7 @@ import useGlobalStyles from "./utils/useGlobalStyles";
 import Layout from "./pages/Layout";
 import MainPage from "./pages/MainPage";
 import ErrorPage from "./pages/ErrorPage";
-import LoginPage from "./pages/LoginPage";
+// import LoginPage from "./pages/LoginPage";
 import LoginLoad from "./pages/LoginLoad";
 import EscapePage from "./pages/EscapePage";
 import PicturePage from "./pages/PicturePage";
@@ -20,6 +20,7 @@ import MyPage from "./pages/MyPage";
 import BedgePage from "./pages/BedgePage";
 import HerbMap from "./components/herbdetail/HerbMap";
 import PrivateRoute from "./components/PrivateRoute";
+import ScrollToTop from "./components/ScrollToTop";
 
 const NAVER_CLIENT_KEY = "miynss7cb8";
 
@@ -38,7 +39,11 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,
+      element: (
+        <Layout>
+          <ScrollToTop />
+        </Layout>
+      ),
       errorElement: <ErrorPage />,
       children: [
         {
@@ -46,11 +51,11 @@ function App() {
           element: <MainPage />,
           errorElement: <ErrorPage />,
         },
-        {
-          path: "/loginpage",
-          element: <LoginPage />,
-          errorElement: <ErrorPage />,
-        },
+        // {
+        //   path: "/loginpage",
+        //   element: <LoginPage />,
+        //   errorElement: <ErrorPage />,
+        // },
         {
           path: "/login/oauth2/code/kakao",
           element: <LoginLoad />,

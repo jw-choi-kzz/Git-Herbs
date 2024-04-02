@@ -27,7 +27,9 @@ function Footer({ onPictureButtonClick }) {
   const [value, setValue] = useState('/');
 
   useEffect(() => {
-    setValue(location.pathname);
+    const pathSegments = location.pathname.split('/');
+    const mainPath = `/${pathSegments[1]}`;
+    setValue(mainPath);
   }, [location]);
 
   // MUI 테마 생성
@@ -55,10 +57,6 @@ function Footer({ onPictureButtonClick }) {
       <FooterContainer position="static">
         <BottomNavigation
           value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-            navigate(newValue);
-          }}
           showLabels
           sx={{
             width: "100%",
@@ -81,35 +79,39 @@ function Footer({ onPictureButtonClick }) {
           }}
         >
           <BottomNavigationAction
-            label="홈" className='regular'
+            label="홈"
+            className="regular"
             value="/"
-            icon={<BiHome fontSize='25px' />}
+            icon={<BiHome fontSize="25px" />}
+            onClick={() => navigate('/')}
           />
           <BottomNavigationAction
-            label="위기탈출" className='regular'
+            label="위기탈출"
+            className="regular"
             value="/escape"
-            icon={<BiDizzy fontSize='25px' />}
+            icon={<BiDizzy fontSize="25px" />}
+            onClick={() => navigate('/escape')}
           />
-          {/* <BottomNavigationAction
-          label="약초판별" className='regular'
-          value="/picture"
-          icon={<BiCamera fontSize='25px'  />}
-        /> */}
           <BottomNavigationAction
             label="약초판별"
             className="regular"
+            value="/picture"
             icon={<BiCamera fontSize="25px" />}
             onClick={onPictureButtonClick}
           />
           <BottomNavigationAction
-            label="도감" className='regular'
+            label="도감"
+            className="regular"
             value="/pedia"
-            icon={<BiBookBookmark fontSize='25px' />}
+            icon={<BiBookBookmark fontSize="25px" />}
+            onClick={() => navigate('/pedia')}
           />
           <BottomNavigationAction
-            label="심봤다" className='regular'
+            label="심봤다"
+            className="regular"
             value="/board"
-            icon={<BiGame fontSize='25px' />}
+            icon={<BiGame fontSize="25px" />}
+            onClick={() => navigate('/board')}
           />
         </BottomNavigation>
       </FooterContainer>

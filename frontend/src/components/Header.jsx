@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { BiUserCircle } from 'react-icons/bi';
@@ -6,6 +7,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import LoginModal from "./LoginModal";
 
 const theme = createTheme({
   components: {
@@ -37,9 +39,29 @@ const theme = createTheme({
   },
 });
 
+
 function Header() {
     const navigate = useNavigate();
+    const [showLoginModal, setShowLoginModal] = useState(false);
 
+    const handleClick = async () => {
+      const token = localStorage.getItem("accessToken");
+    
+      if (token) {
+        console.log("로그인됨");
+        navigate('/mypage');
+      } else{
+          console.log("로그인안됨");
+          setShowLoginModal(true);
+        return(
+          <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          redirectUri={'/mypage'}
+        />
+        );
+      }
+    };
     return (
       <ThemeProvider theme={theme}>
           <AppBar position="static">
@@ -66,7 +88,8 @@ function Header() {
                   edge="end"
                   color="inherit"
                   aria-label="user account"
-                  onClick={() => navigate('/mypage')}
+                  onClick={handleClick}
+                  // onClick={() => navigate('/mypage')}
                 >
                   <BiUserCircle style={{ fontSize: '35px', color: '#407700'}} />
                 </IconButton>

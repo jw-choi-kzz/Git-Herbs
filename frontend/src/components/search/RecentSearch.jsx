@@ -47,19 +47,21 @@ const LoginPrompt = styled.div`
 const RecentSearch = () => {
   const navigate = useNavigate();
   const [recentKeywords, setRecentKeywords] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(()=>{
+    const token = localStorage.getItem('accessToken');
+    if (token) {
       const loginConfig = configService.loginConfig();
       searchService.searchRecent(loginConfig)
       .then(response => {
         setRecentKeywords(response);
+        console.log("response");
         console.log(response);
-    
       })
       .catch(error=>{
         console.error(error);
       });
+    }
   },[]);
 
   const handleKeywordClick = (searchQuery) => {

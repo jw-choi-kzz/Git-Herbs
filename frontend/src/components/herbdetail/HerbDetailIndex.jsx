@@ -71,7 +71,7 @@ const HerbDetailIndex = ({ selectedTab, onTabChange, herbId }) => {
         <LoginModal
           isOpen={showLoginModal}
           onClose={() => setShowLoginModal(false)}
-          redirectUrl={`/detail/${herbId}`}
+          redirectUri={`/detail/${herbId}`}
         />
       )}
     </>

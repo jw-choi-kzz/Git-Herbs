@@ -50,6 +50,7 @@ const ImagePickerModalContent = ({ onImagePicked, onClose }) => {
       <input
         type="file"
         accept="image/*"
+        capture="camera"
         ref={fileInputRef}
         onChange={handleImageUpload}
         style={{ display: "none" }}

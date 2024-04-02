@@ -10,7 +10,7 @@ import com.happiness.githerbs.domain.member.dto.common.BadgeDto;
 import com.happiness.githerbs.domain.member.dto.common.IdTokenPayload;
 import com.happiness.githerbs.domain.member.dto.request.KakaoAuthorizeParameterDto;
 import com.happiness.githerbs.domain.member.dto.response.ReissueTokenResponseDto;
-import com.happiness.githerbs.domain.member.dto.response.UserGrassResponseDto;
+import com.happiness.githerbs.domain.member.dto.response.UserMyInfoResponseDto;
 import com.happiness.githerbs.domain.member.dto.response.UserInfoResponseDto;
 import com.happiness.githerbs.domain.member.dto.response.UserTokenResponseDto;
 import com.happiness.githerbs.domain.member.entity.Member;
@@ -25,7 +25,7 @@ public interface MemberService {
 	public ReissueTokenResponseDto reissueService(String deviceId, AuthorizationTokenDto dto);
 	public UserInfoResponseDto nicknameService(String accessToken, String nickname);
 	public UserInfoResponseDto profileImgService(String accessToken, MultipartFile img) throws IOException;
-	public UserGrassResponseDto userGrassService(String accessToken);
+	public UserMyInfoResponseDto userMyInfoService(String accessToken);
 	public List<BadgeDto> badgeService(String accessToken);
 	public IdTokenPayload decodeIdToken(String idToken);
 	public String uploadProfile(String profileUrl, Long kakaoId);

@@ -10,7 +10,7 @@ import lombok.Builder;
 
 @Builder
 @Schema(description = "유저, 잔디 정보 응답 DTO")
-public record UserGrassResponseDto(
+public record UserMyInfoResponseDto(
 	@Schema(description = "유저 번호")
 	@JsonProperty("user_id")
 	Integer userId,

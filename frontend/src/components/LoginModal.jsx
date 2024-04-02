@@ -1,21 +1,36 @@
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // useNavigate 훅 추가
-import MySnackbar from "./MySnackbar"; // MySnackbar 컴포넌트의 경로에 맞게 수정해주세요.
+import { useRef, useState } from "react";
+import axios from "axios";
+import { useNavigate, useLocation, Route, Routes } from "react-router-dom";
+import MySnackbar from "./MySnackbar"; 
 
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ isOpen, onClose, redirectUrl}) => {
   const [open, setOpen] = useState(isOpen);
   const navigate = useNavigate();
   const location = useLocation();
-
+  const url = "https://j10a205.p.ssafy.io/api/v1/user/login";
+  const kakao_url = useRef();
+  
   const handleClose = () => {
     setOpen(false);
     if (onClose) onClose();
   };
 
   const handleLogin = () => {
-    navigate(
-      `/login/oauth2/code/kakao?state=${encodeURIComponent(location.pathname)}`
-    );
+    axios.get(url, {params: {"redirect-uri": redirectUrl}})
+    .then((response)=>{
+      console.log("response");
+      console.log(response);
+      const loginUrl = response.data.data; 
+      console.log("loginUrl");
+      console.log(loginUrl);
+      if(loginUrl) {
+        kakao_url.current.setAttribute("href", loginUrl);
+        kakao_url.current.click();
+      }
+    })
+    .catch((error)=>{
+      console.error("로그인 실패:", error);
+    });
   };
 
   return (
@@ -28,6 +43,7 @@ const LoginModal = ({ isOpen, onClose }) => {
         actionLabel2="로그인하기"
         onAction={handleLogin}
       />
+      <a ref={kakao_url} style={{ display: 'none' }}/> 
     </div>
   );
 };

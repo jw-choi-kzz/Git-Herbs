@@ -50,7 +50,7 @@ const HerbMedicalPart = styled.div`
 
 const HerbDescription = styled.div`
   font-size: 14px;
-  white-space: nowrap;
+  //white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 340px;

@@ -3,6 +3,7 @@ import { BiEdit, BiCaretUp } from "react-icons/bi";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import useLoginStore from "../../store/useLoginStore";
 import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
 
 const ProfileContainer = styled.div`
@@ -63,7 +64,7 @@ const NicknameAndEditContainer = styled.div`
   gap: 8px 0;
 `;
 
-const MyProfile = ({ nickname, profileImg, rank }) => {
+const MyProfile = ({ nickname, profileImg}) => {
   const [previewImage, setPreviewImage] = useState(profileImg);
   const [newNickname, setNewNickname] = useState(nickname);
   const [nicknameLength, setNicknameLength] = useState();
@@ -93,6 +94,24 @@ const MyProfile = ({ nickname, profileImg, rank }) => {
     return null;
   };
 
+  const updateNickname = (newNickname) => {
+    axios.put('/nickname', newNickname, {
+      headers: {
+        'Authorization': useLoginStore.accessToken
+      }
+    })
+    .then(response => {
+      // 요청이 성공적으로 처리되면,
+      Swal.fire('성공', '별명이 성공적으로 변경되었습니다.', 'success');
+      setNewNickname(newNickname); // UI를 업데이트하여 새 별명을 표시합니다.
+    })
+    .catch(error => {
+      // 요청이 실패하면,
+      console.error('별명 변경 오류:', error);
+      Swal.fire('오류', '별명 변경에 실패했습니다.', 'error');
+    });
+  };
+
   const editNickname = () => {
     Swal.fire({
       title: '별명 변경',
@@ -104,7 +123,8 @@ const MyProfile = ({ nickname, profileImg, rank }) => {
       inputValidator: validateNickname
     }).then((result) => {
       if (result.isConfirmed && !validateNickname(result.value)) {
-        setNewNickname(result.value);
+        updateNickname(result.value);
+
       }
     });
   };
@@ -125,7 +145,7 @@ const MyProfile = ({ nickname, profileImg, rank }) => {
       <NicknameAndEditContainer>
         <NicknameText className='medium'>{newNickname}</NicknameText>
         <BiEdit onClick={editNickname} size="1.5em" />
-        <RankingText><BiCaretUp />상위 {rank}%</RankingText>
+        {/* <RankingText><BiCaretUp />상위 {rank}%</RankingText> */}
       </NicknameAndEditContainer>
     </ProfileContainer>
     </>

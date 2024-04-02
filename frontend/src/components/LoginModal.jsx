@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, useLocation, Route, Routes } from "react-router-dom";
 import MySnackbar from "./MySnackbar"; 
 
-const LoginModal = ({ isOpen, onClose, redirectUrl}) => {
+const LoginModal = ({ isOpen, onClose, redirectUri}) => {
   const [open, setOpen] = useState(isOpen);
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,7 +16,7 @@ const LoginModal = ({ isOpen, onClose, redirectUrl}) => {
   };
 
   const handleLogin = () => {
-    axios.get(url, {params: {"redirect-uri": redirectUrl}})
+    axios.get(url, {params: {"redirect-uri": redirectUri}})
     .then((response)=>{
       console.log("response");
       console.log(response);

@@ -23,19 +23,24 @@ const LoginLoad = () => {
     axios.post(url, data)
       .then(response => {
         console.log("Login Response:", response);
-        const { accessToken, refreshToken, userId, profileImg } = response.data.data;
+        const { accessToken, refreshToken, userId, profileImg, redirectUri } = response.data.data;
         
         localStorage.setItem("userId", userId);
         localStorage.setItem("profileImg", profileImg);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
 
+        let reUrl = "/"
+        if(redirectUri!=null &&redirectUri!=""){
+          reUrl = redirectUri;
+        }
+
         setLogin(true);
         setUserId(userId);
         setProfileImg(profileImg);
         setAccessToken(accessToken);
         setRefreshToken(refreshToken);
-        navigate('');
+        navigate(reUrl);
       })
       .catch(error => {
         console.error("Login Error:", error);
@@ -47,7 +52,7 @@ const LoginLoad = () => {
       initialRender.current = false;
       loginProcess();
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <>

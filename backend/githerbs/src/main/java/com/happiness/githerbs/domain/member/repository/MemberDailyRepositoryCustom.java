@@ -8,6 +8,7 @@ import com.happiness.githerbs.domain.member.dto.common.GrassDto;
 
 public interface MemberDailyRepositoryCustom {
 
+	Integer findRank(Integer id);
 	List<GrassDto> findGrass(Integer id);
 	List<RankingResponse> findRanker(LocalDate start, LocalDate now);
 	void updateDailyQuiz(Integer userId, boolean correct);

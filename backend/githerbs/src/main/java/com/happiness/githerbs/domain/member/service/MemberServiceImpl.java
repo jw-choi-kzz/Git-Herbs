@@ -242,11 +242,11 @@ public class MemberServiceImpl  implements MemberService {
 		// TODO : get member info
 		var member = repo.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
 		// TODO : calculate rank
-
+		var rank = memberDailyRepository.findRank(member.getId());
 		// TODO : get grass
-		var grassList = memberDailyRepository.findGrass(memberInfo.getMemberId());
+		var grassList = memberDailyRepository.findGrass(member.getId());
 		// TODO : return member info
-		return UserMyInfoResponseDto.builder().userId(member.getId()).nickname(member.getNickname()).imgId(member.getImgId()).grass(grassList).build();
+		return UserMyInfoResponseDto.builder().rank(rank).userId(member.getId()).nickname(member.getNickname()).imgId(member.getImgId()).grass(grassList).build();
 	}
 
 	@Override

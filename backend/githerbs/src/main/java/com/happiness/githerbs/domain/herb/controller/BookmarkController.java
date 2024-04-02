@@ -32,9 +32,9 @@ public class BookmarkController {
 
 	@GetMapping("/{herbId}/bookmark")
 	public ResponseEntity<SuccessResponse<?>> getBookmark(
-			@RequestHeader String authorization, @PathVariable Integer herbId) {
-
-		int userId = jwtService.validateToken(authorization).getMemberId();
+			@RequestHeader(required = false) String authorization, @PathVariable Integer herbId) {
+		int userId = 0;
+		if(authorization != null) userId = jwtService.validateToken(authorization).getMemberId();
 		return ResponseEntity.ok(
 				new SuccessResponse<>(HttpStatus.OK.value(), bookmarkService.getBookmark(userId, herbId)));
 	}

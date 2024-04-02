@@ -40,7 +40,7 @@ const StyledTab = styled(Tab)`
 const StyledTabPanel = styled(TabPanel)`
   background-color: #f5f5f5;
 `;
-const HerbDetailIndex = ({ selectedTab, onTabChange }) => {
+const HerbDetailIndex = ({ selectedTab, onTabChange, herbId }) => {
   const { isLogin } = useLoginStore();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -71,6 +71,7 @@ const HerbDetailIndex = ({ selectedTab, onTabChange }) => {
         <LoginModal
           isOpen={showLoginModal}
           onClose={() => setShowLoginModal(false)}
+          redirectUrl={`/detail/${herbId}`}
         />
       )}
     </>

@@ -6,10 +6,10 @@ const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2px; // 아이템 간 간격 설정
-  margin: auto; // 상하좌우 마진 자동으로 설정하여 가운데 정렬
-  width: fit-content; // 컨텐츠 크기에 맞게 가로 폭을 설정
-  max-width: 100%; // 컨테이너의 최대 폭이 화면 폭을 넘지 않도록 설정
+  gap: 2px;
+  margin: auto;
+  width: fit-content;
+  max-width: 100%;
 `;
 
 const HerbList = ({ herbsData }) => {

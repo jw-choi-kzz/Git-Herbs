@@ -1,18 +1,18 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
-import useLoadingStore from '../store/loadingStore';
-import LoadingContent from '../components/LoadingContent';
-import Modal from '../components/Modal';
-import PictureResultModalContent from '../components/picture/PictureResultModalContent';
-import ImagePickerModalContent from '../components/picture/ImagePickerModalContent';
-import useModalStore from '../store/modalStore';
-import { useState } from 'react';
+import useLoadingStore from "../store/loadingStore";
+import LoadingContent from "../components/LoadingContent";
+import Modal from "../components/Modal";
+import PictureResultModalContent from "../components/picture/PictureResultModalContent";
+import ImagePickerModalContent from "../components/picture/ImagePickerModalContent";
+import useModalStore from "../store/modalStore";
+import React, { useState, useEffect } from "react";
 
 const LayoutContainer = styled.div`
   // display: flex;
-  // flex-direction: column;  
+  // flex-direction: column;
   // align-items: center;
   // width: 375px;
   // min-height: 100vh;
@@ -24,7 +24,7 @@ const LayoutContainer = styled.div`
   height: 100%;
   margin: 0 auto; /* 가운데 정렬 */
   background-color: #f5f5f5;
-  `;
+`;
 
 const MainContent = styled.main`
   width: 100%;
@@ -57,12 +57,13 @@ const FooterContainer = styled.div`
 const Layout = () => {
   const isLoading = useLoadingStore((state) => state.isLoading);
 
-  const { isModalVisible, modalContent, selectedItem, openModal, closeModal } = useModalStore();
+  const { isModalVisible, modalContent, selectedItem, openModal, closeModal } =
+    useModalStore();
 
   const [selectedImage, setSelectedImage] = useState();
 
   const handlePictureButtonClick = () => {
-    openModal('imagePicker');
+    openModal("imagePicker");
   };
 
   const handleImagePicked = (imageData) => {
@@ -70,12 +71,21 @@ const Layout = () => {
   };
 
   const handleModalOutsideClick = (event) => {
-    if (event.target === event.currentTarget || event.target.closest('footer')) {
+    if (
+      event.target === event.currentTarget ||
+      event.target.closest("footer")
+    ) {
       closeModal();
     }
   };
 
-  if (isLoading){
+  useEffect(() => {
+    if (isLoading) {
+      window.scrollTo(0, 0);
+    }
+  }, [isLoading]);
+
+  if (isLoading) {
     return <LoadingContent />;
   }
 
@@ -93,11 +103,17 @@ const Layout = () => {
       {isModalVisible && (
         <ModalOverlay onClick={handleModalOutsideClick}>
           <Modal isOpen={isModalVisible} onClose={closeModal}>
-            {modalContent === 'imagePicker' && (
-              <ImagePickerModalContent onImagePicked={handleImagePicked} onClose={closeModal} />
+            {modalContent === "imagePicker" && (
+              <ImagePickerModalContent
+                onImagePicked={handleImagePicked}
+                onClose={closeModal}
+              />
             )}
-            {modalContent === 'pictureResult' && (
-              <PictureResultModalContent item={selectedItem} onClose={closeModal} />
+            {modalContent === "pictureResult" && (
+              <PictureResultModalContent
+                item={selectedItem}
+                onClose={closeModal}
+              />
             )}
           </Modal>
         </ModalOverlay>

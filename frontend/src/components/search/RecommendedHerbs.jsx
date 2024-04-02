@@ -1,5 +1,8 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { searchService } from '../../apis/search';
+import { configService } from '../../apis/config';
 
 const Container = styled.div`
   display: flex;
@@ -44,33 +47,31 @@ const HerbName = styled.div`
 const RecommendedHerbs = () => {
   const navigate = useNavigate();
   //{"herbId": "...","herbUrl": "...","herbName": "..."}
-  const RecommendHerbList = [ 
-    {
-      herbId: 1, //약초 id
-      herbUrl: "./herbs/001_00000010_leaf.jpg", //약초 이미지 url
-      herbName: "칡",
-    },
-    {
-      herbId: 2,
-      herbUrl: "./herbs/001_00000106_flower.jpg",
-      herbName: "칡",
-    },
-    {
-      herbId: 3,
-      herbUrl: "./herbs/001_00000176_root.jpg",
-      herbName: "칡",
-    },
-] //response.data.imageList
+  const [recommendList, setRecommendList] = useState([]);
+      // herbId: 1, //약초 id
+      // herbUrl: "./herbs/001_00000010_leaf.jpg", //약초 이미지 url
+      // herbName: "칡",
 
-const handleHerbClick = (id) => {
-  navigate(`/detail/1`);//${id}
-};
+  useEffect(()=>{
+    const loginConfig = configService.loginConfig();
+    searchService.searchRecommend(loginConfig)
+    .then(response => {
+      setRecommendList(response);
+    })
+    .catch(error=>{
+      console.error(error);
+    })
+  },[]);
+
+  const handleHerbClick = (id) => {
+    navigate(`/detail/${id}`);//${id}
+  };
   return (
     <Container>
       <BoldText>이런 약초는 어때요?</BoldText>
-      <HerbsContainer onClick={()=>handleHerbClick(1)}>
-        {RecommendHerbList.map((herb) => (
-          <Herb key={herb.herbId}>
+      <HerbsContainer>
+        {recommendList.map((herb, index) => (
+          <Herb key={index} onClick={()=>handleHerbClick(herb.herbId)}>
             <HerbImage src={herb.herbUrl} alt={herb.herbName} />
             <HerbName>{herb.herbName}</HerbName>
           </Herb>

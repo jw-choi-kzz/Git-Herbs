@@ -1,7 +1,5 @@
 
-
 export const configService = {
-
 
     /**
      * 로그인이 필요할 경우 넣는 cofnig
@@ -14,14 +12,14 @@ export const configService = {
     
 
 
-    /**
-     * 카카오 API 요청에 필요한 헤더 
-     */
-    kakaoconfig : () =>({
-        headers:{
-            Authorization: 'KakaoAK 8a18ae99d48d2eee9185b60c07d99e85'
-        }
-    })
+  /**
+   * 카카오 API 요청에 필요한 헤더 
+   */
+  kakaoconfig: () => ({
+    headers: {
+      Authorization: 'KakaoAK 8a18ae99d48d2eee9185b60c07d99e85'
+    }
+  })
 
 
 }

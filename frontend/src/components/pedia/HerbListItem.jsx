@@ -52,7 +52,6 @@ const HerbListItem = ({ herb }) => {
 
   // console.log(herb);
   const handleClick = () => {
-    console.log(herb.herbId);
     navigate(`/detail/${herb.herbId}`);
   };
 

@@ -1,6 +1,9 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { BiTime } from "react-icons/bi";
+import { searchService } from '../../apis/search';
+import { configService } from '../../apis/config';
 
 const Container = styled.div`
   width: 100%;
@@ -34,39 +37,51 @@ const Keyword = styled.div`
   font-size: 20px; // 크기를 적절하게 조절
   font-weight: medium;
 `;
+
+const LoginPrompt = styled.div`
+  font-size: 16px; // 크기를 적절하게 조절
+  color: #6c757d; // 색상을 조절
+  text-align: center; // 가운데 정렬
+`;
+
 const RecentSearch = () => {
   const navigate = useNavigate();
-  
-  //response.data에 herbName": string
-  const keywordList = [
-    {
-      id: 1,
-      herbName: "칡"
-    },
-    {
-      id: 2,
-      herbName: "쑥"
-    },
-    {
-      id: 3,
-      herbName: "작약"
-    }
-  ];
+  const [recentKeywords, setRecentKeywords] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleKeywordClick = (id) => {
-    navigate(`/detail/1`);//${id
+  useEffect(()=>{
+      const loginConfig = configService.loginConfig();
+      searchService.searchRecent(loginConfig)
+      .then(response => {
+        setRecentKeywords(response);
+        console.log(response);
+    
+      })
+      .catch(error=>{
+        console.error(error);
+      });
+  },[]);
+
+  const handleKeywordClick = (searchQuery) => {
+    navigate(`/search/result?keyword=${searchQuery}`);
   };
+
 
   return (
     <Container>
-      <Title>최근 검색어</Title>
-      {keywordList.map((keyword) => (
-        <KeywordContainer onClick={() => handleKeywordClick(keyword.id)}>
+    <Title>최근 검색어</Title>
+    {recentKeywords.length > 0 ? (
+      recentKeywords.map((item, index) => (
+        <KeywordContainer key={index} onClick={() => handleKeywordClick(item.keyword)}>
           <Icon />
-          <Keyword>{keyword.herbName}</Keyword>
+          <Keyword>{item.keyword}</Keyword>
         </KeywordContainer>
-      ))}
-    </Container>
+      ))
+    ) : (
+      <div>최근 검색어가 없습니다.</div>
+    )}
+  </Container>
+  
   );
 };
 

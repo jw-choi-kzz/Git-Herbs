@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Carousel } from 'antd';
 import styled, { css } from 'styled-components';
+import { eventService } from "../../apis/event"
 
 const baseStyle = css`
   font-family: 'SpoqaHanSansNeo', sans-serif;
@@ -61,24 +62,19 @@ const ProfileImage = styled.img`
 `;
 
 export default function RankCarousel() {
-  
-  const rankList = [
-    {
-      userId: 1,
-      nickname: "아구몬",
-      profileUrl: "/profileimg/아구몬.webp"
-    },
-    {
-      userId: 2,
-      nickname: "최고봉심마니",
-      profileUrl: "/profileimg/최고봉심마니.png"
-    },
-    {
-      userId: 3,
-      nickname: "부아아앙",
-      profileUrl: "/profileimg/부아아앙.jpg"
+
+  const [rankList, setRankList] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await eventService.getRank();
+      setRankList(response);
     }
-  ];
+    getData();
+  }, []);
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1;
 
   return (
     <>
@@ -86,15 +82,15 @@ export default function RankCarousel() {
         {rankList.map((rankUser, index) => (
           <Content key={index}>
             <div>
-            <img src="/logo.svg" className="h-12 cursor-pointer" style={{ width: '30%' }} alt="Logo"/>
-            <BadgeTitle>3월 뱃지왕</BadgeTitle>
-            {/* <div style={{textAlign: "right"}}> */}
-            <RankTitle className="bold">{index + 1}등</RankTitle>
-            <Nickname className="medium">{rankUser.nickname}</Nickname>
-            {/* </div> */}
+              <img src="/logo.svg" className="h-12 cursor-pointer" style={{ width: '30%' }} alt="Logo" />
+              <BadgeTitle>{currentMonth}월 뱃지왕</BadgeTitle>
+              {/* <div style={{textAlign: "right"}}> */}
+              <RankTitle className="bold">{index + 1}등</RankTitle>
+              <Nickname className="medium">{rankUser.nickname}</Nickname>
+              {/* </div> */}
             </div>
             <div>
-            <ProfileImage src={rankUser.profileUrl} alt={rankUser.nickname} />
+              <ProfileImage src={rankUser.imgId} alt={rankUser.nickname} />
             </div>
           </Content>
         ))}

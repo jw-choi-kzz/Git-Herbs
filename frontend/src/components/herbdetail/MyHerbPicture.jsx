@@ -12,17 +12,17 @@ import boardService from "../../apis/board";
 
 const CardContainer = styled.div`
   border-radius: 12px;
-  max-width: 300px;
-  margin: 0 auto; // 수평 중앙 정렬
+  max-width: 80%;
+  margin: 0 auto;
   overflow: hidden;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 `;
 
 const HerbImage = styled.img`
   width: 100%;
   border-radius: 8px;
-  object-fit: cover; // 이미지 비율을 유지하며 카드에 맞게 조정
+  object-fit: cover;
 `;
 
 const HerbDetails = styled.div`
@@ -33,22 +33,26 @@ const HerbDetails = styled.div`
   background: #f4f4f4;
 `;
 
-const StyledSimilarity = styled(Typography)`
+const StyledSimilarity = styled(Typography).attrs({
+  className: "light",
+})`
   && {
     font-size: 12px;
     color: #999;
-    font-weight: normal;
-    white-space: nowrap; // 글자가 줄바꿈 되지 않도록 설정
+    // font-weight: normal;
+    white-space: nowrap;
     //overflow: hidden;
     text-overflow: ellipsis;
   }
 `;
 
-const StyledDateStamp = styled(Typography)`
+const StyledDateStamp = styled(Typography).attrs({
+  className: "medium",
+})`
   && {
     font-size: 20px;
     color: #666;
-    font-weight: normal;
+    //font-weight: normal;
     flex-grow: 1; // 왼쪽에 여백을 없애고 여유 공간을 모두 차지하도록 조정
   }
 `;
@@ -58,17 +62,6 @@ const StyledFaCirclePlus = styled(FaCirclePlus)`
   font-size: 40px;
   margin-right: 4px;
 `;
-
-const CustomTypography = styled(Typography)`
-  && {
-    margin: 0px 0; // 여백을 없애고 싶다면 이 값을 조정하세요.
-    padding: 10px 5px 10px 25px; // 상단, 우측, 하단, 좌측 순서로 패딩 값을 설정하세요.
-    font-family: "Roboto", sans-serif; // 글씨체를 변경하고 싶다면 이 값을 수정하세요.
-    font-size: 16px; // 글씨 크기를 조정하고 싶다면 이 값을 수정하세요.
-    font-weight: 500; // 글씨 두께를 조절하고 싶다면 이 값을 수정하세요.
-  }
-`;
-
 
 const MyHerbPicture = ({ herbId }) => {
   const [herbData, setherbData] = useState([]);
@@ -159,6 +152,13 @@ const MyHerbPicture = ({ herbId }) => {
     return <Typography>No Herb ID provided.</Typography>;
   }
 
+  // herbId에 해당하는 데이터만 필터링
+  const filteredHerbPictures = herbData.filter(
+    (herbData) => herbData.myHerbId === parseInt(herbId, 10)
+  );
+  if (!filteredHerbPictures.length) {
+    return <Typography>No matching herb picture found.</Typography>;
+  }
 
   return (
     <>

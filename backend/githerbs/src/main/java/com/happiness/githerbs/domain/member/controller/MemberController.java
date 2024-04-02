@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.happiness.githerbs.domain.auth.dto.common.AuthorizationTokenDto;
-import com.happiness.githerbs.domain.auth.service.JwtService;
 import com.happiness.githerbs.domain.member.dto.request.KakaoAuthorizeParameterDto;
 import com.happiness.githerbs.domain.member.dto.response.ReissueTokenResponseDto;
 import com.happiness.githerbs.domain.member.dto.response.UserInfoResponseDto;

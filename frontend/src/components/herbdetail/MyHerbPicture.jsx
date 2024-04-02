@@ -21,7 +21,7 @@ const CardContainer = styled.div`
 
 const HerbImage = styled.img`
   width: 100%;
-  border-radius: 8px;
+  // border-radius: 8px;
   object-fit: cover;
 `;
 

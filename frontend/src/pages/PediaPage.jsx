@@ -13,9 +13,8 @@ const PageContainer = styled.div`
   position: relative;
 `;
 
-const Title = styled.h1`
+const Title = styled.h2`
   width: 100%;
-  font-size: 30px;
   text-align: left;
   // color: #4a4a4a;
   margin-top: 10px;

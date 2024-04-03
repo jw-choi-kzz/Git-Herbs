@@ -13,9 +13,8 @@ const BoardPageContainer = styled.div`
   position: relative;
 `;
 
-const Title = styled.h1`
+const Title = styled.h2`
   width: 100%;
-  font-size: 30px;
   text-align: left;
   // color: #4a4a4a;
   margin-top: 10px;
@@ -33,11 +32,11 @@ const FilterWrapper = styled.div`
 const BoardPage = () => {
   const [filterOption, setFilterOption] = useState("전체 게시글");
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const { accessToken } = useLoginStore(); // Access the login state
+  const { accessToken } = useLoginStore(); 
 
   const handleFilterChange = (newValue) => {
     if ((newValue === '내가 쓴 글 모아보기' || newValue === '좋아요한 글 모아보기') && !accessToken) {
-      setIsLoginModalOpen(true); // Open login modal if not logged in
+      setIsLoginModalOpen(true); 
     } else {
       setFilterOption(newValue);
     }

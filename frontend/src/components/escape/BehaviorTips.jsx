@@ -29,8 +29,7 @@ const Container = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to start */
-  cursor: pointer;
+  align-items: flex-start; 
 `;
 const tip = styled.div`
   display: flex;

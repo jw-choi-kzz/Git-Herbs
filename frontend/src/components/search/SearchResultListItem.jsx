@@ -41,21 +41,17 @@ const HerbMedicalPart = styled.div`
   font-size: 14px;
   padding: 4px 8px;
   border-radius: 4px;
-  display: inline-flex; // 이 부분을 변경
-  flex-wrap: wrap; // 줄바꿈을 위해 추가
-  // white-space: normal; // 텍스트 줄바꿈을 위해 추가
-  // display: inline-block; //기존코드
+  display: inline-flex;
+  flex-wrap: wrap; 
   margin-top: 8px;
 `;
 
 const HerbDescription = styled.div`
   font-size: 14px;
-  //white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 340px;
   b {
-    // background-color: #407700;
     font-size: 16px;
     color: #407700;
     font-weight: bold;

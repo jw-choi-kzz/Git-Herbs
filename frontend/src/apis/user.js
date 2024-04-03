@@ -24,8 +24,8 @@ export const userServcie = {
      * @param {*} loginConfig  <수정필요> 로그인 config 헤더
      * @returns [ userId, userNickname, userImgurl]
      */
-    updateProfileImg : (loginConfig,) =>{
-        return axios.put(`/user/img`,loginConfig)
+    updateProfileImg : (img,loginConfig,) =>{
+        return axios.put(`/user/img`,img,loginConfig)
         .then(response => {
             return response.data.data;
         })

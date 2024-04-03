@@ -78,6 +78,8 @@ const MyProfile = ({ nickname, profileImg }) => {
     setPreviewImage(profileImg);
   }, [profileImg]);
 
+
+
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       // 파일이 이미지인지 확인
@@ -99,20 +101,20 @@ const MyProfile = ({ nickname, profileImg }) => {
     }
   };
 
-  const uploadProfileImage = (imageFile) => {
+
+  const uploadProfileImage = (img) => {
     const formData = new FormData();
-    formData.append('image', imageFile);
-    const loginConfig = configService.loginConfig();
-    userServcie.updateProfileImg(formData, loginConfig)
-      .then((response) => {
-        // 응답으로 받은 새 프로필 이미지 URL로 업데이트
-        setPreviewImage(response.img_id);
-        Swal.fire('성공', '프로필 이미지가 업데이트되었습니다.', 'success');
-      })
-      .catch((error) => {
-        console.error('프로필 이미지 변경 오류:', error);
-        Swal.fire('오류', '프로필 이미지 변경에 실패했습니다.', 'error');
-      });
+    formData.append('img', img,img);
+    const loginConfig = configService.mulitconfig();
+    userServcie.updateProfileImg(formData,loginConfig)
+    .then(repsonse =>{
+      Swal.fire('성공', '프로필 이미지를 정상적으로 변경되었습니다.', 'success');
+      console.log(error);
+    })
+    .catch(error =>{
+      console.log(error);
+    })
+
   };
 
 

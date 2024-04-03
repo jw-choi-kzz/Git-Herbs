@@ -3,7 +3,9 @@ from typing import Union
 from fastapi import FastAPI, File, UploadFile
 import pickle as pk
 import tensorflow as tf
-import io
+import io, os
+
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 result = []
 with open('./result.pkl','rb') as f:

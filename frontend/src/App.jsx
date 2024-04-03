@@ -22,8 +22,6 @@ import HerbMap from "./components/herbdetail/HerbMap";
 import PrivateRoute from "./components/PrivateRoute";
 import ScrollToTop from "./components/ScrollToTop";
 
-// const NAVER_CLIENT_KEY = "miynss7cb8";
-
 function App() {
   useGlobalStyles();
   const script = document.createElement("script");

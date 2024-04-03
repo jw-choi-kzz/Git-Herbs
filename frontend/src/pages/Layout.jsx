@@ -15,9 +15,11 @@ import LoginModal from "../components/LoginModal";
 const LayoutContainer = styled.div`
   max-width: 375px;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin: 0 auto;
   background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
 `;
 
 const MainContent = styled.main`
@@ -39,7 +41,7 @@ const ModalOverlay = styled.div`
   justify-content: flex-end;
   align-items: center;
   z-index: 999;
-  overflow: hidden;
+  overflow: auto;
 `;
 
 const FooterContainer = styled.div`

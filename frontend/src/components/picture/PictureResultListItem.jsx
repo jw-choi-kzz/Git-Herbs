@@ -64,7 +64,6 @@ const PictureResultListItem = ({ item, index, count, herbId, img, onItemClick })
   }
 
   const handleButtonClick = async () => {
-    console.log(count)
     setSnackbarOpen(true);
     if (count === 0) {
       const myHerbRequestDto = {
@@ -93,7 +92,7 @@ const PictureResultListItem = ({ item, index, count, herbId, img, onItemClick })
       <MySnackbar
         open={snackbarOpen}
         onClose={handleCloseSnackbar}
-        messages={count === 1 ? ["'내 도감' 저장이 완료되었습니다." + count] : ["이미 저장된 이미지 입니다." + count]}
+        messages={count === 1 ? ["'내 도감' 저장이 완료되었습니다."] : ["이미 저장된 이미지 입니다."]}
         actionLabel1="머무르기"
         actionLabel2="확인하러 가기 >"
         onAction={moveFunction}

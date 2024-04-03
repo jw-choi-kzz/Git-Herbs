@@ -48,8 +48,9 @@ export default function SeasonalHerbs() {
                 </div>
 
                 <Nickname className="medium">{herb.herbName}</Nickname>
+                
                 <Link  to={`/detail/${herb.id}`}>
-                <Nickname2 > 상세 보기</Nickname2>
+                <HerbDetailButton>상세 보기</HerbDetailButton>
                 </Link>
               </div>
             </Content>
@@ -59,6 +60,27 @@ export default function SeasonalHerbs() {
     </>
   );
 }
+
+
+const HerbDetailButton = styled.button`
+cursor: pointer;
+padding: 10px;
+background-color: #407700;
+color: white;
+border: none;
+border-radius: 5px;
+transition: background-color 0.3s ease;
+position: absolute;
+top: 100px; 
+text-align: center;
+font-size: 1em;
+
+&:hover {
+  background-color: #21351F; 
+}
+`;
+
+
 const Container = styled.div`
   width: 320px;
   height: auto; /* Changed to auto to wrap content */

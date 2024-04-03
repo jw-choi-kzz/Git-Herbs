@@ -48,14 +48,19 @@ public class MemberDailyRepositoryImpl implements MemberDailyRepositoryCustom {
 			.from(memberDaily)
 			.where(memberDaily.date.between(LocalDate.now().withDayOfMonth(1), LocalDate.now()))
 			.groupBy(memberDaily.member)
+			.orderBy(getTotalTrueCount().desc())
 			.fetch();
 
-		int rank = 0;
-		for(int i = 0; i < list.size(); i++){
+		int rank = 1;
+
+		if(Objects.equals(list.get(0).id(), id)) return rank; // 1등인 경우
+
+		for(int i = 1; i < list.size(); i++){
 			UserRankResponseDto user = list.get(i);
+			UserRankResponseDto beforeUser = list.get(i-1);
+			
+			if(user.count() < beforeUser.count()) rank++; // 점수가 동점이 아닌 경우만 증가
 			if(Objects.equals(user.id(), id)){
-				rank = i+1;
-				System.out.println(rank);
 				break;
 			}
 		}

@@ -87,7 +87,7 @@ const MyPage = () => {
 
   const navigate = useNavigate();
   const navigateToBadgeList = () => {
-    navigate("/mypage/bedge");
+    navigate("/mypage/badge");
   };
 
   const handleLogout = () => {

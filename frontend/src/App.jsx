@@ -17,7 +17,7 @@ import DetailPage from "./pages/DetailPage";
 import SearchPage from "./pages/SearchPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import MyPage from "./pages/MyPage";
-import BedgePage from "./pages/BedgePage";
+import BadgePage from "./pages/BadgePage";
 import HerbMap from "./components/herbdetail/HerbMap";
 import PrivateRoute from "./components/PrivateRoute";
 import ScrollToTop from "./components/ScrollToTop";
@@ -122,8 +122,8 @@ function App() {
               element: <MyPage />,
             },
             {
-              path: "bedge",
-              element: <BedgePage />,
+              path: "badge",
+              element: <BadgePage />,
               errorElement: <ErrorPage />,
             },
           ],

@@ -112,7 +112,7 @@ public class SearchServiceImpl implements SearchService {
 
 		for (int id : keywords.herbIds) {
 			Herb herb = herbRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.HERB_NOT_FOUND));
-			result.add(new KeywordResponseDto(id, herb.getHerbName()));
+			result.add(new KeywordResponseDto(herb.getId(), herb.getHerbImg(), herb.getHerbName()));
 		}
 		return result;
 	}

@@ -26,7 +26,6 @@ public interface MemberService {
 	UserInfoResponseDto nicknameService(String accessToken, String nickname);
 	UserInfoResponseDto profileImgService(String accessToken, MultipartFile img) throws IOException;
 	UserMyInfoResponseDto userMyInfoService(String accessToken);
-	List<BadgeDto> badgeService(String accessToken);
 	IdTokenPayload decodeIdToken(String idToken);
 	String uploadProfile(String profileUrl, Long kakaoId);
 }

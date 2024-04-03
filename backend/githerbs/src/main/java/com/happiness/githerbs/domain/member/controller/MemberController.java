@@ -125,13 +125,4 @@ public class MemberController {
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, result));
 	}
 
-	@GetMapping("/badge")
-	@Operation(summary = "뱃지 조회", description = "뱃지 조회")
-	public ResponseEntity<SuccessResponse<?>> badgeController(@RequestHeader("Authorization") String accessToken){
-		// TODO : validate access token
-
-		// TODO : return badge info
-		return null;
-	}
-
 }

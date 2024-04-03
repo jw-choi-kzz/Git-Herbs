@@ -226,7 +226,7 @@ public class MemberServiceImpl  implements MemberService {
 		// update profile image
 		var member  = repo.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
 		var prevImg = member.getImgId();
-		if(prevImg != null && !prevImg.isBlank()) {
+		if(prevImg != null && !prevImg.isBlank() && !prevImg.equals("default_profile")) {
 			var imgName = prevImg.split("/")[prevImg.split("/").length - 2]+"/"+prevImg.split("/")[prevImg.split("/").length - 1];
 			s3.delete(imgName);
 		}
@@ -249,10 +249,6 @@ public class MemberServiceImpl  implements MemberService {
 		return UserMyInfoResponseDto.builder().rank(rank).userId(member.getId()).nickname(member.getNickname()).imgId(member.getImgId()).grass(grassList).build();
 	}
 
-	@Override
-	public List<BadgeDto> badgeService(String accessToken) {
-		return null;
-	}
 
 	private String randomNickname() {
 		List<String> prefix = Arrays.asList("성실한", "열정적인", "행복한", "평화로운", "자유로운", "창의적인", "활발한", "유쾌한", "친절한", "용감한", "신중한", "정직한", "근면한", "겸손한", "헌신적인", "희망찬", "진취적인", "지혜로운", "신비로운");

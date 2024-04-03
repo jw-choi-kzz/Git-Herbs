@@ -67,4 +67,20 @@ export const eventService = {
             console.log(error);
         })
     },
+
+    /**
+     *  사용자의 뱃지 획득 정보를 받아옵니다. [로그인 필수]
+     * @param {*} loginConfig  <수정필요> 로그인 config 헤더
+     * @returns [ {badgeId, name(뱃지이름), details(뱃지 설명), createdId} ]
+     */
+    getUserBadge : (loginConfig) =>{
+        return axios.get(`/event/badge`, loginConfig)
+        .then(response => {
+           
+            return response.data.data;
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    },
 }

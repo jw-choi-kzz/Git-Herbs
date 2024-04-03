@@ -36,10 +36,9 @@ const StyledSimilarity = styled(Typography).attrs({
 })`
   && {
     font-size: 12px;
-    color: #999;
-    // font-weight: normal;
+    color: #407700;
+    font-weight: normal;
     white-space: nowrap;
-    //overflow: hidden;
     text-overflow: ellipsis;
   }
 `;

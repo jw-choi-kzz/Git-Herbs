@@ -8,6 +8,8 @@ services:
             - "8888:8888"
         volumes:
             - ./image:/tf
+        environment:
+            - TF_ENABLE_ONEDNN_OPTS=0
         deploy:
             resources:
                 reservations:

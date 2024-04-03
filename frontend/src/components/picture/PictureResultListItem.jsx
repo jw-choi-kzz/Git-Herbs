@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import useModalStore from '../../store/modalStore';
 import { herbsService } from '../../apis/herbs';
 import { configService } from '../../apis/config';
 import { useNavigate } from 'react-router-dom';
+import MySnackbar from '../MySnackbar';
+import { useState } from 'react';
 
 const ListItemWrapper = styled.div`
   display: flex;
@@ -51,11 +52,18 @@ const ItemButton = styled.button`
 `;
 
 const PictureResultListItem = ({ item, index, saved, herbId, img, onItemClick }) => {
-  const openModal = useModalStore((state) => state.openModal);
   const navigate = useNavigate();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
+  const moveFunction = () => {
+    navigate(`/detail/${herbId == undefined ? item.herbId : herbId}`);
+  }
 
   const handleButtonClick = () => {
-    console.log(JSON.stringify(item))
     onItemClick(item.herbId)
     if (!saved) {
       const myHerbRequestDto = {
@@ -65,31 +73,31 @@ const PictureResultListItem = ({ item, index, saved, herbId, img, onItemClick })
       };
       herbsService.postHerb(myHerbRequestDto, configService.loginConfig());
     }
-
-    const modalFunction = () => {
-      navigate(`/detail/${herbId == undefined ? item.herbId : herbId}`);
-    }
-
-    const modalItem = {
-      url: `/detail/${item.herbId}`,
-      progress: "확인하러 가기 >",
-      done: "머무르기",
-      title: saved ? "이미 저장된 이미지 입니다." : "'내 도감' 저장이 완료되었습니다.",
-      function: modalFunction
-    }
-    openModal("pictureResult", modalItem);
+    setSnackbarOpen(true);
   };
 
   return (
-    <ListItemWrapper>
-      <ItemNumber>{index}</ItemNumber>
-      <ItemImage src={item.herbImgUrl} alt={item.herbName} />
-      <ItemContent>
-        <ItemName>{item.herbName}</ItemName>
-        <ItemSimilarity>{item.similarity}</ItemSimilarity>
-        <ItemButton onClick={handleButtonClick}>도감에 추가하기</ItemButton>
-      </ItemContent>
-    </ListItemWrapper>
+    <>
+      <ListItemWrapper>
+        <ItemNumber>{index}</ItemNumber>
+        <ItemImage src={item.herbImgUrl} alt={item.herbName} />
+        <ItemContent>
+          <ItemName>{item.herbName}</ItemName>
+          <ItemSimilarity>{item.similarity}</ItemSimilarity>
+          <ItemButton onClick={handleButtonClick}>도감에 추가하기</ItemButton>
+        </ItemContent>
+      </ListItemWrapper>
+
+      {/* 스낵바를 호출하는 부분 */}
+      <MySnackbar
+        open={snackbarOpen}
+        onClose={handleCloseSnackbar}
+        messages={saved ? ["이미 저장된 이미지 입니다."] : ["'내 도감' 저장이 완료되었습니다."]}
+        actionLabel1="머무르기"
+        actionLabel2="확인하러 가기 >"
+        onAction={moveFunction}
+      />
+    </>
   );
 };
 

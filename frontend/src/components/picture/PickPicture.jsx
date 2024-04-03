@@ -3,7 +3,7 @@ import Cropper from 'react-easy-crop';
 import getCroppedImg from './CropImage';
 import styled from 'styled-components';
 import Button from "@mui/joy/Button";
-import useModalStore from '../../store/modalStore';
+import MySnackbar from '../MySnackbar';
 
 const StyledButton1 = styled(Button)`
   && {
@@ -44,7 +44,12 @@ const PickPicture = ({ imageUrl, onImageCrop, onGoBack }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const openModal = useModalStore((state) => state.openModal);
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
 
   const onCropComplete = async (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -65,13 +70,7 @@ const PickPicture = ({ imageUrl, onImageCrop, onGoBack }) => {
   };
 
   const confirmGoBack = () => {
-    const modalItem = {
-      progress: "확인",
-      done: "취소",
-      title: "이전 단계로 이동하시겠습니까? 현재 이미지가 삭제됩니다.",
-      function: onGoBack
-    }
-    openModal("pictureResult", modalItem);
+    setSnackbarOpen(true);
   };
 
   return (
@@ -95,6 +94,15 @@ const PickPicture = ({ imageUrl, onImageCrop, onGoBack }) => {
         <StyledButton1 onClick={confirmGoBack}>뒤로가기</StyledButton1>
         <StyledButton2 onClick={showCroppedImage}>선택하기</StyledButton2>
       </ButtonContainer>
+      {/* 스낵바를 호출하는 부분 */}
+      <MySnackbar
+        open={snackbarOpen}
+        onClose={handleCloseSnackbar}
+        messages={["이전 단계로 이동하시겠습니까?", "현재 이미지가 삭제됩니다."]}
+        actionLabel1="취소하기"
+        actionLabel2="뒤로가기"
+        onAction={handleGoBack}
+      />
     </div>
   );
 };

@@ -4,9 +4,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from "@mui/joy/Button";
-import useModalStore from '../../store/modalStore';
 import { configService } from '../../apis/config';
 import imageCompression from 'browser-image-compression';
+import MySnackbar from '../MySnackbar';
 
 const StyledButton1 = styled(Button)`
   && {
@@ -46,7 +46,12 @@ const ButtonContainer = styled.div`
 const CroppedImage = ({ croppedImage, onGoBack }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const openModal = useModalStore((state) => state.openModal);
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
 
   function dataURLtoFile(dataURL, filename) {
     const arr = dataURL.split(',');
@@ -69,8 +74,8 @@ const CroppedImage = ({ croppedImage, onGoBack }) => {
     if (originalWidth <= maxWidth) {
       return file;
     }
-    
-    const options =  {
+
+    const options = {
       maxSizeMB: 1,
       maxWidthOrHeight: maxWidth,
       useWebWorker: true
@@ -108,13 +113,7 @@ const CroppedImage = ({ croppedImage, onGoBack }) => {
   };
 
   const confirmGoBack = () => {
-    const modalItem = {
-      progress: "확인",
-      done: "취소",
-      title: "이전 단계로 이동하시겠습니까? 현재 이미지가 삭제됩니다.",
-      function: handleGoBack
-    }
-    openModal("pictureResult", modalItem);
+    setSnackbarOpen(true);
   };
 
   return (
@@ -136,6 +135,15 @@ const CroppedImage = ({ croppedImage, onGoBack }) => {
           </ButtonContainer>
         </>
       )}
+      {/* 스낵바를 호출하는 부분 */}
+      <MySnackbar
+        open={snackbarOpen}
+        onClose={handleCloseSnackbar}
+        messages={["이전 단계로 이동하시겠습니까?", "현재 이미지가 삭제됩니다."]}
+        actionLabel1="취소하기"
+        actionLabel2="뒤로가기"
+        onAction={handleGoBack}
+      />
     </div>
   );
 };

@@ -6,7 +6,6 @@ import { Outlet } from "react-router-dom";
 import useLoadingStore from "../store/loadingStore";
 import LoadingContent from "../components/LoadingContent";
 import Modal from "../components/Modal";
-import PictureResultModalContent from "../components/picture/PictureResultModalContent";
 import ImagePickerModalContent from "../components/picture/ImagePickerModalContent";
 import useModalStore from "../store/modalStore";
 import useLoginStore from "../store/useLoginStore";
@@ -79,7 +78,6 @@ const Layout = () => {
           <ModalOverlay onClick={handleModalOutsideClick}>
             <Modal isOpen={isModalVisible} onClose={closeModal}>
               {modalContent === "imagePicker" && <ImagePickerModalContent onImagePicked={handleImagePicked} onClose={closeModal} />}
-              {modalContent === "pictureResult" && <PictureResultModalContent item={selectedItem} onClose={closeModal} />}
             </Modal>
           </ModalOverlay>
         );

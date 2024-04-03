@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const ResultContainer = styled.div`
-  display: flex; 
+  display: flex;
   flex-direction: column;
   padding: 16px;
   // border: 1px solid #d7d7d7;
@@ -17,7 +17,7 @@ const HerbDetails = styled.div`
 `;
 
 const HerbTextDetails = styled.div`
-  margin-left: 24px; 
+  margin-left: 24px;
 `;
 
 const HerbImage = styled.img`
@@ -27,33 +27,35 @@ const HerbImage = styled.img`
 `;
 
 const HerbName = styled.h1`
-  font-size: 18px; 
-  margin: 0; 
+  font-size: 18px;
+  margin: 0;
 `;
 
 const HerbScientificName = styled.h2`
-  font-size: 14px; 
+  font-size: 14px;
   color: #757575;
-  margin: 0; 
+  margin: 0;
 `;
 
 const HerbMedicalPart = styled.div`
-  font-size: 14px; 
-  padding: 4px 8px; 
-  border-radius: 4px;  
-  display: inline-block; 
-  margin-top: 8px; 
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-flex; // 이 부분을 변경
+  flex-wrap: wrap; // 줄바꿈을 위해 추가
+  // white-space: normal; // 텍스트 줄바꿈을 위해 추가
+  // display: inline-block; //기존코드
+  margin-top: 8px;
 `;
-
 
 const HerbDescription = styled.div`
   font-size: 14px;
-  white-space: nowrap;
+  //white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 340px;
-  b { 
-    // background-color: #407700; 
+  b {
+    // background-color: #407700;
     font-size: 16px;
     color: #407700;
     font-weight: bold;
@@ -70,16 +72,20 @@ const SearchResultListItem = ({ searchResult }) => {
   return (
     <ResultContainer onClick={() => handleClick(searchResult.id)}>
       <HerbDetails>
-        <HerbImage src={searchResult.herbImg} alt={searchResult.herbName}/>
+        <HerbImage src={searchResult.herbImg} alt={searchResult.herbName} />
         <HerbTextDetails>
-          <HerbName className='bold'>{searchResult.herbName}</HerbName>
-          <HerbScientificName className='regular'>{searchResult.scientificName}</HerbScientificName>
-          <HerbMedicalPart className='regular'>{searchResult.medicalPart}</HerbMedicalPart>
+          <HerbName className="bold">{searchResult.herbName}</HerbName>
+          <HerbScientificName className="regular">
+            {searchResult.scientificName}
+          </HerbScientificName>
+          <HerbMedicalPart className="regular">
+            {searchResult.medicalPart}
+          </HerbMedicalPart>
         </HerbTextDetails>
       </HerbDetails>
       <br />
       <HerbDescription
-        className='medium'
+        className="medium"
         dangerouslySetInnerHTML={{ __html: searchResult.description }}
       />
     </ResultContainer>

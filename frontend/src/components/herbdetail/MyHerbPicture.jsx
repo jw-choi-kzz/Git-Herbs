@@ -8,8 +8,6 @@ import { herbsService } from "../../apis/herbs";
 import { configService } from "../../apis/config";
 import boardService from "../../apis/board";
 
-
-
 const CardContainer = styled.div`
   border-radius: 12px;
   max-width: 80%;
@@ -21,7 +19,7 @@ const CardContainer = styled.div`
 
 const HerbImage = styled.img`
   width: 100%;
-  border-radius: 8px;
+  // border-radius: 8px;
   object-fit: cover;
 `;
 
@@ -69,16 +67,13 @@ const MyHerbPicture = ({ herbId }) => {
     fetchData();
   }, [herbId]);
 
-  useEffect(() => {
-  }, [herbData]);
-
+  useEffect(() => {}, [herbData]);
 
   const fetchData = async () => {
     try {
       let response = [];
       const loginconfig = await configService.loginConfig();
-      response = await herbsService.getMyHerbImg(herbId,loginconfig);
-      
+      response = await herbsService.getMyHerbImg(herbId, loginconfig);
 
       setherbData(response);
       // console.log(herbData);
@@ -86,7 +81,6 @@ const MyHerbPicture = ({ herbId }) => {
       console.log(error);
     }
   };
-
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -100,8 +94,6 @@ const MyHerbPicture = ({ herbId }) => {
     return `${year}.${formattedMonth}.${formattedDay}`;
   };
 
-
-
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarStep, setSnackbarStep] = useState(1);
 
@@ -111,42 +103,39 @@ const MyHerbPicture = ({ herbId }) => {
   };
 
   const handleCloseSnackbar = () => {
-    
     setSnackbarOpen(false);
   };
 
   const handleRegisterClick = () => {
     console.log("등록하기");
     const config = configService.loginConfig();
-    
+
     // herbData가 배열로 제공되므로, 첫 번째 요소를 사용하여 imgUrl을 추출합니다.
     const imgUrl = herbData.length > 0 ? herbData[0].imgId : null;
-  
+
     if (imgUrl) {
       // BoardRequestDto 객체 생성
       const boardRequest = { imgUrl };
-  
+
       // writeBoard 함수를 호출할 때 request에 boardRequest를 전달합니다.
-      boardService.writeBoard(boardRequest, config)
+      boardService
+        .writeBoard(boardRequest, config)
         .then(() => {
           setSnackbarStep(2);
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error while writing board:", error);
         });
     } else {
       console.error("No imgUrl found in herbData.");
     }
   };
-  
-
 
   const handleConfirmClick = () => {
     console.log("확인하러 가기 버튼을 누릅니다.");
-    window.location.href = 'https://j10a205.p.ssafy.io/board';
+    window.location.href = "https://j10a205.p.ssafy.io/board";
     handleCloseSnackbar();
   };
-  
 
   if (!herbId) {
     return <Typography>No Herb ID provided.</Typography>;
@@ -157,7 +146,7 @@ const MyHerbPicture = ({ herbId }) => {
     (herbData) => herbData.myHerbId === parseInt(herbId, 10)
   );
   if (!filteredHerbPictures.length) {
-    return <Typography>No matching herb picture found.</Typography>;
+    return <Typography>해당 약초에 등록한 사진이 없습니다.</Typography>;
   }
 
   return (
@@ -166,7 +155,7 @@ const MyHerbPicture = ({ herbId }) => {
         // .filter((data) => data.myHerbId === parseInt(herbId, 10))
         .map((herbData, index) => (
           <CardContainer key={index}>
-           <HerbImage src={herbData.imgId} alt="Herb" />
+            <HerbImage src={herbData.imgId} alt="Herb" />
 
             <HerbDetails>
               <StyledDateStamp>
@@ -191,9 +180,7 @@ const MyHerbPicture = ({ herbId }) => {
         }
         actionLabel1={snackbarStep === 1 ? "취소" : "머무르기"}
         actionLabel2={snackbarStep === 1 ? "등록하기" : "확인하러 가기>"}
-        onAction={
-          snackbarStep === 1 ? handleRegisterClick : handleConfirmClick
-        }
+        onAction={snackbarStep === 1 ? handleRegisterClick : handleConfirmClick}
       />
     </>
   );

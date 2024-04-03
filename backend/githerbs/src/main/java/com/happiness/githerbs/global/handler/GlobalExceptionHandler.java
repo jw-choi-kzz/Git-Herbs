@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestCookieException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -66,6 +68,22 @@ public class GlobalExceptionHandler {
 		log.error("MissingServletRequestParameterException", e);
 		final ErrorResponse res = ErrorResponse.of(ErrorCode.MISSING_REQUEST_PARAMETER_ERROR, e.getMessage());
 		return ResponseEntity.status(ErrorCode.MISSING_REQUEST_PARAMETER_ERROR.getStatus()).body(res);
+	}
+	
+	/** HTTP Method가 잘못되었을 때 */
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	protected  ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+		log.error("HttpRequestMethodNotSupportedException", e);
+		final ErrorResponse res = ErrorResponse.of(ErrorCode.METHOD_NOT_ALLOWED_ERROR, e.getMessage());
+		return ResponseEntity.status(ErrorCode.METHOD_NOT_ALLOWED_ERROR.getStatus()).body(res);
+	}
+	
+	/** cookie 값이 없을 때 */
+	@ExceptionHandler(MissingRequestCookieException.class)
+	protected ResponseEntity<ErrorResponse> handleMissingRequestCookieException(MissingRequestCookieException e) {
+		log.error("MissingRequestCookieException", e);
+		final ErrorResponse res = ErrorResponse.of(ErrorCode.NOT_VALID_HEADER_ERROR, e.getMessage());
+		return ResponseEntity.status(ErrorCode.NOT_VALID_HEADER_ERROR.getStatus()).body(res);
 	}
 
 	/** 응답이 잘못된 경우 (FeignClient에서 404가 오는 등)에 발생하는 Exception */

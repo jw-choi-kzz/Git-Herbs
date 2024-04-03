@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,9 +53,9 @@ public class MemberController {
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, url));
 	}
 
-	@DeleteMapping("/")
+	@DeleteMapping
 	@Operation(summary = "회원탈퇴", description = "회원탈퇴")
-	public ResponseEntity<SuccessResponse<Object>> deleteController(@RequestHeader("device-id") String deviceId, @RequestHeader("Authorization") String accessToken) {
+	public ResponseEntity<SuccessResponse<Object>> deleteController(@CookieValue("device-id") String deviceId, @RequestHeader("Authorization") String accessToken) {
 		// withdraw member using service
 		var result = service.withdrawService(accessToken, deviceId);
 		// send status 200
@@ -72,7 +73,7 @@ public class MemberController {
 
 	@DeleteMapping("/logout")
 	@Operation(summary = "로그아웃", description = "로그아웃")
-	public ResponseEntity<SuccessResponse<Object>> logoutController(@RequestHeader("Authorization") String accessToken, @RequestHeader("device-id") String deviceId){
+	public ResponseEntity<SuccessResponse<Object>> logoutController(@RequestHeader("Authorization") String accessToken, @CookieValue("device-id") String deviceId){
 		// call service for logout
 		var result = service.logoutService(accessToken, deviceId);
 		// return status 200

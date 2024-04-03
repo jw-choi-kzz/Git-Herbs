@@ -53,6 +53,8 @@ public enum ErrorCode {
 	EXIST_TOKEN_ERROR(401, "G-018", "Exist Token Exception"),
 	// FeignClient에서 400 이상의 에러가 오는 경우
 	FEIGN_ERROR(502, "G-019", "Feign Exception"),
+	// Method Not Allowed
+	METHOD_NOT_ALLOWED_ERROR(405, "G-020", "Method Not Allowed Exception"),
 	// 서버가 처리 할 방법을 모르는 경우 발생,
 	INTERNAL_SERVER_ERROR(500, "G-999", "Internal Server Error Exception"),
 

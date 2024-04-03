@@ -17,7 +17,6 @@ import com.happiness.githerbs.domain.auth.dto.common.AuthorizationTokenDto;
 import com.happiness.githerbs.domain.auth.dto.common.JwtScopeDto;
 import com.happiness.githerbs.domain.auth.dto.common.MemberInfoDto;
 import com.happiness.githerbs.domain.auth.service.JwtService;
-import com.happiness.githerbs.domain.member.dto.common.BadgeDto;
 import com.happiness.githerbs.domain.member.dto.common.IdTokenPayload;
 import com.happiness.githerbs.domain.member.dto.request.KakaoAuthorizeParameterDto;
 import com.happiness.githerbs.domain.member.dto.request.KakaoTokenRequestDto;

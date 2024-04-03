@@ -15,7 +15,7 @@ import LoginModal from "../components/LoginModal";
 const LayoutContainer = styled.div`
   max-width: 375px;
   width: 100%;
-  height: 100vh;
+  height: 80vh;
   margin: 0 auto;
   background-color: #f5f5f5;
   display: flex;

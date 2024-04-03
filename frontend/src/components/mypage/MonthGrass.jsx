@@ -90,23 +90,35 @@ const MonthGrass = ({ grassList = [] }) => {
   // tileContent 함수 내에서 모든 날짜에 대해 icons[0] 아이콘을 보여주도록 설정
   const tileContent = ({ date, view }) => {
     if (view === "month") {
-      const currentDateStr = date.toISOString().split("T")[0]; // YYYY-MM-DD 형식
+
+      const oneDay = 24 * 60 * 60 * 1000;
+
+      const currentDateStr = new Date(date.getTime() + oneDay + (date.getTimezoneOffset() * 60000))
+      .toISOString()
+      .split("T")[0]; // YYYY-MM-DD 형식
+
       const currentGrass = grassList.find(
         (grass) => grass.date === currentDateStr
       );
 
-      if (currentGrass) {
-        let iconIndex;
-        if (currentGrass.count === 0) {
-          iconIndex = 0;
-        } else if (currentGrass.count === 1) {
-          iconIndex = 1;
-        } else if (currentGrass.count === 2) {
-          iconIndex = 2;
-        } else if (currentGrass.count >= 3) {
-          iconIndex = 3;
-        }
+      // console.log("currentDateStr", currentDateStr);
+      console.log("currentGrass", currentGrass);
 
+      // if (currentGrass) {
+      //   let iconIndex;
+      //   if (currentGrass.count === 0) {
+      //     iconIndex = 0;
+      //   } else if (currentGrass.count === 1) {
+      //     iconIndex = 1;
+      //   } else if (currentGrass.count === 2) {
+      //     iconIndex = 2;
+      //   } else if (currentGrass.count >= 3) {
+      //     iconIndex = 3;
+      //   }
+
+      if (currentGrass) {
+        let iconIndex = currentGrass.count >= 3 ? 3 : currentGrass.count;
+  
         return (
           <DayTile>
             <IconImage src={icons[iconIndex]} alt="Icon" />

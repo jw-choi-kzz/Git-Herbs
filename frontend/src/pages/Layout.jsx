@@ -27,6 +27,7 @@ const MainContent = styled.main`
   width: 100%;
   flex: 1;
   overflow-y: auto;
+  padding-bottom: 60px; /* 푸터 높이만큼 padding 추가 */
 `;
 
 const ModalOverlay = styled.div`

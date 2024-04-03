@@ -35,6 +35,11 @@ public class S3Uploader {
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
         return upload(uploadFile, dirName);
     }
+    public String upload(MultipartFile multipartFile, String dirName, String uuid) throws IOException {
+        File uploadFile = convert(multipartFile, uuid)
+            .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
+        return upload(uploadFile, dirName);
+    }
 
     public String upload(InputStream in, String dirName, String fileName) throws IOException {
         File uploadFile = convert(in, fileName)
@@ -74,6 +79,17 @@ public class S3Uploader {
 
     private Optional<File> convert(MultipartFile file) throws  IOException {
         File convertFile = new File(tmpPath+"/"+file.getOriginalFilename());
+        if(convertFile.createNewFile()) {
+            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
+                fos.write(file.getBytes());
+            }
+            return Optional.of(convertFile);
+        }
+        return Optional.empty();
+    }
+
+    private Optional<File> convert(MultipartFile file, String uuid) throws  IOException {
+        File convertFile = new File(tmpPath+"/"+uuid+"_"+file.getOriginalFilename());
         if(convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(file.getBytes());

@@ -133,7 +133,7 @@ export const herbsService ={
             return response;
         })
         .catch(error =>{
-            console.log(error);
+            // console.log(error);
         })
     },
 
@@ -143,7 +143,7 @@ export const herbsService ={
             return response.data;
         })
         .catch(error =>{
-            console.log(error);
+            // console.log(error);
         })
     },
 

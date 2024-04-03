@@ -101,21 +101,7 @@ const MonthGrass = ({ grassList = [] }) => {
         (grass) => grass.date === currentDateStr
       );
 
-      // console.log("currentDateStr", currentDateStr);
-      console.log("currentGrass", currentGrass);
-
-      // if (currentGrass) {
-      //   let iconIndex;
-      //   if (currentGrass.count === 0) {
-      //     iconIndex = 0;
-      //   } else if (currentGrass.count === 1) {
-      //     iconIndex = 1;
-      //   } else if (currentGrass.count === 2) {
-      //     iconIndex = 2;
-      //   } else if (currentGrass.count >= 3) {
-      //     iconIndex = 3;
-      //   }
-
+      
       if (currentGrass) {
         let iconIndex = currentGrass.count >= 3 ? 3 : currentGrass.count;
   

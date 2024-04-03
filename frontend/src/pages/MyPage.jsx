@@ -95,7 +95,7 @@ const MyPage = () => {
     if (loginConfig) {
       userServcie.logout(loginConfig);
       localStorage.clear();
-      navigate("/");
+      window.location.href = "/";
     } 
   }
 

@@ -1,9 +1,15 @@
 package com.happiness.githerbs.domain.search.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.Criteria;
@@ -13,18 +19,24 @@ import org.springframework.data.elasticsearch.core.query.highlight.Highlight;
 import org.springframework.data.elasticsearch.core.query.highlight.HighlightField;
 import org.springframework.data.elasticsearch.core.query.highlight.HighlightFieldParameters;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.happiness.githerbs.domain.auth.service.JwtService;
 import com.happiness.githerbs.domain.herb.entity.Herb;
 import com.happiness.githerbs.domain.herb.repository.HerbRepository;
 import com.happiness.githerbs.domain.member.repository.MemberRepository;
+import com.happiness.githerbs.domain.search.dto.common.HerbCandidateDto;
+import com.happiness.githerbs.domain.search.dto.response.HerbSimilarityResponseDto;
 import com.happiness.githerbs.domain.search.dto.response.KeywordResponseDto;
 import com.happiness.githerbs.domain.search.dto.response.RecentSearchResponseDto;
+import com.happiness.githerbs.domain.search.dto.response.SearchImageResponseDto;
 import com.happiness.githerbs.domain.search.dto.response.SearchResponseDto;
 import com.happiness.githerbs.domain.search.entity.HerbDocument;
 import com.happiness.githerbs.domain.search.entity.SearchLog;
 import com.happiness.githerbs.domain.search.repository.SearchLogRepository;
 import com.happiness.githerbs.global.common.code.ErrorCode;
 import com.happiness.githerbs.global.common.exception.BaseException;
+import com.happiness.githerbs.global.config.S3Uploader;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +49,14 @@ public class SearchServiceImpl implements SearchService {
 	private final MemberRepository memberRepository;
 	private final SearchLogRepository searchLogRepository;
 	private final ElasticsearchOperations elasticsearchOperations;
+	private final JwtService jwt;
+	private final S3Uploader s3;
 	private final FastApiClient fastApiClient;
+
+	@Value("${feign.fast-api.img}")
+	private String fastApiImgUrl;
+	@Value("${kakao.login.tmp-path}")
+	private String tmpPath;
 
 	@Override
 	@Transactional
@@ -112,6 +131,58 @@ public class SearchServiceImpl implements SearchService {
 		for (int id : keywords.herbIds) {
 			Herb herb = herbRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.HERB_NOT_FOUND));
 			result.add(new KeywordResponseDto(id, herb.getHerbName()));
+		}
+		return result;
+	}
+
+	@Override
+	public SearchImageResponseDto searchImage(String accessToken, MultipartFile img) throws IOException {
+		// validate token
+		var memberInfo = jwt.validateToken(accessToken);
+
+		// change file extension if image is not jpg if raise exception
+
+		// save image to S3
+		var uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		var s3Url = s3.upload(img, "search", uuid);
+
+		// send image to fastapi using feign client
+		var uri = URI.create(fastApiImgUrl);
+		// convert MultiPartFile to File
+		var similarityMap = fastApiClient.getSimilarityClient(uri, img);
+		var similarity = convertToSimilarity(similarityMap);
+
+		// return herb information
+		var candidate = convetToCandidate(similarity);
+
+		// return response
+		return SearchImageResponseDto.builder()
+			.pictureUrl(s3Url)
+			.candidates(candidate)
+			.build();
+	}
+
+	private List<HerbSimilarityResponseDto> convertToSimilarity(Map<String, Double> similarity) {
+		List<HerbSimilarityResponseDto> result = new ArrayList<>();
+		for (var entry : similarity.entrySet()) {
+			result.add(HerbSimilarityResponseDto.builder().herbClass(entry.getKey()).similarity(entry.getValue()).build());
+		}
+		return result;
+	}
+
+	private List<HerbCandidateDto> convetToCandidate(List<HerbSimilarityResponseDto> similarity) {
+		List<HerbCandidateDto> result = new ArrayList<>();
+		// get herb information from repository
+		for (HerbSimilarityResponseDto dto : similarity) {
+			var split = dto.herbClass().split("_");
+			var herb = herbRepository.findById(Integer.parseInt(split[0]))
+				.orElseThrow(() -> new BaseException(ErrorCode.HERB_NOT_FOUND));
+			result.add(HerbCandidateDto.builder()
+				.herbId(herb.getId())
+				.herbImgUrl(herb.getHerbImg())
+				.herbName(herb.getHerbName())
+				.similarity(dto.similarity())
+				.build());
 		}
 		return result;
 	}

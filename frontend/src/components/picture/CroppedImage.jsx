@@ -70,6 +70,7 @@ const CroppedImage = ({ croppedImage, onGoBack }) => {
     }
     const maxWidth = 750;
     const options = {
+      maxSizeMB: 1,
       maxWIdthOrHeight: maxWidth,
       useWebWorker: true
     }

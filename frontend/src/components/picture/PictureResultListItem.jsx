@@ -67,7 +67,7 @@ const PictureResultListItem = ({ item, index, saved, herbId, img, onItemClick })
     }
 
     const modalFunction = () => {
-      navigate(`/detail/${herbId}`);
+      navigate(`/detail/${herbId == undefined ? item.herbId : herbId}`);
     }
 
     const modalItem = {

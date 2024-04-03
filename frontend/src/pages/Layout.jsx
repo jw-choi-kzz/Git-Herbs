@@ -27,7 +27,7 @@ const MainContent = styled.main`
   width: 100%;
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 60px; /* FooterContainer의 높이만큼 padding 추가 */
+  padding-bottom: 150px; /* FooterContainer의 높이만큼 padding 추가 */
 `;
 
 const ModalOverlay = styled.div`
@@ -51,7 +51,7 @@ const FooterContainer = styled.footer`
   left: 0;
   right: 0;
   z-index: 1;
-  height: 60px; /* FooterContainer의 높이 설정 */
+  height: 150px; /* FooterContainer의 높이 설정 */
 `;
 
 // 레이아웃 컴포넌트

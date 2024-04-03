@@ -53,6 +53,7 @@ const PictureResultPage = () => {
       <Container>
         <PictureResultList items={data.candidates} img={data.pictureUrl} onItemClick={handleItemClick} />
       </Container>
+      <p style={{ color: '#797979' }}>분석에 사용된 이미지 정보는 AI Hub의 동의보감 약초 이미지를 사용하였습니다.</p>
     </>
   );
 };

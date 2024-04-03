@@ -83,10 +83,11 @@ public class SearchServiceImpl implements SearchService {
 		return searchHits.stream().map(hit -> {
 			Integer herbId = hit.getContent().getId();
 			Herb herb = herbRepository.findById(herbId).orElseThrow(() -> new BaseException(ErrorCode.HERB_NOT_FOUND));
+			int length = Math.min(hit.getContent().getHerbMedicinalEffect().get(0).length(), 50);
 			String description = hit.getHighlightField(herbMedicinalEffect)
 				.stream()
 				.findFirst()
-				.orElseGet(() -> hit.getContent().getHerbMedicinalEffect().get(0).substring(0, 50));
+				.orElseGet(() -> hit.getContent().getHerbMedicinalEffect().get(0).substring(0, length));
 			return SearchResponseDto.builder()
 				.id(herbId)
 				.herbName(herb.getHerbName())

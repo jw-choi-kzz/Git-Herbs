@@ -4,12 +4,14 @@ import static com.happiness.githerbs.domain.member.entity.QMemberDaily.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.happiness.githerbs.domain.event.dto.response.RankingResponse;
 import com.happiness.githerbs.domain.member.dto.common.GrassDto;
+import com.happiness.githerbs.domain.member.dto.response.UserRankResponseDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -36,6 +38,33 @@ public class MemberDailyRepositoryImpl implements MemberDailyRepositoryCustom {
 			.where(memberDaily.member.id.eq(id).and(memberDaily.date.between(now.withDayOfMonth(1), now)))
 			.groupBy(memberDaily.date)
 			.fetch();
+	}
+
+	public Integer findRank(Integer id){
+		List<UserRankResponseDto> list = queryFactory
+			.select(Projections.constructor(UserRankResponseDto.class,
+				memberDaily.member.id,
+				getTotalTrueCount()))
+			.from(memberDaily)
+			.where(memberDaily.date.between(LocalDate.now().withDayOfMonth(1), LocalDate.now()))
+			.groupBy(memberDaily.member)
+			.orderBy(getTotalTrueCount().desc())
+			.fetch();
+
+		int rank = 1;
+
+		if(Objects.equals(list.get(0).id(), id)) return rank; // 1등인 경우
+
+		for(int i = 1; i < list.size(); i++){
+			UserRankResponseDto user = list.get(i);
+			UserRankResponseDto beforeUser = list.get(i-1);
+			
+			if(user.count() < beforeUser.count()) rank++; // 점수가 동점이 아닌 경우만 증가
+			if(Objects.equals(user.id(), id)){
+				break;
+			}
+		}
+		return rank;
 	}
 
 	@Override
@@ -82,5 +111,4 @@ public class MemberDailyRepositoryImpl implements MemberDailyRepositoryCustom {
 			.where(memberDaily.member.id.eq(userId).and(memberDaily.date.eq(LocalDate.now())))
 			.execute();
 	}
-
 }

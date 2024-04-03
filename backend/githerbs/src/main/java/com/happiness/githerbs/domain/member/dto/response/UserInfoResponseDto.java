@@ -1,7 +1,6 @@
 package com.happiness.githerbs.domain.member.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 
 @Builder

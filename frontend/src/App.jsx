@@ -22,13 +22,10 @@ import HerbMap from "./components/herbdetail/HerbMap";
 import PrivateRoute from "./components/PrivateRoute";
 import ScrollToTop from "./components/ScrollToTop";
 
-const NAVER_CLIENT_KEY = "miynss7cb8";
-
 function App() {
   useGlobalStyles();
-
   const script = document.createElement("script");
-  script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${NAVER_CLIENT_KEY}&callback=map_callback`;
+  script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${import.meta.env.VITE_NAVER_CLIENT_KEY}&callback=map_callback`;
   script.async = true;
   document.head.appendChild(script);
   const setIsLoading = useLoadingStore((state) => state.setIsLoading);

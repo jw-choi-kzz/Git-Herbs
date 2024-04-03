@@ -104,7 +104,7 @@ const MyProfile = ({ nickname, profileImg }) => {
 
   const uploadProfileImage = (img) => {
     const formData = new FormData();
-    formData.append('img', img,img);
+    formData.append('img', img,img.name);
     const loginConfig = configService.mulitconfig();
     userServcie.updateProfileImg(formData,loginConfig)
     .then(repsonse =>{

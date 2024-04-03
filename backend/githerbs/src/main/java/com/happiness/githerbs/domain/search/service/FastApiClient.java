@@ -11,7 +11,7 @@ import lombok.Data;
 @FeignClient(name = "fastApi", url = "${feign.fast-api.url}")
 public interface FastApiClient {
 
-	@GetMapping("/search")
+	@GetMapping("search")
 	KeywordListResponseDto getKeyword(@RequestParam("herbId") Integer herbId);
 
 	@Data

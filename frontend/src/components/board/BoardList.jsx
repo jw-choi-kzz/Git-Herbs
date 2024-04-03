@@ -17,6 +17,10 @@ const BoardList = ({ filterOption }) => {
     fetchData();
   }, [filterOption]);
 
+  useEffect(() => {
+
+  }, [boardDatas]);
+
   const fetchData = async () => {
     try {
       let response = [];
@@ -32,7 +36,6 @@ const BoardList = ({ filterOption }) => {
       }
       
       setBoardDatas(response);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

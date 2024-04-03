@@ -49,6 +49,8 @@ const RecentSearch = () => {
   const [recentKeywords, setRecentKeywords] = useState([]);
 
   useEffect(()=>{
+    const token = localStorage.getItem('accessToken');
+    if (token) {
       const loginConfig = configService.loginConfig();
       searchService.searchRecent(loginConfig)
       .then(response => {
@@ -59,6 +61,7 @@ const RecentSearch = () => {
       .catch(error=>{
         console.error(error);
       });
+    }
   },[]);
 
   const handleKeywordClick = (searchQuery) => {

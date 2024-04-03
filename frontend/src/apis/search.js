@@ -1,5 +1,5 @@
 import { apiInstance } from "../utils/Sample-axios";
-
+import { configService } from "./config";
 
 const axios = apiInstance;
 
@@ -7,11 +7,12 @@ const axios = apiInstance;
 export const searchService = {
     /**
      *  입력한 키워드로 검색을 합니다.
-     * @param {*} keyword  검색 키워드
+     * @param {*} keyword  검색 키워드, 
      * @returns [id , herbImg, herbName, "scientificName", medicinalPart(약효부위) , "description"]
      */
     searchKeyword : (keyword) =>{
-        return axios.get(`/search?keyword=${keyword}`)
+        const config = configService.loginConfig();
+        return axios.get(`/search?keyword=${keyword}`, config)
         .then(response => {
             return response.data.data;
         })

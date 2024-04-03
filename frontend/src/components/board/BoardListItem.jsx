@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@mui/joy/Typography";
 import Button from "@mui/joy/Button";
@@ -98,7 +98,6 @@ const BoardListItem = ({ data }) => {
       .putFavorite(data.boardId, config)
       .then((response) => {
         setLikeCheck(response.flag);
-        console.log(response.flag);
         if (response.flag) {
           setLikeCnt(likeCnt + 1); // likeCnt를 증가시킴
         } else {

@@ -74,7 +74,6 @@ const HerbProfile = ({ data }) => {
         config
       )
       .then((response) => {
-        console.log(response);
         setIsBookmarked(1);
       })
       .catch((error) => {

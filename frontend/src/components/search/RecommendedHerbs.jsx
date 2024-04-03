@@ -6,8 +6,8 @@ import { configService } from '../../apis/config';
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column; // 방향을 세로로 설정합니다.
-  align-items: center; // 가운데 정렬합니다.
+  flex-direction: column; 
+  align-items: center; 
   background-color: #fff;
   padding: 16px;
   box-sizing: border-box;
@@ -15,19 +15,19 @@ const Container = styled.div`
 
 const BoldText = styled.div`
   font-weight: bold;
-  margin-bottom: 16px; // 텍스트 아래 공간을 추가합니다.
+  margin-bottom: 16px;
 `;
 
 const HerbsContainer = styled.div`
-  display: flex; // 플렉스 레이아웃을 사용합니다.
-  justify-content: space-around; // 약초 항목들 사이에 공간을 동일하게 배분합니다.
-  width: 100%; // 부모 컨테이너의 전체 너비를 사용합니다.
+  display: flex; 
+  justify-content: space-around; 
+  width: 100%;
 `;
 
 const Herb = styled.div`
   display: flex;
-  flex-direction: column; // 방향을 세로로 설정합니다.
-  align-items: center; // 가운데 정렬합니다.
+  flex-direction: column; 
+  align-items: center;
   cursor: pointer;
 `;
 
@@ -46,41 +46,41 @@ const HerbName = styled.div`
 
 const RecommendedHerbs = () => {
   const navigate = useNavigate();
-  //{"herbId": "...","herbUrl": "...","herbName": "..."}
   const [recommendList, setRecommendList] = useState([]);
-      // herbId: 1, //약초 id
-      // herbUrl: "./herbs/001_00000010_leaf.jpg", //약초 이미지 url
-      // herbName: "칡",
 
   useEffect(()=>{
-    const loginConfig = configService.loginConfig();
-    console.log("loginConfig");
-    console.log(loginConfig);
-    searchService.searchRecommend(loginConfig)
-    .then(response => {
-      console.log("response");
-      console.log(response);
-      setRecommendList(response);
-    })
-    .catch(error=>{
-      console.error(error);
-    })
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      const loginConfig = configService.loginConfig();
+      searchService.searchRecommend(loginConfig)
+        .then(response => {
+          setRecommendList(response);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   },[]);
 
   const handleHerbClick = (id) => {
-    navigate(`/detail/${id}`);//${id}
+    navigate(`/detail/${id}`);
   };
+
   return (
     <Container>
       <BoldText>이런 약초는 어때요?</BoldText>
-      <HerbsContainer>
-        {recommendList.map((herb, index) => (
-          <Herb key={index} onClick={()=>handleHerbClick(herb.herbId)}>
-            <HerbImage src={herb.herbUrl} alt={herb.herbName} />
-            <HerbName>{herb.herbName}</HerbName>
-          </Herb>
-        ))}
-      </HerbsContainer>
+      {recommendList.length > 0 ? (
+        <HerbsContainer>
+          {recommendList.map((herb, index) => (
+            <Herb key={index} onClick={() => handleHerbClick(herb.herbId)}>
+              <HerbImage src={herb.herbUrl} alt={herb.herbName} />
+              <HerbName>{herb.herbName}</HerbName>
+            </Herb>
+          ))}
+        </HerbsContainer>
+      ) : (
+        <div>추천할 약초가 없습니다.</div>
+      )}
     </Container>
   );
 };

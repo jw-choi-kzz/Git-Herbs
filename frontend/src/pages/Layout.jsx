@@ -46,9 +46,12 @@ const ModalOverlay = styled.div`
 `;
 
 const FooterContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 1;
 `;
-
 // 레이아웃 컴포넌트
 const Layout = () => {
   const isLoading = useLoadingStore((state) => state.isLoading);

@@ -27,7 +27,6 @@ const MainContent = styled.main`
   width: 100%;
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 60px; /* 푸터 높이만큼 padding 추가 */
 `;
 
 const ModalOverlay = styled.div`
@@ -46,12 +45,13 @@ const ModalOverlay = styled.div`
 `;
 
 const FooterContainer = styled.footer`
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 1;
 `;
+
 // 레이아웃 컴포넌트
 const Layout = () => {
   const isLoading = useLoadingStore((state) => state.isLoading);

@@ -37,8 +37,6 @@ const DetailPage = () => {
   }, [herbId, setHerbs]);
 
   return (
-    // 스크롤을 허용하는 컨테이너 overflowY: 'auto', height: 'calc(100vh - 105px)',
-    // <div style={{ justifyContent: 'center' }}>
     <React.Fragment>
       <HerbProfile data={herbs} />
       <HerbDetailIndex
@@ -56,7 +54,6 @@ const DetailPage = () => {
         <Typography>로그인이 필요한 서비스입니다.</Typography>
       </Snackbar>
     </React.Fragment>
-    // </div>
   );
 };
 

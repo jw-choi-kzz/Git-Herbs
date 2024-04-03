@@ -16,8 +16,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           maxWidth: "375px",
-          width: "100%", // 부모 컨테이너의 너비에 따라 조정되도록 변경
-          margin: "0 auto", // 가운데 정렬을 위해 추가
+          width: "100%", 
+          margin: "0 auto", 
           backgroundColor: "#fff",
           boxShadow: "none",
           borderBottom: "1px solid #d7d7d7",
@@ -79,7 +79,6 @@ function Header() {
                 color="inherit"
                 aria-label="user account"
                 onClick={handleClick}
-                // onClick={() => navigate('/mypage')}
               >
                 <BiUserCircle style={{ fontSize: "35px", color: "#407700" }} />
               </IconButton>

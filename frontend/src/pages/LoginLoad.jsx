@@ -59,7 +59,7 @@ const Button = styled.button`
   transition: color 0.3s ease;
 
   &:hover {
-    color: #979797; /* Lighter shade for hover state */
+    color: #979797; 
   }
 `;
 

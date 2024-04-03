@@ -5,8 +5,6 @@ import TodayHerb from "../components/main/TodayHerb";
 import HerbQuiz from "../components/main/HerbQuiz";
 import useGlobalStyles from '../utils/useGlobalStyles';
 
-
-//overflowY: 'auto', height: 'calc(100dvh - 105px)', 
 const MainPage = () => {
   useGlobalStyles(); 
 

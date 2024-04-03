@@ -22,8 +22,6 @@ const PrivateRoute = () => {
     if (!showModal) {
       return <Navigate to="/" />;
     } else {
-      // 로그인이 안 되어 있고, 모달이 여전히 보여지고 있다면
-      // 모달을 띄우고 페이지는 리디렉션하지 않습니다.
       return (
         <div>
           <LoginModal isOpen={showModal} onClose={handleModalClose} redirectUri={"/"}/>
@@ -32,7 +30,7 @@ const PrivateRoute = () => {
     }
   }
 
-  // 로그인이 되어 있다면 Outlet을 통해 자식 라우트를 렌더링합니다.
+  // 로그인이 되어 있다면 Outlet을 통해 자식 라우트를 렌더링
   return <Outlet />;
 };
 

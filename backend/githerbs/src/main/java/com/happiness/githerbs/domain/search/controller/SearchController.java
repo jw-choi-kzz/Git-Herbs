@@ -50,7 +50,7 @@ public class SearchController {
 		int memberId = jwtService.validateToken(authorization).getMemberId();
 		Integer herbId = bookmarkService.recentBookmark(memberId);
 
-		Object keywords = null;
+		Object keywords = "";
 		if (herbId != 0)
 			keywords = searchService.recommendKeyword(herbId);
 

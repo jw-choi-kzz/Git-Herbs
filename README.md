@@ -1,8 +1,10 @@
-
 # 🍀 GIT HERBS - 안전한 약초 채집을 위한 나만의 약초 저장소
 SSAFY 10기 2학기 특화 프로젝트 - 행복만땅 (팀 A205) 
 
-![로고](산출물/docs/asset/logo.png)
+
+<p align="center">
+  <img src="산출물/docs/asset/logo.png" width="400">
+</p>
 
 <br><br>
 
@@ -259,7 +261,7 @@ SSAFY 10기 2학기 특화 프로젝트 - 행복만땅 (팀 A205)
             <sub><b>팀원 강태연</b></sub>
         </a>
         <br />
-        <div>BE, INFRA</div>
+        <div>BE, FE ,INFRA</div>
       </td>
       <td align="center">
         <a href="https://github.com/namhyemi">
@@ -268,7 +270,7 @@ SSAFY 10기 2학기 특화 프로젝트 - 행복만땅 (팀 A205)
             <sub><b>팀원 남혜미</b></sub>
         </a>
         <br />
-        <div>BE</div>
+        <div>BE, AI</div>
       </td>
     </tr>
   </tbody>

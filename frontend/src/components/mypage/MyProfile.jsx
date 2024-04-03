@@ -65,7 +65,6 @@ const NicknameAndEditContainer = styled.div`
 `;
 
 const MyProfile = ({ nickname, profileImg }) => {
-  console.log(nickname);
   const [newNickname, setNewNickname] = useState(nickname);
   const [previewImage, setPreviewImage] = useState(profileImg);
   const imgRef = useRef();

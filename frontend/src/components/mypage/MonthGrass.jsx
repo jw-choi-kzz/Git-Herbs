@@ -85,8 +85,7 @@ const icons = {
 };
 
 const MonthGrass = ({ grassList = [] }) => {
-  // const [value] = useState(new Date());
-  console.log(grassList);
+  
   // tileContent 함수 내에서 모든 날짜에 대해 icons[0] 아이콘을 보여주도록 설정
   const tileContent = ({ date, view }) => {
     if (view === "month") {

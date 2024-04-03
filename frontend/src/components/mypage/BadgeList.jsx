@@ -45,8 +45,6 @@ const BadgeList = () => {
     const loginConfig = configService.loginConfig();
     eventService.getUserBadge(loginConfig)
     .then(response => {
-      console.log("뱃지 정보");
-      console.log(response);
       setBadges(response || []);
     })
     .catch(error=>{
@@ -55,7 +53,6 @@ const BadgeList = () => {
   },[]);
 
   const acquiredBadgeCount = Array.isArray(badges) ? badges.filter(badge => badge.check).length : 0;
-  console.log(badges.length);
 
   return (
     <>

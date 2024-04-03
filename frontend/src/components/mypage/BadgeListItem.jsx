@@ -13,7 +13,6 @@ const BadgeImage = styled.img`
 `;
 
 const BadgeListItem = ( {badge} ) => {
-  console.log(badge);
   const handleClick = () => {
     MySwal.fire({
       title: `<span style="color: #ffffff;">${badge.name}</span>`,

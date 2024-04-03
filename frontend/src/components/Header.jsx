@@ -15,10 +15,6 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          // width: '375px',
-          // backgroundColor: '#fff',
-          // boxShadow: 'none',
-          // borderBottom: '1px solid #d7d7d7',
           maxWidth: "375px",
           width: "100%", // 부모 컨테이너의 너비에 따라 조정되도록 변경
           margin: "0 auto", // 가운데 정렬을 위해 추가
@@ -48,10 +44,8 @@ function Header() {
     const token = localStorage.getItem("accessToken");
 
     if (token) {
-      console.log("로그인됨");
       navigate("/mypage");
     } else {
-      console.log("로그인안됨");
       setShowLoginModal(true);
     }
   };

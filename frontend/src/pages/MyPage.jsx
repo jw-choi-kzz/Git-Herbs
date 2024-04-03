@@ -78,7 +78,6 @@ const MyPage = () => {
           ...response,
           userGrass: response.grass,
         });
-        console.log(userInfo);
       })
       .catch((error) => {
         setError("사용자 정보를 불러오는 데 실패했습니다.");

@@ -230,8 +230,9 @@ public class MemberServiceImpl  implements MemberService {
 			var imgName = prevImg.split("/")[prevImg.split("/").length - 2]+"/"+prevImg.split("/")[prevImg.split("/").length - 1];
 			s3.delete(imgName);
 		}
-		var path = tmpPath + img.getOriginalFilename();
-		var s3Url = s3.upload(img, "profile");
+
+		var uuid = UUID.randomUUID().toString().replaceAll("-", "");
+		var s3Url = s3.upload(img, "profile", uuid);
 		var result = repo.updateProfileImg(memberInfo.getMemberId(), s3Url);
 		// return member into
 		return UserInfoResponseDto.builder().id(result.id()).nickname(result.nickname()).img(result.img()).build();

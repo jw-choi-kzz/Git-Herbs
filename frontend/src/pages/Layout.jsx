@@ -15,7 +15,7 @@ import LoginModal from "../components/LoginModal";
 const LayoutContainer = styled.div`
   max-width: 375px;
   width: 100%;
-  height: 80vh;
+  height: 100vh;
   margin: 0 auto;
   background-color: #f5f5f5;
   display: flex;
@@ -27,6 +27,7 @@ const MainContent = styled.main`
   width: 100%;
   flex: 1;
   overflow-y: auto;
+  padding-bottom: 60px; /* FooterContainer의 높이만큼 padding 추가 */
 `;
 
 const ModalOverlay = styled.div`
@@ -45,8 +46,12 @@ const ModalOverlay = styled.div`
 `;
 
 const FooterContainer = styled.footer`
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 1;
+  height: 60px; /* FooterContainer의 높이 설정 */
 `;
 
 // 레이아웃 컴포넌트

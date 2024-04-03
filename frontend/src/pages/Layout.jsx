@@ -46,9 +46,6 @@ const ModalOverlay = styled.div`
 
 const FooterContainer = styled.footer`
   position: relative;
-  bottom: 0;
-  left: 0;
-  right: 0;
   z-index: 1;
 `;
 

@@ -45,8 +45,8 @@ const ModalOverlay = styled.div`
 `;
 
 const FooterContainer = styled.div`
-  position: relative;
   z-index: 1;
+  margin-top: auto;
 `;
 
 // 레이아웃 컴포넌트

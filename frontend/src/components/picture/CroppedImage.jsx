@@ -70,8 +70,8 @@ const CroppedImage = ({ croppedImage, onGoBack }) => {
       return file;
     }
     
-    const options = {
-      maxWIdthOrHeight: maxWidth,
+    const options =  {
+      maxWidthOrHeight: maxWidth,
       useWebWorker: true
     }
     try {

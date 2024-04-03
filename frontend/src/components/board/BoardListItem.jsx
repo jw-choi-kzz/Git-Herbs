@@ -7,7 +7,7 @@ import boardService from "../../apis/board";
 import { configService } from "../../apis/config";
 import LoginModal from "../LoginModal";
 import useLoginStore from "../../store/useLoginStore";
-
+import Swal from 'sweetalert2';
 
 
 
@@ -103,7 +103,7 @@ const BoardListItem = ({ data }) => {
   const [showTrashIcon, setShowTrashIcon] = useState(false);
   const { imgUrl, herbName, userNickname, userImgUrl, createAt } = data;
   const [dede , setdede] = useState(false);
-
+  const [newNickname, setNewNickname] = useState("'삭제' 키워드를 입력하세요!");
 
   useEffect(() => {
     const userId = localStorage.getItem('userId');
@@ -141,21 +141,37 @@ const BoardListItem = ({ data }) => {
       
   };
 
+  const validateNickname = (value) => {
+    if (!value == "삭제") return '잘 못 입력하셨습니다';
+    return null;
+  };
+
   const removeHandler = () => {
 
-    const confirmResult = window.confirm('삭제하시겠습니까?');
+    Swal.fire({
+      title: '게시글 삭제',
+      input: 'text',
+      inputValue: newNickname,
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소',
+      inputValidator: validateNickname
+    }).then((result) => {
+      if (result.value ==  "삭제") {
+        const config = configService.loginConfig();
+        boardService.deleteBoard(data.boardId, config)
+          .then((response) => {
+            Swal.fire('성공', '게시글이 성공적으로 삭제되었습니다.', 'success');
+            setdede(true);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else{
+        Swal.fire('오류', '잘 못 입력하셨습니다.', 'error');
+      }
+    });
 
-    if (confirmResult) {
-      const config = configService.loginConfig();
-  
-      boardService.deleteBoard(data.boardId, config)
-        .then((response) => {
-          setdede(true);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
   }
 
   // 사용자가 좋아요를 눌렀는지 여부에 따라 아이콘을 조정합니다.

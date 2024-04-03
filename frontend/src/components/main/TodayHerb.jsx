@@ -3,10 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { eventService } from '../../apis/event';
 
-// Styled Components는 컴포넌트 바깥에서 정의해야함.
-//컴포넌트 렌더링될 때마다 새로운 Styled Component가 만들어지지 않도록
-//성능 저하 방지, 불필요한 리렌더링을 막기 위해
-//속성 이름은 camelCase가 아니라 - 사용
 const Container = styled.div`
   width: 320px;
   height: auto; 
@@ -19,7 +15,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  cursor: pointer;
 `;
 
 const Title = styled.div`
@@ -60,6 +55,21 @@ const HerbImage = styled.img`
   margin-right: 10px; 
 `;
 
+const HerbDetailButton = styled.button`
+cursor: pointer;
+padding: 10px;
+background-color: #407700;
+color: white;
+border: none;
+border-radius: 5px;
+font-size: 14px;
+margin: 10px; 
+transition: background-color 0.3s ease;
+&:hover {
+  background-color: #21351F; 
+}
+`;
+
 const TodayHerb = () => {
   const navigate = useNavigate();
 
@@ -81,26 +91,20 @@ const TodayHerb = () => {
     getData();
   }, []);
 
-  // const todayHerb = {
-  //   herbId: 1,
-  //   herbUrl: "/herbs/001_00000176_root.jpg",
-  //   herbName: "칡",
-  //   latinName: "Paeoniae Radix",
-  // } //api연결 전 임의 약초 정보
-
   const handleClick = () => {
-    navigate(`/detail/${herbId}`); // 클릭 시 상세 페이지로 이동
+    navigate(`/detail/${herbId}`); 
   };
 
   return (
     <>
-      <Container onClick={handleClick}>
+      <Container>
         <Title className='bold'>오늘의 약초</Title>
         <DetailsContainer>
           <HerbImage src={herbImg} alt={herbName} />
           <TextContainer>
             <HerbName className='medium'>{herbName}</HerbName>
-            <SubTitle className='regular'>{herbMedicalPart}</SubTitle>
+            <SubTitle className='regular'>약용부위 : {herbMedicalPart}</SubTitle>
+            <HerbDetailButton onClick={handleClick}>자세히 보러가기</HerbDetailButton>
           </TextContainer>
         </DetailsContainer>
       </Container>

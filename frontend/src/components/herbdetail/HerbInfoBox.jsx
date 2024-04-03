@@ -32,7 +32,7 @@ const SectionHeader = styled.div.attrs({
 })`
   font-size: 18px;
   //font-family: "SpoqaHanSansNeo", sans-serif;
-  color: #305f72; // 글자색은 .medium 클래스의 색으로 변경
+  color: #305f72; 
   //font-weight: 500;
   margin-bottom: 4px;
   margin-left: 5px;

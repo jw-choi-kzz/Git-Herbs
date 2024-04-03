@@ -46,14 +46,17 @@ const EscapePage = () => {
   return (
     <div style={{ justifyContent: 'center' }}>
       <>
-      <br></br>
+      <br />
         <Weather weatherdata={weatherdata}></Weather>
         <p>야생동물 서식 구역</p>
         <WildlifeArea weatherdata={weatherdata} ></WildlifeArea>
+        <br /><hr color="e8e8e8" width="90%"/>
         <p>제철약초</p>
         <SeasonalHerbs></SeasonalHerbs>
+        <br /><hr color="e8e8e8" width="90%"/>
         <p>위급 상황시 행동 요령</p>
         <BehaviorTips></BehaviorTips>
+        <br /><hr color="e8e8e8" width="90%"/>
         <p>월별 Tip</p>
         <Monthtip></Monthtip>
       </>

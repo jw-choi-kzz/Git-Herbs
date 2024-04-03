@@ -109,7 +109,7 @@ const BoardListItem = ({ data }) => {
       });
   };
 
-  // 사용자가 좋아요를 눌렀는지 여부에 따라 아이콘을 조정합니다.
+  // 사용자가 좋아요를 눌렀는지 여부에 따라 아이콘을 조정
   const HeartIcon = likeCheck ? StyledHeartIcon : StyledEmptyHeartIcon;
 
   return (

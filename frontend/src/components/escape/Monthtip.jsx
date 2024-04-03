@@ -5,14 +5,9 @@ import { manuualService } from '../../apis/manual';
 const Monthtip = () => {
   const [res, setTip] = useState(null);
 
-
   useEffect(() => {
     getTip();
   }, []);
-
-
-
-
 
   const getTip = async () => {
     manuualService.getTip()
@@ -36,7 +31,7 @@ export default Monthtip;
 
 const Container = styled.div`
   width: 320px;
-  height: auto; /* Changed to auto to wrap content */
+  height: auto; 
   margin: auto;
   border-radius: 10px;
   padding: 20px;
@@ -45,8 +40,7 @@ const Container = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to start */
-  cursor: pointer;
+  align-items: flex-start; 
 `;
 
 

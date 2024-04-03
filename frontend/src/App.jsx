@@ -6,7 +6,6 @@ import useGlobalStyles from "./utils/useGlobalStyles";
 import Layout from "./pages/Layout";
 import MainPage from "./pages/MainPage";
 import ErrorPage from "./pages/ErrorPage";
-// import LoginPage from "./pages/LoginPage";
 import LoginLoad from "./pages/LoginLoad";
 import EscapePage from "./pages/EscapePage";
 import PicturePage from "./pages/PicturePage";
@@ -48,11 +47,6 @@ function App() {
           element: <MainPage />,
           errorElement: <ErrorPage />,
         },
-        // {
-        //   path: "/loginpage",
-        //   element: <LoginPage />,
-        //   errorElement: <ErrorPage />,
-        // },
         {
           path: "/login/oauth2/code/kakao",
           element: <LoginLoad />,

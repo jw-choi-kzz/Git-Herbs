@@ -61,12 +61,8 @@ const LogoutButton = styled(ButtonStyle)``;
 
 const UserDeleteButton = styled(ButtonStyle)``;
 
-
-//response.data: [{"userId" : int, "userNickname" : string, "userImgurl" : string, "rank" : int, "grass" : [{"date" : date, "count" : int},]}]}
-
 const MyPage = () => {
   useGlobalStyles();
-  // const [userData, setUserData] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
 

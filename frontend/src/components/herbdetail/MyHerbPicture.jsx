@@ -50,7 +50,6 @@ const StyledDateStamp = styled(Typography).attrs({
   && {
     font-size: 20px;
     color: #666;
-    //font-weight: normal;
     flex-grow: 1; // 왼쪽에 여백을 없애고 여유 공간을 모두 차지하도록 조정
   }
 `;
@@ -106,17 +105,16 @@ const MyHerbPicture = ({ herbId }) => {
   };
 
   const handleRegisterClick = () => {
-    console.log("등록하기");
     const config = configService.loginConfig();
 
-    // herbData가 배열로 제공되므로, 첫 번째 요소를 사용하여 imgUrl을 추출합니다.
+    // herbData가 배열로 제공되므로, 첫 번째 요소를 사용하여 imgUrl을 추출
     const imgUrl = herbData.length > 0 ? herbData[0].imgId : null;
 
     if (imgUrl) {
       // BoardRequestDto 객체 생성
       const boardRequest = { imgUrl };
 
-      // writeBoard 함수를 호출할 때 request에 boardRequest를 전달합니다.
+      // writeBoard 함수를 호출할 때 request에 boardRequest를 전달
       boardService
         .writeBoard(boardRequest, config)
         .then(() => {
@@ -131,7 +129,6 @@ const MyHerbPicture = ({ herbId }) => {
   };
 
   const handleConfirmClick = () => {
-    console.log("확인하러 가기 버튼을 누릅니다.");
     window.location.href = "https://j10a205.p.ssafy.io/board";
     handleCloseSnackbar();
   };

@@ -26,7 +26,8 @@ const BoardList = ({ filterOption }) => {
       let response = [];
       const loginconfig = await configService.loginConfig();
       
-      // filterOption에 따라 적절한 함수 호출
+      setBoardDatas([]);
+
       if (filterOption === '내가 쓴 글 모아보기') {
         response = await boardService.getMyBoard(loginconfig);
       } else if (filterOption === '좋아요한 글 모아보기') {

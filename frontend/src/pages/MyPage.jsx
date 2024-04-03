@@ -68,6 +68,7 @@ const MyPage = () => {
   useGlobalStyles();
   // const [userData, setUserData] = useState([]);
   const [userInfo, setUserInfo] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loginConfig = configService.loginConfig();
@@ -85,7 +86,6 @@ const MyPage = () => {
       })
   }, []);
 
-  const navigate = useNavigate();
   const navigateToBadgeList = () => {
     navigate("/mypage/badge");
   };
@@ -95,6 +95,7 @@ const MyPage = () => {
     if (loginConfig) {
       userServcie.logout(loginConfig);
       localStorage.clear();
+      navigate("/");
     } 
   }
 
@@ -104,6 +105,7 @@ const MyPage = () => {
     if (loginConfig) {
       userServcie.deleteUser(loginConfig);
       localStorage.clear();
+      navigate("/");
     } 
   }
 

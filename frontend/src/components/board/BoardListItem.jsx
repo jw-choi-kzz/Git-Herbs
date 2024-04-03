@@ -7,6 +7,9 @@ import boardService from "../../apis/board";
 import { configService } from "../../apis/config";
 import LoginModal from "../LoginModal";
 import useLoginStore from "../../store/useLoginStore";
+import Swal from 'sweetalert2';
+
+
 
 const CardContainer = styled.div`
   display: flex; // 이미지와 유저 섹션을 위한 flex 컨테이너
@@ -78,20 +81,48 @@ const StyledEmptyHeartIcon = styled(AiOutlineHeart)`
   margin-right: 4px;
 `;
 
+const Remove = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dee2e6;
+  font-size: 24px;
+  cursor: pointer;
+  &:hover {
+    color: #ff6b6b;
+  }
+  display: none;
+`;
+
+
 const BoardListItem = ({ data }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const { isLogin } = useLoginStore();
   const [likeCheck, setLikeCheck] = useState(data.likeCheck);
   const [likeCnt, setLikeCnt] = useState(data.likeCnt);
-
+  const [showTrashIcon, setShowTrashIcon] = useState(false);
   const { imgUrl, herbName, userNickname, userImgUrl, createAt } = data;
+  const [dede , setdede] = useState(false);
+  const [newNickname, setNewNickname] = useState("'삭제' 키워드를 입력하세요!");
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (userId && userId == data.memberId) {
+      setShowTrashIcon(true);
+    } else {
+      setShowTrashIcon(false);
+    }
+  }, []);
+
+  useEffect(() =>{
+
+  },[dede]);
 
   const favoriteHandler = () => {
     if (!isLogin) {
       setShowLoginModal(true);
       return;
     }
-
     const config = configService.loginConfig();
 
     boardService
@@ -107,11 +138,48 @@ const BoardListItem = ({ data }) => {
       .catch((error) => {
         console.error(error);
       });
+      
   };
 
-  // 사용자가 좋아요를 눌렀는지 여부에 따라 아이콘을 조정
+  const validateNickname = (value) => {
+    if (!value == "삭제") return '잘 못 입력하셨습니다';
+    return null;
+  };
+
+  const removeHandler = () => {
+
+    Swal.fire({
+      title: '게시글 삭제',
+      input: 'text',
+      inputValue: newNickname,
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소',
+      inputValidator: validateNickname
+    }).then((result) => {
+      if (result.value ==  "삭제") {
+        const config = configService.loginConfig();
+        boardService.deleteBoard(data.boardId, config)
+          .then((response) => {
+            Swal.fire('성공', '게시글이 성공적으로 삭제되었습니다.', 'success');
+            setdede(true);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else{
+        Swal.fire('오류', '잘 못 입력하셨습니다.', 'error');
+      }
+    });
+
+  }
+
+  // 사용자가 좋아요를 눌렀는지 여부에 따라 아이콘을 조정합니다.
   const HeartIcon = likeCheck ? StyledHeartIcon : StyledEmptyHeartIcon;
 
+  if (dede == true) {
+    return null;
+  }
   return (
     <CardContainer>
       <ImageContainer>
@@ -124,9 +192,11 @@ const BoardListItem = ({ data }) => {
           <Typography sx={{ p: 0, m: 0 }}>{createAt}</Typography>
         </UserInfo>
         <LikeCounter>
+        {showTrashIcon && <img  onClick={removeHandler} src="https://i.ibb.co/M5RgzQL/removebg-preview.png" alt="Trash Icon" style={{ width: '15px', height: '15px',marginRight: '10px' }} onError={(e) => e.target.style.display = 'none'} />}
           <HeartIcon liked={likeCheck} onClick={favoriteHandler} />
           <Typography sx={{ p: 0, m: 0 }}>{likeCnt}</Typography>
         </LikeCounter>
+
       </UserSection>
       {showLoginModal && (
         <LoginModal

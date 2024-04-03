@@ -25,7 +25,6 @@ const LayoutContainer = styled.div`
 const MainContent = styled.main`
   width: 100%;
   flex: 1;
-  height: calc(100dvh - 105px);
   overflow-y: auto;
 `;
 

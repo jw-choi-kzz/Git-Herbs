@@ -60,14 +60,14 @@ const PictureResultListItem = ({ item, index, saved, herbId, img, onItemClick })
     if (!saved) {
       const myHerbRequestDto = {
         herbId: item.herbId,
-        imgId: herbImgUrl,
+        imgId: img,
         similarity: item.similarity
       };
       herbsService.postHerb(myHerbRequestDto, configService.loginConfig());
     }
 
     const modalFunction = () => {
-      navigate(`/detail/${herbId}`);
+      navigate(`/detail/${herbId == undefined ? item.herbId : herbId}`);
     }
 
     const modalItem = {

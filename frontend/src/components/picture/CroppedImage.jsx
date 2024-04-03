@@ -88,9 +88,9 @@ const CroppedImage = ({ croppedImage, onGoBack }) => {
     const resizedFile = await resizeImageForMobile(file);
 
     const form = new FormData();
-    form.append("image", resizedFile);
+    form.append("img", resizedFile);
 
-    axios.post('https://j10a205.p.ssafy.io/api/v1/search/image', form, configService.loginConfig())
+    await axios.post('https://j10a205.p.ssafy.io/api/v1/search/image', form, configService.loginConfig())
       .then(({ data }) => {
         const responseData = data.data;
         navigate('/picture/result', { state: { responseData } })

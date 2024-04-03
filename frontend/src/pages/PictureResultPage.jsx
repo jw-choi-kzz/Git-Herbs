@@ -48,7 +48,7 @@ const PictureResultPage = () => {
   return (
     <>
       <ImageWrapper>
-        <Image src={data.pictureImg} alt="Main" />
+        <Image src={data.pictureUrl} alt="Main" />
       </ImageWrapper>
       <Container>
         <PictureResultList items={data.candidates} img={data.pictureImg} onItemClick={handleItemClick} />

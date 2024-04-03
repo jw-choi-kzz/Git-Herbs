@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import BedgeListItem from './BedgeListItem';
+import BadgeListItem from './BadgeListItem';
 import styled from 'styled-components';
 import { configService } from '../../apis/config';
-import { userServcie } from "../../apis/user";
+import { eventService } from "../../apis/event";
 
 const Title = styled.div`
   font-size: 20px;
@@ -38,27 +38,33 @@ const GridContainer = styled.div`
   padding: 20px; 
 `;
 
-const BedgeList = () => {
-  const [bedges, setBedges] = useState([]);
+const BadgeList = () => {
+  const [badges, setBadges] = useState([]);
+
   useEffect(()=>{
-    userServcie.getUserBedge(configService.loginConfig)
+    const loginConfig = configService.loginConfig();
+    eventService.getUserBadge(loginConfig)
     .then(response => {
-      setBedges(response);
+      console.log("뱃지 정보");
+      console.log(response);
+      setBadges(response || []);
     })
     .catch(error=>{
       console.error(error);
     })
-    
   },[]);
+
+  const acquiredBadgeCount = Array.isArray(badges) ? badges.filter(badge => badge.check).length : 0;
+  console.log(badges.length);
 
   return (
     <>
       <Title className='bold'>획득한 뱃지 목록</Title>
-      <Explain>전체 뱃지 8개 중 {bedges.filter(bedge => bedge.check).length}개를 획득했어요.</Explain>
+      <Explain>전체 뱃지 4개 중 {acquiredBadgeCount}개를 획득했어요.</Explain>
       <Container>
         <GridContainer>
-          {bedges.map((bedge) => (
-            <BedgeListItem key={bedge.badgeId} {...bedge} />
+          {badges.map((badge, index) => (
+            <BadgeListItem key={index} badge={badge} />
           ))}
         </GridContainer>
       </Container>
@@ -67,4 +73,4 @@ const BedgeList = () => {
   );
 };
 
-export default BedgeList;
+export default BadgeList;

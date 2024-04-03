@@ -13,15 +13,16 @@ const CardContainer = styled.div`
   flex-direction: column; // 세로 방향 정렬
   justify-content: space-between; // 유저 섹션을 하단에 배치
   border-radius: 12px;
-width: 80%;
+  width: 80%;
+  min-width: 300px;
   max-width: 336px;
   margin: 0 auto;
   overflow: hidden;
   margin-bottom: 25px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   min-height: 300px; // 이미지와 유저 섹션을 포함한 최소 높이 설정
-  
-@media (max-width: 336px) {
+
+  @media (max-width: 336px) {
     max-width: 100%; // 화면 폭이 500px 이하일 때는 최대 폭을 100%로 설정
   }
 `;
@@ -47,7 +48,6 @@ const UserSection = styled.div`
   background: #f4f4f4;
   border-top: 1px solid #dcdcdc; // 유저 섹션 상단에 선 추가
 `;
-
 
 const UserInfo = styled.div`
   margin-left: 8px;
@@ -115,7 +115,7 @@ const BoardListItem = ({ data }) => {
   return (
     <CardContainer>
       <ImageContainer>
-      <HerbImage src={imgUrl} alt={herbName} />
+        <HerbImage src={imgUrl} alt={herbName} />
       </ImageContainer>
       <UserSection>
         <UserAvatar src={userImgUrl} alt={userNickname} />

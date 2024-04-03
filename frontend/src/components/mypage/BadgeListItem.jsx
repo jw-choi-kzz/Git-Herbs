@@ -7,19 +7,18 @@ const MySwal = withReactContent(Swal);
 const BadgeImage = styled.img`
   width: auto; 
   height: 60px; 
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)); 
+  // filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)); 
   cursor: pointer;
-  ${props => !props.check && css`
-    opacity: 0.4; // 획득하지 않은 뱃지의 투명도 조정
-  `}
+  opacity: ${(props) => (props.check ? '1' : '0.4')};
 `;
 
-const BedgeListItem = ( {badgeTitle, badgeInfo, check} ) => {
+const BadgeListItem = ( {badge} ) => {
+  console.log(badge);
   const handleClick = () => {
     MySwal.fire({
-      title: `<span style="color: #ffffff;">${badgeTitle}</span>`,
-      html: `<span style="color: #ffffff;">획득 조건 - ${badgeInfo}</span>`,
-      imageUrl: '/bedge.png',
+      title: `<span style="color: #ffffff;">${badge.name}</span>`,
+      html: `<span style="color: #ffffff;">획득 조건 - ${badge.details}</span>`,
+      imageUrl: '/badge.png',
       imageWidth: 120,
       imageHeight: 120,
       imageAlt: '뱃지 아이콘',
@@ -27,13 +26,13 @@ const BedgeListItem = ( {badgeTitle, badgeInfo, check} ) => {
       width: '320',
       padding: '10',
       confirmButtonText: '닫기',
-      confirmButtonColor: '#407700',
+      confirmButtonColor: '#407700', 
       customClass: {
         confirmButton: 'custom-swal-button',
         popup: 'custom-swal-popup',
         title: 'custom-swal-title'
       },
-      imageClass: `custom-swal-image${check ? '' : '-unchecked'}`
+      imageClass: `custom-swal-image${badge.check ? '' : '-unchecked'}`
     });
 
     // 커스텀 스타일 정의
@@ -61,9 +60,9 @@ const BedgeListItem = ( {badgeTitle, badgeInfo, check} ) => {
   };
   return (
     <>
-      <BadgeImage src='/bedge.png' alt='Badge' onClick={handleClick} check={check}/>
+      <BadgeImage src='/badge.png' alt='Badge' onClick={handleClick} check={badge.check}/>
     </>
   );
 };
 
-export default BedgeListItem;
+export default BadgeListItem;

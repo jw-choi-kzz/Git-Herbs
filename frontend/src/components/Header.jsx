@@ -8,6 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LoginModal from "./LoginModal";
+import MySnackbar from "./MySnackbar"; 
 
 const theme = createTheme({
   components: {

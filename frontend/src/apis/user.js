@@ -25,7 +25,7 @@ export const userServcie = {
      * @returns [ {bedgeId, name(뱃지이름), details(뱃지 설명), createdId} ]
      */
     getUserBedge : (loginConfig) =>{
-        return axios.get(`/user/bedge`,loginConfig)
+        return axios.get(`/event/bedge`,loginConfig)
         .then(response => {
             return response.data.data;
         })
@@ -65,5 +65,26 @@ export const userServcie = {
         });
     },
     
+    logout: (loginConfig) => {
+        return axios.delete(`/user/logout`, loginConfig)
+        .then(response => {
+            console.log("로그아웃 완료");
+            return response;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    },
+
+    deleteUser: (loginConfig) => {
+        return axios.delete(`/user`, loginConfig)
+        .then(response => {
+            console.log("회원탈퇴 완료");
+            return response;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
 
 }

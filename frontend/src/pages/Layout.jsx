@@ -51,7 +51,7 @@ const FooterContainer = styled.footer`
   left: 0;
   right: 0;
   z-index: 1;
-  height: 150px; /* FooterContainer의 높이 설정 */
+  height: 50px; /* FooterContainer의 높이 설정 */
 `;
 
 // 레이아웃 컴포넌트

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@mui/joy/Typography";
 import Button from "@mui/joy/Button";
@@ -13,7 +13,7 @@ const CardContainer = styled.div`
   flex-direction: column; // 세로 방향 정렬
   justify-content: space-between; // 유저 섹션을 하단에 배치
   border-radius: 12px;
-  width: 80%;
+width: 80%;
   max-width: 336px;
   margin: 0 auto;
   overflow: hidden;
@@ -21,7 +21,7 @@ const CardContainer = styled.div`
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   min-height: 300px; // 이미지와 유저 섹션을 포함한 최소 높이 설정
   
-  @media (max-width: 336px) {
+@media (max-width: 336px) {
     max-width: 100%; // 화면 폭이 500px 이하일 때는 최대 폭을 100%로 설정
   }
 `;
@@ -98,7 +98,6 @@ const BoardListItem = ({ data }) => {
       .putFavorite(data.boardId, config)
       .then((response) => {
         setLikeCheck(response.flag);
-        console.log(response.flag);
         if (response.flag) {
           setLikeCnt(likeCnt + 1); // likeCnt를 증가시킴
         } else {

@@ -65,12 +65,12 @@ const CroppedImage = ({ croppedImage, onGoBack }) => {
   const resizeImageForMobile = async (file) => {
     const originalImage = await createImageBitmap(file);
     const originalWidth = originalImage.width;
-    if (originalWidth <= 750) {
+    const maxWidth = 448;
+    if (originalWidth <= maxWidth) {
       return file;
     }
-    const maxWidth = 750;
+    
     const options = {
-      maxSizeMB: 1,
       maxWIdthOrHeight: maxWidth,
       useWebWorker: true
     }

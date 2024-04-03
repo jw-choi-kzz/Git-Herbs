@@ -1,14 +1,16 @@
-
 # 🍀 GIT HERBS - 안전한 약초 채집을 위한 나만의 약초 저장소
 SSAFY 10기 2학기 특화 프로젝트 - 행복만땅 (팀 A205) 
 
-![로고](산출물/docs/asset/logo.png)
+
+<p align="center">
+  <img src="산출물/docs/asset/logo.png" width="400">
+</p>
 
 <br><br>
 
 [//]: # (<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"> <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white"> <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"> )
 
-![Github](https://img.shields.io/badge/react-2.6.11-%234FC08D?style=plastic&logo=React) ![Github](https://img.shields.io/badge/spring_boot-3.2.3-%236DB33F?style=plastic&logo=Spring) ![Github](https://img.shields.io/badge/MySQL-8.0-%234479A1?style=plastic&logo=mysql) ![Github](https://img.shields.io/badge/Redis-3.0-%23DC382D?style=plastic&logo=Redis)
+![Github](https://img.shields.io/badge/react-2.6.11-61DAFB?style=plastic&logo=React) ![Github](https://img.shields.io/badge/spring_boot-3.2.3-%236DB33F?style=plastic&logo=Spring) ![Github](https://img.shields.io/badge/MySQL-8.0-%234479A1?style=plastic&logo=mysql) ![Github](https://img.shields.io/badge/Redis-7.2.4-%23DC382D?style=plastic&logo=Redis) ![Github](https://img.shields.io/badge/Fastapi-0.11.0-009688?style=plastic&logo=Fastapi) ![Github](https://img.shields.io/badge/Tensorflow-2.15.0-FF6F00?style=plastic&logo=Tensorflow) ![Github](https://img.shields.io/badge/Docker-25.0.4-2496ED?style=plastic&logo=docker)
 
 
 ## 🌱 [GIT HERBS URL](https://j10a205.p.ssafy.io/)
@@ -108,7 +110,9 @@ SSAFY 10기 2학기 특화 프로젝트 - 행복만땅 (팀 A205)
 
 
 ## 🧰 주요 기술
+
 - 🛠️ **Backend**
+  - Intellij
   - JAVA 17
   - Springboot 3.2.3
   - Spring Data JPA 3.2.3
@@ -122,6 +126,7 @@ SSAFY 10기 2학기 특화 프로젝트 - 행복만땅 (팀 A205)
 
 
 - 🛠️ **Frontend**
+  - Vscode 
   - HTML5
   - CSS
   - JS
@@ -132,6 +137,18 @@ SSAFY 10기 2학기 특화 프로젝트 - 행복만땅 (팀 A205)
   - React-Dom 18.2.0
   - Zustand 4.5.2
   - Styled-Components 6.1.8
+
+
+- 🛠️ **Data**
+  - Python(3.11)
+  - FastAPI(0.110.0)
+  - uvicorn(0.29.0) 
+  - tensorflow(2.15.0) 
+  - konply(0.6.0) 
+  - pandas(2.2.1) 
+  - numpy(1.26.4) 
+  - scikit-learn(1.12.0) 
+  - jupyter hub(4.0.2) 
 
 
 - 🛠️ **Infra**
@@ -306,7 +323,7 @@ SSAFY 10기 2학기 특화 프로젝트 - 행복만땅 (팀 A205)
             <sub><b>팀원 강태연</b></sub>
         </a>
         <br />
-        <div>BE, INFRA</div>
+        <div>BE, FE ,INFRA</div>
       </td>
       <td align="center">
         <a href="https://github.com/namhyemi">
@@ -315,7 +332,7 @@ SSAFY 10기 2학기 특화 프로젝트 - 행복만땅 (팀 A205)
             <sub><b>팀원 남혜미</b></sub>
         </a>
         <br />
-        <div>BE</div>
+        <div>BE, AI</div>
       </td>
     </tr>
   </tbody>

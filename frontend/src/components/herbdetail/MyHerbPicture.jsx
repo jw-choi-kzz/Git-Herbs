@@ -76,7 +76,6 @@ const MyHerbPicture = ({ herbId }) => {
       response = await herbsService.getMyHerbImg(herbId, loginconfig);
 
       setherbData(response);
-      // console.log(herbData);
     } catch (error) {
       console.log(error);
     }
@@ -141,13 +140,6 @@ const MyHerbPicture = ({ herbId }) => {
     return <Typography>No Herb ID provided.</Typography>;
   }
 
-  // herbId에 해당하는 데이터만 필터링
-  const filteredHerbPictures = herbData.filter(
-    (herbData) => herbData.myHerbId === parseInt(herbId, 10)
-  );
-  if (!filteredHerbPictures.length) {
-    return <Typography>해당 약초에 등록한 사진이 없습니다.</Typography>;
-  }
 
   return (
     <>

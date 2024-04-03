@@ -15,13 +15,13 @@ const EmptyMessage = styled.p`
 `;
 
 const PictureResultList = ({ items, img, onItemClick }) => {
-  const [state, setState] = useState(false);
+  const [count, setCount] = useState(0);
   const [herbId, setHerbId] = useState();
   const clicked = (data) => {
-    setState(true)
-    if (!state) {
+    if (count === 0) {
       setHerbId(data)
     }
+    setCount(count + 1)
     onItemClick();
   }
   if (!items || items.length === 0) {
@@ -31,7 +31,7 @@ const PictureResultList = ({ items, img, onItemClick }) => {
     <ListWrapper className='bold'>
       <h2>사진 판별 결과</h2>
       {items.map((item, index) => (
-        <PictureResultListItem key={index} item={item} index={index + 1} saved={state} herbId={herbId} img={img} onItemClick={clicked} />
+        <PictureResultListItem key={index} item={item} index={index + 1} count={count} herbId={herbId} img={img} onItemClick={clicked} />
       ))}
     </ListWrapper>
   );

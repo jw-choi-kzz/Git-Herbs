@@ -2,6 +2,7 @@ package com.happiness.githerbs.domain.member.controller;
 
 import java.io.IOException;
 
+import org.springframework.boot.web.server.Cookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -97,7 +98,8 @@ public class MemberController {
 		log.info(dto.toString());
 		var result = service.tokenService(dto);
 		// response에 access jwt, refresh jwt, member 정보 담고, device-id set-cookie 설정하기
-		ResponseCookie cookie = ResponseCookie.from("device-id", result.deviceId()).httpOnly(true).maxAge(60 * 60 * 24 * 30).build();
+		ResponseCookie cookie = ResponseCookie.from("device-id", result.deviceId()).httpOnly(true).maxAge(60 * 60 * 24 * 30).sameSite(
+			Cookie.SameSite.NONE.attributeValue()).build();
 		return ResponseEntity.ok()
 			.header(HttpHeaders.SET_COOKIE, cookie.toString())
 			.body(new SuccessResponse<>(HttpStatus.OK, result));

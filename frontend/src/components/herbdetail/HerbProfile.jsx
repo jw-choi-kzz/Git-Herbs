@@ -29,6 +29,7 @@ const HerbScientificName = styled.h2`
 const BookmarkIcon = styled.div`
   color: #f49349;
   font-size: 30px;
+  margin-left: auto;
 `;
 
 const HerbProfile = ({ data }) => {
@@ -41,6 +42,7 @@ const HerbProfile = ({ data }) => {
   }, [data]);
 
   const getBookmark = async () => {
+    if(isLogin){
     const config = configService.loginConfig();
     herbsService
       .getBookmark(data.herbId, config)
@@ -49,7 +51,10 @@ const HerbProfile = ({ data }) => {
       })
       .catch((error) => {
         console.log(error);
-      });
+      });} else{
+        setIsBookmarked(0);
+      }
+
   }; // getBookmark 함수의 중괄호를 닫음
 
   const removeBookmark = async () => {
@@ -102,6 +107,7 @@ const HerbProfile = ({ data }) => {
       <BookmarkIcon onClick={handleClick}>
         {isBookmarked ? <PiStarFill /> : <PiStarBold />}
       </BookmarkIcon>
+      <div>
       {showLoginModal && (
         <LoginModal
           isOpen={showLoginModal}
@@ -109,6 +115,7 @@ const HerbProfile = ({ data }) => {
           redirectUri={`/detail/${data.herbId}`}
         />
       )}
+      </div>
     </Container>
   );
 };

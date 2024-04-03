@@ -82,7 +82,7 @@ public class MemberController {
 
 	@PostMapping("/reissue")
 	@Operation(summary = "토큰재발급", description = "토큰 갱신")
-	public ResponseEntity<SuccessResponse<ReissueTokenResponseDto>> reissueController(@RequestHeader("Authorization") String accessToken, @RequestHeader("device-id") String deviceId, @RequestHeader("refresh-token") String refreshToken) {
+	public ResponseEntity<SuccessResponse<ReissueTokenResponseDto>> reissueController(@RequestHeader("Authorization") String accessToken, @CookieValue("device-id") String deviceId, @RequestHeader("refresh-token") String refreshToken) {
 		var entity = AuthorizationTokenDto.builder().accessToken(accessToken).refreshToken(refreshToken).build();
 		var result = service.reissueService(deviceId, entity);
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, result));

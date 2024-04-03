@@ -105,6 +105,7 @@ public class MemberController {
 	@PutMapping("/nickname")
 	@Operation(summary = "닉네임 수정", description = "닉네임 수정")
 	public ResponseEntity<SuccessResponse<UserInfoResponseDto>> updateNicknameController(@RequestHeader("Authorization") String accessToken, @RequestBody String nickname){
+		nickname = nickname.replaceAll("\"", "");
 		var result = service.nicknameService(accessToken, nickname);
 		return ResponseEntity.ok(new SuccessResponse<>(HttpStatus.OK, result));
 	}

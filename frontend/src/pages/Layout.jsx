@@ -45,7 +45,7 @@ const ModalOverlay = styled.div`
   overflow: auto;
 `;
 
-const FooterContainer = styled.div`
+const FooterContainer = styled.footer`
   position: absolute;
   bottom: 0;
   left: 0;

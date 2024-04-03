@@ -35,21 +35,49 @@ const IconAndTitle = styled.div`
   display: flex;
 `;
 
+const Buttons = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+`;
+
+const ButtonStyle = styled.button`
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #979797;
+  border: none;
+  border-radius: 0; 
+  font-size: 12px;
+  margin: 0;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #979797; /* Lighter shade for hover state */
+  }
+`;
+
+const LogoutButton = styled(ButtonStyle)``;
+
+const UserDeleteButton = styled(ButtonStyle)``;
+
+
 //response.data: [{"userId" : int, "userNickname" : string, "userImgurl" : string, "rank" : int, "grass" : [{"date" : date, "count" : int},]}]}
 
 const MyPage = () => {
   useGlobalStyles();
   // const [userData, setUserData] = useState([]);
   const [userInfo, setUserInfo] = useState({});
-  const [userGrass, setUserGrass] = useState([]);
 
   useEffect(() => {
-    userServcie.getUserInfo(configService.loginConfig)
+    const loginConfig = configService.loginConfig();
+    userServcie.getUserInfo(loginConfig)
       .then((response) => {
         setUserInfo({
           ...response,
           userGrass: response.grass,
         });
+        console.log(userInfo);
       })
       .catch((error) => {
         setError("사용자 정보를 불러오는 데 실패했습니다.");
@@ -62,12 +90,28 @@ const MyPage = () => {
     navigate("/mypage/bedge");
   };
 
+  const handleLogout = () => {
+    const loginConfig = configService.loginConfig();
+    if (loginConfig) {
+      userServcie.logout(loginConfig);
+    } 
+  }
+
+  
+  const handleDelete = () => {
+    const loginConfig = configService.loginConfig();
+    if (loginConfig) {
+      userServcie.deleteUser(loginConfig);
+    } 
+  }
+
+
   return (
     <div style={{ justifyContent: "center" }}>
       <Container>
         <MyProfile
-          nickname={userInfo.userNickname}
-          profileImg={userInfo.userImgurl}
+          nickname={userInfo.nickname}
+          profileImg={userInfo.img_id}
         />
         <br />
         <MenuTitle className="bold">
@@ -86,6 +130,10 @@ const MyPage = () => {
           <Explain>활동을 통해 얻은 뱃지를 확인해보세요!</Explain>
         </NaviContainer>
       </Container>
+      <Buttons>
+      <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+      <UserDeleteButton onClick={handleDelete}>회원탈퇴</UserDeleteButton>
+      </Buttons>
     </div>
   );
 };

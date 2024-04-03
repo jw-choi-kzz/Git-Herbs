@@ -8,6 +8,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LoginModal from "./LoginModal";
+import MySnackbar from "./MySnackbar"; 
 
 const theme = createTheme({
   components: {
@@ -46,22 +47,23 @@ function Header() {
 
     const handleClick = async () => {
       const token = localStorage.getItem("accessToken");
-    
+  
+      // 만약 이미 로그인이 되어 있으면 마이페이지로 이동
       if (token) {
         console.log("로그인됨");
-        navigate('/mypage');
-      } else{
-          console.log("로그인안됨");
-          setShowLoginModal(true);
-        return(
-          <LoginModal
-          isOpen={showLoginModal}
-          onClose={() => setShowLoginModal(false)}
-          redirectUri={'/mypage'}
-        />
-        );
+        navigate("/mypage");
+      } else {
+        // 로그인이 되어 있지 않고, 로그인 모달이 이미 표시 중이면 아무 것도 하지 않음
+        if (showLoginModal) {
+          console.log("로그인 모달이 이미 열려있음");
+          return;
+        }
+        // 로그인이 되어 있지 않고, 로그인 모달이 표시되지 않은 경우 로그인 모달을 표시
+        console.log("로그인안됨");
+        setShowLoginModal(true);
       }
     };
+
     return (
       <ThemeProvider theme={theme}>
           <AppBar position="static">
@@ -96,6 +98,13 @@ function Header() {
               </Box>
             </Toolbar>
           </AppBar>
+          {showLoginModal && (
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          redirectUri={"/mypage"}
+        />
+      )}
       </ThemeProvider>
     );
 }

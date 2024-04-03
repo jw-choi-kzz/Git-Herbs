@@ -84,9 +84,9 @@ const icons = {
   3: "/grass/step3.png",
 };
 
-const MonthGrass = ({ grassList }) => {
+const MonthGrass = ({ grassList = [] }) => {
   // const [value] = useState(new Date());
-
+  console.log(grassList);
   // tileContent 함수 내에서 모든 날짜에 대해 icons[0] 아이콘을 보여주도록 설정
   const tileContent = ({ date, view }) => {
     if (view === "month") {
@@ -99,11 +99,11 @@ const MonthGrass = ({ grassList }) => {
         let iconIndex;
         if (currentGrass.count === 0) {
           iconIndex = 0;
-        } else if (currentGrass.count >= 1 && currentGrass.count <= 2) {
+        } else if (currentGrass.count === 1) {
           iconIndex = 1;
-        } else if (currentGrass.count >= 3 && currentGrass.count <= 4) {
+        } else if (currentGrass.count === 2) {
           iconIndex = 2;
-        } else if (currentGrass.count >= 5) {
+        } else if (currentGrass.count >= 3) {
           iconIndex = 3;
         }
 

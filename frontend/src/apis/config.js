@@ -50,7 +50,9 @@ export const configService = {
     headers: {
       Authorization: 'KakaoAK 8a18ae99d48d2eee9185b60c07d99e85'
     }
-  })
+  }),
+
+  
 
 
 }

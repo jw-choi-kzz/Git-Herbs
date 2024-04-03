@@ -94,6 +94,7 @@ const MyPage = () => {
     const loginConfig = configService.loginConfig();
     if (loginConfig) {
       userServcie.logout(loginConfig);
+      localStorage.clear();
     } 
   }
 
@@ -102,6 +103,7 @@ const MyPage = () => {
     const loginConfig = configService.loginConfig();
     if (loginConfig) {
       userServcie.deleteUser(loginConfig);
+      localStorage.clear();
     } 
   }
 

@@ -51,7 +51,7 @@ const PictureResultPage = () => {
         <Image src={data.pictureUrl} alt="Main" />
       </ImageWrapper>
       <Container>
-        <PictureResultList items={data.candidates} img={data.pictureImg} onItemClick={handleItemClick} />
+        <PictureResultList items={data.candidates} img={data.pictureUrl} onItemClick={handleItemClick} />
       </Container>
     </>
   );

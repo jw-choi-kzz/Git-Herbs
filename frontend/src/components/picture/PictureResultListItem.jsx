@@ -60,7 +60,7 @@ const PictureResultListItem = ({ item, index, saved, herbId, img, onItemClick })
     if (!saved) {
       const myHerbRequestDto = {
         herbId: item.herbId,
-        imgId: herbImgUrl,
+        imgId: img,
         similarity: item.similarity
       };
       herbsService.postHerb(myHerbRequestDto, configService.loginConfig());

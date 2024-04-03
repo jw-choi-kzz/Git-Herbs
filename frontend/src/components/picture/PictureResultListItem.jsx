@@ -60,7 +60,7 @@ const PictureResultListItem = ({ item, index, saved, herbId, img, onItemClick })
     if (!saved) {
       const myHerbRequestDto = {
         herbId: item.herbId,
-        imgId: img,
+        imgId: herbImgUrl,
         similarity: item.similarity
       };
       herbsService.postHerb(myHerbRequestDto, configService.loginConfig());
@@ -83,7 +83,7 @@ const PictureResultListItem = ({ item, index, saved, herbId, img, onItemClick })
   return (
     <ListItemWrapper>
       <ItemNumber>{index}</ItemNumber>
-      <ItemImage src={item.herbImg} alt={item.herbName} />
+      <ItemImage src={item.herbImgUrl} alt={item.herbName} />
       <ItemContent>
         <ItemName>{item.herbName}</ItemName>
         <ItemSimilarity>{item.similarity}</ItemSimilarity>

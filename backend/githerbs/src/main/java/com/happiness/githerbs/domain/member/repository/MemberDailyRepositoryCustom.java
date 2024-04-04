@@ -14,4 +14,6 @@ public interface MemberDailyRepositoryCustom {
 	void updateDailyQuiz(Integer userId, boolean correct);
 	void updateDailyBookmark(Integer userId);
 	void updateDailyAnalysis(Integer userId);
+	void updateDailyBoard(Integer userId);
+	void updateDailyFavorite(Integer userId);
 }

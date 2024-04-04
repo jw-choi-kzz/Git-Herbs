@@ -1,5 +1,6 @@
 package com.happiness.githerbs.domain.board.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +14,8 @@ import com.happiness.githerbs.domain.board.entity.Board;
 import com.happiness.githerbs.domain.board.entity.Favorite;
 import com.happiness.githerbs.domain.board.repository.BoardRepository;
 import com.happiness.githerbs.domain.member.entity.Member;
+import com.happiness.githerbs.domain.member.entity.MemberDaily;
+import com.happiness.githerbs.domain.member.repository.MemberDailyRepository;
 import com.happiness.githerbs.domain.member.repository.MemberRepository;
 import com.happiness.githerbs.global.common.code.ErrorCode;
 import com.happiness.githerbs.global.common.exception.BaseException;
@@ -30,6 +33,7 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 	private final FavoriteService favoriteService;
 	private final MemberRepository memberRepository;
+	private final MemberDailyRepository memberDailyRepository;
 	//해당 하는 멤버 찾기
 	public Member findMember(Integer memberId){
 		return memberRepository.findById(memberId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND));
@@ -41,6 +45,27 @@ public class BoardService {
 	public BoardResponseDto writeBoard(Integer memberId, BoardRequestDto boardRequestDto) {
 		boardRequestDto.setMemberId(memberId);
 		Board newBoard = boardRepository.save(toEntity(boardRequestDto));
+
+		var byMemberIdAndDate = memberDailyRepository.findByMemberIdAndDate(memberId,
+			LocalDate.now());
+		MemberDaily memberDaily;
+		if (byMemberIdAndDate.isPresent()) {
+			memberDaily = byMemberIdAndDate.get();
+		} else {
+			memberDaily = MemberDaily
+				.builder()
+				.member(memberRepository.findById(memberId).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND)))
+				.date(LocalDate.now())
+				.build();
+			memberDailyRepository.saveAndFlush(memberDaily);
+		}
+		if (!memberDaily.getDate().equals(LocalDate.now())) {
+			throw new BaseException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		if (!memberDaily.isBoard()) {
+			memberDailyRepository.updateDailyBoard(memberId);
+		}
+
 		return new BoardResponseDto().entityTo(newBoard);
 	}
 

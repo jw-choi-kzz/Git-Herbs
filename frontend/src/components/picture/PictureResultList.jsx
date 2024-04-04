@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PictureResultListItem from './PictureResultListItem';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 const ListWrapper = styled.ul`
   list-style: none;
@@ -15,10 +15,12 @@ const EmptyMessage = styled.p`
 `;
 
 const PictureResultList = ({ items, img, onItemClick }) => {
-  console.log(items);
+
+
   const [count, setCount] = useState(0);
   const [herbId, setHerbId] = useState();
   const [showWarning, setShowWarning] = useState(false);
+
 
   const clicked = (data) => {
     if (count === 0) {
@@ -28,12 +30,17 @@ const PictureResultList = ({ items, img, onItemClick }) => {
     onItemClick();
   }
 
-  for (let item of items) {
-    if (isToxicHerb(item.herbName)) {
-      setShowWarning(true);
-      break;
+  useEffect(() => {
+    // items 배열을 순회하면서 독초가 있는지 확인
+    for (let item of items) {
+      if (isToxicHerb(item.herbName)) {
+        setShowWarning(true);
+        return; // 독초를 발견하면 바로 함수 종료
+      }
     }
-  }
+    // 독초가 없으면 경고 표시를 해제합니다.
+    setShowWarning(false);
+  }, [items]); // items 배열이 변경될 때마다 useEffect가 실행됩니다.
 
   // 주어진 이름이 독초인지 확인하는 함수
   function isToxicHerb(herbName) {
@@ -42,14 +49,13 @@ const PictureResultList = ({ items, img, onItemClick }) => {
   }
 
 
-
   if (!items || items.length === 0) {
     return <EmptyMessage>검색 결과가 없습니다.</EmptyMessage>;
   }
   return (
     <ListWrapper className='bold'>
       <h2>사진 판별 결과</h2>
-      {showWarning && <div><p><strong>독초일 수도 있으니 조심하세요!!</strong></p></div>}
+      {showWarning && <div style={{ marginBottom: '30px', color: 'red' }}><strong>독초일 수도 있으니 조심하세요!!</strong></div>}
       {items.map((item, index) => (
         <PictureResultListItem key={index} item={item} index={index + 1} count={count} herbId={herbId} img={img} onItemClick={clicked} />
       ))}

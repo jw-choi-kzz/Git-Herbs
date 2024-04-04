@@ -70,6 +70,9 @@ export const userServcie = {
         .catch(error => {
             console.log(error);
         })
+    },
+    reissueToken: (reissueConfig) => {
+        return axios.post('/user/reissue', {}, reissueConfig);
     }
 
 }

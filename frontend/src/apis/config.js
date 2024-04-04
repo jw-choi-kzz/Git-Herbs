@@ -22,7 +22,7 @@ export const configService = {
       }
     },
   
-  mulitconfig : () =>{
+    mulitconfig : () =>{
 
           // 로컬스토리지에서 token 값을 가져옴
           const token = localStorage.getItem('accessToken');
@@ -40,7 +40,7 @@ export const configService = {
             // token 값이 없으면 빈 객체 반환
             return {};
           }
-  } ,   
+    } ,   
 
 
   /**
@@ -51,8 +51,17 @@ export const configService = {
       Authorization: 'KakaoAK 8a18ae99d48d2eee9185b60c07d99e85'
     }
   }),
-
-  
+  reissueconfig: () => {
+    const access = localStorage.getItem('accessToken');
+    const refresh = localStorage.getItem('refreshToken');
+    return {
+      headers: {
+        Authorization: `Bearer ${access}`,
+        'refresh-token': refresh
+      },
+      withCredentials: true
+    }
+  }
 
 
 }

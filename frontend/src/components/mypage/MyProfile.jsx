@@ -43,6 +43,7 @@ const ModifyImgButton = styled.button`
 const NicknameText = styled.span`
   // margin-right: 8px;
   font-size: 16px;
+  font-weight: 550;
 `;
 
 const RankingText = styled.div`
@@ -64,7 +65,7 @@ const NicknameAndEditContainer = styled.div`
   gap: 8px 0;
 `;
 
-const MyProfile = ({ nickname, profileImg }) => {
+const MyProfile = ({ nickname, profileImg, ranking }) => {
   const [newNickname, setNewNickname] = useState(nickname);
   const [previewImage, setPreviewImage] = useState(profileImg);
   const imgRef = useRef();
@@ -169,8 +170,9 @@ const MyProfile = ({ nickname, profileImg }) => {
         <ModifyImgButton onClick={() => imgRef.current.click()}><BiEdit size="1.5em" /></ModifyImgButton>
       </ProfileImgContainer>
       <NicknameAndEditContainer>
-        <NicknameText className='medium'>{newNickname}</NicknameText>
+        <NicknameText>{newNickname}</NicknameText>
         <BiEdit onClick={editNickname} size="1.5em" />
+        <RankingText> 랭킹 {ranking} 등 </RankingText>
       </NicknameAndEditContainer>
     </ProfileContainer>
     </>

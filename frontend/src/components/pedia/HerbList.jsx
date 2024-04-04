@@ -14,7 +14,6 @@ const ListContainer = styled.div`
 
 const HerbList = ({ herbsData }) => {
   return (
-    // 리스트 컨테이너 안에서 스크롤바 안보이게 설정한 것
     <ListContainer>
       {herbsData.map((herb) => (
         <HerbListItem key={herb.herbId} herb={herb} />

@@ -31,9 +31,7 @@ const SectionHeader = styled.div.attrs({
   className: "bold",
 })`
   font-size: 18px;
-  //font-family: "SpoqaHanSansNeo", sans-serif;
-  color: #305f72; 
-  //font-weight: 500;
+  color: #376933; 
   margin-bottom: 4px;
   margin-left: 5px;
   margin-top: 5px;
@@ -42,7 +40,7 @@ const SectionHeader = styled.div.attrs({
 const SectionSubHeader = styled.div.attrs({
   className: "medium",
 })`
-  font-size: 10px;
+  font-size: 12px;
   color: #888;
   margin-bottom: 0px;
   margin-right: 5px;

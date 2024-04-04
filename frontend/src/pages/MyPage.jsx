@@ -111,6 +111,7 @@ const MyPage = () => {
         <MyProfile
           nickname={userInfo.nickname}
           profileImg={userInfo.img_id}
+          ranking={userInfo.rank}
         />
         <br />
         <MenuTitle className="bold">

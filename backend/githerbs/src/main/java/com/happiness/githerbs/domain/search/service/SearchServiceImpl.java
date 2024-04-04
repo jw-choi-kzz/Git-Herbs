@@ -140,6 +140,7 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
+	@Transactional
 	public SearchImageResponseDto searchImage(String accessToken, MultipartFile img) throws IOException {
 		// validate token
 		var memberInfo = jwt.validateToken(accessToken);

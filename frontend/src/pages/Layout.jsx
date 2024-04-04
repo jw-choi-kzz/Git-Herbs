@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
@@ -15,19 +15,26 @@ import LoginModal from "../components/LoginModal";
 const LayoutContainer = styled.div`
   max-width: 375px;
   width: 100%;
-  height: 100vh;
   margin: 0 auto;
   background-color: #f5f5f5;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+
+  ${({ $isWhale }) =>
+    $isWhale
+      ? css`
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+        `
+      : css`
+          height: 100%;
+        `}
 `;
 
 const MainContent = styled.main`
   width: 100%;
   flex: 1;
+  height: calc(100dvh - 105px);
   overflow-y: auto;
-  padding-bottom: 150px; /* FooterContainer의 높이만큼 padding 추가 */
 `;
 
 const ModalOverlay = styled.div`
@@ -42,17 +49,26 @@ const ModalOverlay = styled.div`
   justify-content: flex-end;
   align-items: center;
   z-index: 999;
-  overflow: auto;
+
+  ${({ $isWhale }) =>
+    $isWhale
+      ? css`
+          overflow: auto;
+        `
+      : css`
+          overflow: hidden;
+        `}
 `;
 
-const FooterContainer = styled.footer`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+const FooterContainer = styled.div`
+  position: relative;
   z-index: 1;
-  height: 60px; /* FooterContainer의 높이 설정 */
 `;
+
+const isWhaleBrowser = () => {
+  const userAgent = typeof window.navigator === "undefined" ? "" : navigator.userAgent;
+  return userAgent.includes("Whale/1.0.0.0");
+};
 
 // 레이아웃 컴포넌트
 const Layout = () => {
@@ -61,6 +77,15 @@ const Layout = () => {
   const { isModalVisible, modalContent, selectedItem, openModal, closeModal } = useModalStore();
 
   const [selectedImage, setSelectedImage] = useState();
+
+  const [isWhale, setIsWhale] = useState(false);
+
+  useEffect(() => {
+    const checkWhale = () => {
+      setIsWhale(isWhaleBrowser());
+    };
+    checkWhale();
+  }, []);
 
   const handlePictureButtonClick = () => {
     openModal("imagePicker");
@@ -104,7 +129,7 @@ const Layout = () => {
 
   return (
     <>
-      <LayoutContainer>
+      <LayoutContainer $isWhale={isWhale}>
         <Header />
         <MainContent>
           <Outlet />

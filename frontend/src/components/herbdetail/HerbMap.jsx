@@ -53,32 +53,26 @@ const NaverMap = ({ data }) => {
   };
 
   const getColor = (count) => {
-    if (count < 1000) {
-      return "#e6b8af";
-    } else if (count < 2000) {
-      return "#f4cccc";
+    if (count < 1500) {
+      return "#6a4c93";
     } else if (count < 3000) {
-      return "#fce5cd";
-    } else if (count < 4000) {
-      return "#fff2cc";
-    } else if (count < 5000) {
-      return "#d9ead3";
+      return "#1982c4";
+    } else if (count < 4500) {
+      return "#8ac926";
     } else if (count < 6000) {
-      return "#d0e0e3";
+      return "#ffca3a";
     } else {
-      return "#c9daf8";
+      return "#ff595e";
     }
   };
 
   const renderLegend = () => {
     const ranges = [
-      { color: "#e6b8af", range: "1000" },
-      { color: "#f4cccc", range: "2000" },
-      { color: "#fce5cd", range: "3000" },
-      { color: "#fff2cc", range: "4000" },
-      { color: "#d9ead3", range: "5000" },
-      { color: "#d0e0e3", range: "6000" },
-      { color: "#c9daf8", range: "6000+" },
+      { color: "#6a4c93", range: "1500" },
+      { color: "#1982c4", range: "3000" },
+      { color: "#8ac926", range: "4500" },
+      { color: "#ffca3a", range: "6000" },
+      { color: "#ff595e", range: "6000+" },
     ];
 
     return (

@@ -38,7 +38,7 @@ const LoginModal = ({ isOpen, onClose, redirectUri}) => {
       <MySnackbar
         open={open}
         onClose={handleClose}
-        messages={["로그인이 필요한 기능입니다"]}
+        messages={["로그인이 필요한 기능입니다."]}
         actionLabel1="뒤로가기"
         actionLabel2="로그인하기"
         onAction={handleLogin}

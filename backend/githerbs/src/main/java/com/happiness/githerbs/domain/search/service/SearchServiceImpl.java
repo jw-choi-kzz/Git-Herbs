@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.happiness.githerbs.domain.auth.service.JwtService;
 import com.happiness.githerbs.domain.herb.entity.Herb;
 import com.happiness.githerbs.domain.herb.repository.HerbRepository;
+import com.happiness.githerbs.domain.member.entity.MemberDaily;
+import com.happiness.githerbs.domain.member.repository.MemberDailyRepository;
 import com.happiness.githerbs.domain.member.repository.MemberRepository;
 import com.happiness.githerbs.domain.search.dto.common.HerbCandidateDto;
 import com.happiness.githerbs.domain.search.dto.response.HerbSimilarityResponseDto;
@@ -52,6 +54,7 @@ public class SearchServiceImpl implements SearchService {
 	private final JwtService jwt;
 	private final S3Uploader s3;
 	private final FastApiClient fastApiClient;
+	private final MemberDailyRepository dailyRepo;
 
 	@Value("${feign.fast-api.img}")
 	private String fastApiImgUrl;
@@ -155,6 +158,25 @@ public class SearchServiceImpl implements SearchService {
 
 		// return herb information
 		var candidate = convetToCandidate(similarity);
+
+		// check member daily analysis flag
+		var byMemberIdAndDate = dailyRepo.findByMemberIdAndDate(memberInfo.getMemberId(), LocalDate.now());
+		MemberDaily memberDaily;
+		if (byMemberIdAndDate.isPresent()) {
+			memberDaily = byMemberIdAndDate.get();
+		} else {
+			memberDaily = MemberDaily.builder()
+				.member(memberRepository.findById(memberInfo.getMemberId()).orElseThrow(() -> new BaseException(ErrorCode.USER_NOT_FOUND)))
+				.date(LocalDate.now())
+				.build();
+			dailyRepo.saveAndFlush(memberDaily);
+		}
+		if (!memberDaily.getDate().equals(LocalDate.now())) {
+			throw new BaseException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		if (!memberDaily.isAnalysis()) {
+			dailyRepo.updateDailyAnalysis(memberInfo.getMemberId());
+		}
 
 		// return response
 		return SearchImageResponseDto.builder()

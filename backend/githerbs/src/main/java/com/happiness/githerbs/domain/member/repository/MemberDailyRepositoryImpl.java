@@ -111,4 +111,12 @@ public class MemberDailyRepositoryImpl implements MemberDailyRepositoryCustom {
 			.where(memberDaily.member.id.eq(userId).and(memberDaily.date.eq(LocalDate.now())))
 			.execute();
 	}
+	@Override
+	public void updateDailyAnalysis(Integer userId) {
+		queryFactory
+			.update(memberDaily)
+			.set(memberDaily.analysis, true)
+			.where(memberDaily.member.id.eq(userId).and(memberDaily.date.eq(LocalDate.now())))
+			.execute();
+	}
 }

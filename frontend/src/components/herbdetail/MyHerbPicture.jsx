@@ -138,12 +138,6 @@ const MyHerbPicture = ({ herbId }) => {
     return <Typography>No Herb ID provided.</Typography>;
   }
 
-    const filteredHerbPictures = herbData.filter(
-      (herbData) => herbData.myHerbId === parseInt(herbId, 10)
-    );
-    if (!filteredHerbPictures.length) {
-      return <Typography>해당 약초에 등록한 사진이 없습니다.</Typography>;
-    }
 
   return (
     <>

@@ -38,6 +38,7 @@ const ItemSimilarity = styled.p`
   font-size: 16px;
   color: #333;
   margin: 0;
+  padding: 0;
 `;
 
 const ItemButton = styled.button`
@@ -83,7 +84,7 @@ const PictureResultListItem = ({ item, index, count, herbId, img, onItemClick })
         <ItemImage src={item.herbImgUrl} alt={item.herbName} />
         <ItemContent>
           <ItemName>{item.herbName}</ItemName>
-          <ItemSimilarity>{item.similarity}</ItemSimilarity>
+          <ItemSimilarity>유사도 {item.similarity}%</ItemSimilarity>
           <ItemButton onClick={handleButtonClick}>도감에 추가하기</ItemButton>
         </ItemContent>
       </ListItemWrapper>

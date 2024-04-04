@@ -1,0 +1,24 @@
+version: "3"
+services:
+    tensorflow:
+        image: tensorflow/tensorflow:2.15.0.post1-gpu-jupyter
+        container_name: tensorflow
+        ports:
+            - "7000:7000"
+            - "8888:8888"
+        volumes:
+            - ./image:/tf
+        environment:
+            - TF_ENABLE_ONEDNN_OPTS=0
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - driver: nvidia
+                          count: 1
+                          capabilities: [gpu]
+        entrypoint: ["/bin/bash", "-c"]
+        command:
+            - |
+                pip install fastapi uvicorn[standard] python-multipart pillow
+                python -m uvicorn main:app --host 0.0.0.0 --port 7000 --reload

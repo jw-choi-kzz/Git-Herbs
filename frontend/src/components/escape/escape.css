@@ -1,0 +1,9 @@
+p {
+    display: flex;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px 30px 10px 25px;
+    margin: auto;
+    font-weight: 700;
+    color: #21351F;
+}

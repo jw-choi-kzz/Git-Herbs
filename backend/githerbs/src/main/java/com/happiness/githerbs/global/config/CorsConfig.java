@@ -8,20 +8,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
-@RequiredArgsConstructor
-public class CorsConfig {
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-					.allowedOriginPatterns("*")
-					.allowedHeaders("*")
-					.exposedHeaders("*")
-					.allowedMethods("*")
-					.allowCredentials(true);
-			}
-		};
+public class CorsConfig implements WebMvcConfigurer {
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+	registry.addMapping("/**")
+		.allowedOriginPatterns("*")
+		.allowedHeaders("*")
+		.exposedHeaders("*")
+		.allowedMethods("*")
+		.allowCredentials(true);
 	}
 }

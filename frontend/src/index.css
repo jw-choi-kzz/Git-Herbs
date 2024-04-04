@@ -1,0 +1,84 @@
+@font-face {
+  font-family: "SpoqaHanSansNeo";
+  font-weight: 300; /* Light */
+  src: url("./assets/fonts/SpoqaHanSansNeo-Light.woff") format("truetype");
+}
+
+@font-face {
+  font-family: "SpoqaHanSansNeo";
+  font-weight: 400; /* Regular */
+  src: url("./assets/fonts/SpoqaHanSansNeo-Regular.woff") format("truetype");
+}
+
+@font-face {
+  font-family: "SpoqaHanSansNeo";
+  font-weight: 500; /* Medium */
+  src: url("./assets/fonts/SpoqaHanSansNeo-Medium.woff") format("truetype");
+}
+
+@font-face {
+  font-family: "SpoqaHanSansNeo";
+  font-weight: 700; /* Bold */
+  src: url("./assets/fonts/SpoqaHanSansNeo-Bold.woff") format("truetype");
+}
+
+@font-face {
+  font-family: "SpoqaHanSansNeo";
+  font-weight: 100; /* Thin */
+  src: url("./assets/fonts/SpoqaHanSansNeo-Thin.ttf") format("truetype");
+}
+
+.regular {
+  font-family: "SpoqaHanSansNeo", sans-serif;
+  color: #21351f;
+  font-weight: 400; /* Regular */
+}
+
+.light {
+  font-family: "SpoqaHanSansNeo", sans-serif;
+  color: #21351f;
+  font-weight: 300; /* Light */
+}
+
+.medium {
+  font-family: "SpoqaHanSansNeo", sans-serif;
+  color: #21351f;
+  font-weight: 500; /* Medium */
+}
+
+.bold {
+  font-family: "SpoqaHanSansNeo", sans-serif;
+  color: #21351f;
+  font-weight: 700; /* Bold */
+}
+
+.thin {
+  font-family: "SpoqaHanSansNeo", sans-serif;
+  color: #21351f;
+  font-weight: 100; /* Thin */
+}
+
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 색상 변수
+ * -------------------------
+ * 메인 색: #407700; 로고, 헤더 및 푸터 아이콘, 버튼
+ * 기본 폰트 색: #21351F; 페이지명, 콘텐츠 제목 등
+ * 중요도 낮은 폰트 색: #757575; 라틴어 학명 표시 등
+ * 페이지 배경 색: #F5F5F5; 페이지 기본 배경
+ * 중요도 낮은 버튼 색: #ADADAD; 사진 재선택, 머무르기, 취소 버튼 등
+ * 로딩 페이지 배경 색: #F8FFEC; 로딩 페이지, 도감 약초 아이콘 배경 등
+ * 상호작용 아이콘 색: #F49349; 약초 즐겨찾기, 게시판 좋아요 등
+ */
+
+/* 폰트 크기
+ * -------------------------
+ * 그냥 px로?
+ * 중요한 폰트 20px (1.25em)
+ * 기본 폰트 16px (1em)
+ * 덜 중요한 폰트 약 13px (0.85em)
+ */

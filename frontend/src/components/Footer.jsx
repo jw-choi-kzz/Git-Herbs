@@ -1,0 +1,113 @@
+
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { BiHome, BiDizzy, BiCamera, BiBookBookmark, BiGame } from 'react-icons/bi';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import styled from 'styled-components';
+
+const FooterContainer = styled.footer`
+  width: 100%;
+`;
+
+
+function Footer({ onPictureButtonClick }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [value, setValue] = useState('/');
+
+  useEffect(() => {
+    const pathSegments = location.pathname.split('/');
+    const mainPath = `/${pathSegments[1]}`;
+    setValue(mainPath);
+  }, [location]);
+
+  // MUI 테마 생성
+  const theme = createTheme({
+    components: {
+      MuiBottomNavigationAction: {
+        styleOverrides: {
+          root: {
+            width: '100%',
+          },
+          label: {
+            fontSize: '12px',
+            whiteSpace: 'nowrap',
+          },
+        },
+      },
+    },
+    palette: {
+      primary: { main: '#407700' },
+    },
+  });
+
+  return (
+    <ThemeProvider theme={theme}>
+      <FooterContainer position="static">
+        <BottomNavigation
+          value={value}
+          showLabels
+          sx={{
+            width: "100%",
+            height: "50px",
+            bottom: 0,
+            borderTop: '1px solid',
+            borderColor: 'divider',
+            '& .Mui-selected': {
+              color: 'primary.main',
+              '& .MuiBottomNavigationAction-label': {
+                whiteSpace: 'nowrap', // 줄바꿈 방지
+                fontSize: '12px',
+              },
+            },
+            '& .MuiBottomNavigationAction-root': {
+              color: '#A5A5A5',
+              minWidth: 0,
+              maxWidth: '20%',
+            },
+          }}
+        >
+          <BottomNavigationAction
+            label="홈"
+            className="regular"
+            value="/"
+            icon={<BiHome fontSize="25px" />}
+            onClick={() => navigate('/')}
+          />
+          <BottomNavigationAction
+            label="위기탈출"
+            className="regular"
+            value="/escape"
+            icon={<BiDizzy fontSize="25px" />}
+            onClick={() => navigate('/escape')}
+          />
+          <BottomNavigationAction
+            label="약초판별"
+            className="regular"
+            value="/picture"
+            icon={<BiCamera fontSize="25px" />}
+            onClick={onPictureButtonClick}
+          />
+          <BottomNavigationAction
+            label="도감"
+            className="regular"
+            value="/pedia"
+            icon={<BiBookBookmark fontSize="25px" />}
+            onClick={() => navigate('/pedia')}
+          />
+          <BottomNavigationAction
+            label="심봤다"
+            className="regular"
+            value="/board"
+            icon={<BiGame fontSize="25px" />}
+            onClick={() => navigate('/board')}
+          />
+        </BottomNavigation>
+      </FooterContainer>
+    </ThemeProvider>
+  );
+}
+
+export default Footer;

@@ -35,11 +35,12 @@ const StyledSimilarity = styled(Typography).attrs({
   className: "light",
 })`
   && {
-    font-size: 12px;
+    font-size: 14px;
     color: #407700;
     font-weight: normal;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding: 10px 30px 10px 15px;
   }
 `;
 
@@ -49,13 +50,14 @@ const StyledDateStamp = styled(Typography).attrs({
   && {
     font-size: 20px;
     color: #666;
-    flex-grow: 1; // 왼쪽에 여백을 없애고 여유 공간을 모두 차지하도록 조정
+    padding: 10px 30px 10px 15px;
+    flex-grow: 1; 
   }
 `;
 
 const StyledFaCirclePlus = styled(FaCirclePlus)`
   color: #407700;
-  font-size: 40px;
+  font-size: 30px;
   margin-right: 4px;
 `;
 
@@ -144,7 +146,6 @@ const MyHerbPicture = ({ herbId }) => {
         .map((herbData, index) => (
           <CardContainer key={index}>
             <HerbImage src={herbData.imgId} alt="Herb" />
-
             <HerbDetails>
               <StyledDateStamp>
                 {formatDate(herbData.createdAt)}

@@ -48,6 +48,7 @@ const EscapePage = () => {
       <>
       <br />
         <Weather weatherdata={weatherdata}></Weather>
+        <br />
         <p>야생동물 서식 구역</p>
         <WildlifeArea weatherdata={weatherdata} ></WildlifeArea>
         <br /><hr color="e8e8e8" width="90%"/>

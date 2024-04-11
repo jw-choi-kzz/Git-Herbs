@@ -27,7 +27,7 @@ const useGlobalStyle = () => {
 
 
   const getWeatherByCurrentLocation = async (lat, lon) => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=17b9703e65beccec33b5a18c5c49c021&units=metric`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=&units=metric`;
     let response = await fetch(url);
     let data = await response.json();
     setWeather(data);
